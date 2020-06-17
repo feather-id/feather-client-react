@@ -41,13 +41,15 @@ export default function AuthenticationForm_SignIn(props) {
           name='passwordInput'
           title={inputs.password.title ? inputs.password.title : 'Password'}
           placeholder={inputs.password.placeholder}
-          helpButton={{
-            title: props.forgotPasswordButtonTitle
-              ? props.forgotPasswordButtonTitle
-              : 'Forgot password?',
-            onClick: props.onClickFormTypeButton,
-            name: 'forgot_password'
-          }}
+          helpButton={
+            props.linkToForgotPassword && {
+              title: inputs.password.forgotPasswordButtonTitle
+                ? inputs.password.forgotPasswordButtonTitle
+                : 'Forgot password?',
+              onClick: props.onClickFormTypeButton,
+              name: 'forgot_password'
+            }
+          }
           value={props.input.password}
           onChange={props.onChangeInput}
         />

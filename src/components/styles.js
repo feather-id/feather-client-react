@@ -26,7 +26,8 @@ export const defaultInputFieldStyle = {
   padding: '16px',
   border: '1px solid hsl(214, 36%, 84%)',
   color: 'hsl(214, 24%, 32%)',
-  borderRadius: '4px'
+  borderRadius: '4px',
+  '::placeholder': '#f00'
 }
 
 export const defaultInputTitleStyle = {
