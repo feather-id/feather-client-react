@@ -1,11 +1,3 @@
-'use strict'
-
-// const credentialTypes = require('../credentialTypes')
-// const utils = require('../utils')
-// const FeatherError = require('../errors/featherError')
-// const ErrorType = require('../errors/errorType')
-// const ErrorCode = require('../errors/errorCode')
-
 import credentialTypes from '../credentialTypes'
 import utils from '../utils'
 import FeatherError from '../errors/featherError'
@@ -104,5 +96,4 @@ const credentials = {
   }
 }
 
-// module.exports = credentials;
 export default credentials

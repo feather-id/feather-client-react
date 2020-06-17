@@ -1,10 +1,3 @@
-'use strict'
-
-// var jws = require('jws')
-// const FeatherError = require('./errors/featherError')
-// const ErrorType = require('./errors/errorType')
-// const ErrorCode = require('./errors/errorCode')
-
 import jws from 'jws'
 import FeatherError from './errors/featherError'
 import ErrorType from './errors/errorType'

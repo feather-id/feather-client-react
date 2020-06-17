@@ -1,5 +1,3 @@
-'use strict'
-
 class FeatherError extends Error {
   constructor(raw = {}) {
     super(raw.message)
@@ -10,5 +8,4 @@ class FeatherError extends Error {
   }
 }
 
-// module.exports = FeatherError;
 export default FeatherError

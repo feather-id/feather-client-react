@@ -1,5 +1,3 @@
-'use strict'
-
 const ErrorCode = {
   API_KEY_INVALID: 'api_key_invalid',
   PARAMETER_INVALID: 'parameter_invalid',
@@ -8,5 +6,4 @@ const ErrorCode = {
   SESSION_TOKEN_INVALID: 'session_token_invalid'
 }
 
-// module.exports = ErrorCode;
 export default ErrorCode

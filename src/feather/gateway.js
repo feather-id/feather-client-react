@@ -1,17 +1,8 @@
-'use strict'
-
-// const querystring = require('querystring')
-// const utils = require('./utils')
-// const FeatherError = require("./errors/featherError");
-// const ErrorType = require("./errors/errorType");
-// const ErrorCode = require("./errors/errorCode");
 import querystring from 'querystring'
 import utils from './utils'
 import FeatherError from './errors/featherError'
 import ErrorType from './errors/errorType'
 import ErrorCode from './errors/errorCode'
-import http from 'http'
-import https from 'https'
 
 const DEFAULT_PROTOCOL = 'https'
 const DEFAULT_HOST = 'api.feather.id'
@@ -32,17 +23,23 @@ function Gateway(apiKey, config = {}) {
   }
 }
 
+function handleApiResult(res, resolve, reject) {
+  if (res.object === 'error') {
+    reject(res)
+  } else {
+    resolve(res)
+  }
+}
+
 Gateway.prototype = {
   sendRequest(method, path, data) {
     const that = this
     return new Promise(function (resolve, reject) {
-      // Build headers
+      // Build request data
       var headers = {
         Authorization: that._api.auth,
         'Content-Type': 'application/x-www-form-urlencoded'
       }
-
-      // Build request data
       var query = ''
       if (data) {
         data = utils.camelToSnakeCase(data)
@@ -74,61 +71,30 @@ Gateway.prototype = {
             break
         }
       }
-
-      // Build request options
       var options = {
-        host: that._api.host,
-        path: that._api.basePath + path + query,
-        port: that._api.port,
-        method: method,
+        method,
         headers
       }
-
-      // Build production request
-      const proto = that._api.protocol === 'https' ? https : http
-      var req = proto.request(options, function (res) {
-        res.setEncoding('utf8')
-        let body = []
-        res.on('data', function (chunk) {
-          body.push(Buffer.from(chunk, 'utf-8'))
-        })
-        res.on('end', function () {
-          try {
-            body = Buffer.concat(body).toString()
-            resolve(utils.snakeToCamelCase(JSON.parse(body)))
-            return
-          } catch (e) {
-            reject(
-              new FeatherError({
-                type: ErrorType.API,
-                message:
-                  'The gateway received an unparsable response with status code ' +
-                  res.statusCode
-              })
-            )
-            return
-          }
-        })
-      })
-
-      // Handle errors
-      req.on('error', (err) =>
-        reject(
-          new FeatherError({
-            type: ErrorType.API_CONNECTION,
-            message: err.message
-          })
-        )
-      )
-
-      // Post data
       if (method === 'POST' && data) {
-        req.write(data)
+        options.body = data
       }
-      req.end()
+      const url =
+        that._api.protocol +
+        '://' +
+        that._api.host +
+        ':' +
+        that._api.port +
+        that._api.basePath +
+        path +
+        query
+
+      // Execute request
+      fetch(url, options)
+        .then((res) => res.json())
+        .then((res) => handleApiResult(res, resolve, reject))
+        .catch((err) => reject(err))
     })
   }
 }
 
-// module.exports = Gateway;
 export default Gateway

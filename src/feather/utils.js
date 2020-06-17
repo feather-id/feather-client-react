@@ -1,7 +1,3 @@
-// const FeatherError = require('./errors/featherError')
-// const ErrorType = require('./errors/errorType')
-// const ErrorCode = require('./errors/errorCode')
-
 import FeatherError from './errors/featherError'
 import ErrorType from './errors/errorType'
 import ErrorCode from './errors/errorCode'

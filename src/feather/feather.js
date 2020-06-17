@@ -1,12 +1,3 @@
-'use strict'
-
-// const gateway = require('./gateway')
-// const resources = require('./resources')
-// const utils = require('./utils')
-// const FeatherError = require('./errors/featherError')
-// const ErrorType = require('./errors/errorType')
-// const ErrorCode = require('./errors/errorCode')
-
 import gateway from './gateway'
 import resources from './resources'
 import utils from './utils'

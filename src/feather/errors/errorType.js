@@ -1,5 +1,3 @@
-'use strict'
-
 const ErrorType = {
   API: 'api_error',
   API_CONNECTION: 'api_connection_error',
@@ -7,5 +5,4 @@ const ErrorType = {
   VALIDATION: 'validation_error'
 }
 
-// module.exports = ErrorType;
 export default ErrorType

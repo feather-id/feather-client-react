@@ -1,5 +1,3 @@
-'use strict'
-
 import Credentials from './resources/credentials'
 import Sessions from './resources/sessions'
 import Users from './resources/users'

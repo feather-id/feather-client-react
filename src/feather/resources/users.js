@@ -1,5 +1,3 @@
-'use strict'
-
 import utils from '../utils'
 import FeatherError from '../errors/featherError'
 import ErrorType from '../errors/errorType'
@@ -169,5 +167,4 @@ const users = {
   }
 }
 
-// module.exports = users;
 export default users

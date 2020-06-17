@@ -1,10 +1,3 @@
-'use strict'
-
-// const utils = require('../utils')
-// const FeatherError = require('../errors/featherError')
-// const ErrorType = require('../errors/errorType')
-// const ErrorCode = require('../errors/errorCode')
-
 import utils from '../utils'
 import FeatherError from '../errors/featherError'
 import ErrorType from '../errors/errorType'
@@ -279,5 +272,4 @@ const sessions = {
   }
 }
 
-// module.exports = sessions;
 export default sessions
