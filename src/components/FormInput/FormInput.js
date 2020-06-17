@@ -33,6 +33,7 @@ export default function FormInput(props) {
         name={props.name}
         onChange={props.onChange}
         value={props.value}
+        placeholder={props.placeholder}
         style={defaultInputFieldStyle}
       />
     </div>

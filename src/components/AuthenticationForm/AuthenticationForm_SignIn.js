@@ -20,6 +20,7 @@ export default function AuthenticationForm_SignIn(props) {
           type='text'
           name='usernameInput'
           title={inputs.username.title ? inputs.username.title : 'Username'}
+          placeholder={inputs.username.placeholder}
           value={props.input.username}
           onChange={props.onChangeInput}
         />
@@ -29,6 +30,7 @@ export default function AuthenticationForm_SignIn(props) {
           type='email'
           name='emailInput'
           title={inputs.email.title ? inputs.email.title : 'Email'}
+          placeholder={inputs.email.placeholder}
           value={props.input.email}
           onChange={props.onChangeInput}
         />
@@ -38,6 +40,7 @@ export default function AuthenticationForm_SignIn(props) {
           type='password'
           name='passwordInput'
           title={inputs.password.title ? inputs.password.title : 'Password'}
+          placeholder={inputs.password.placeholder}
           helpButton={{
             title: props.forgotPasswordButtonTitle
               ? props.forgotPasswordButtonTitle

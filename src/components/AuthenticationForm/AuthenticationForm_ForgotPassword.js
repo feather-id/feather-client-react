@@ -1,4 +1,5 @@
 import React from 'react'
+import FormInput from '../FormInput'
 import {
   defaultTitleStyle,
   defaultInputStyle,
@@ -15,18 +16,14 @@ export default function AuthenticationForm_ForgotPassword(props) {
     <div>
       {props.form.title && <p style={defaultTitleStyle}>{props.form.title}</p>}
       {inputs.hasOwnProperty('email') && (
-        <div style={defaultInputStyle}>
-          <p style={defaultInputTitleStyle}>
-            {inputs.email.title ? inputs.email.title : 'Email'}
-          </p>
-          <input
-            type='email'
-            name='emailInput'
-            onChange={props.onChangeInput}
-            value={props.input.email}
-            style={defaultInputFieldStyle}
-          />
-        </div>
+        <FormInput
+          type='email'
+          name='emailInput'
+          title={inputs.email.title ? inputs.email.title : 'Email'}
+          placeholder={inputs.email.placeholder}
+          value={props.input.email}
+          onChange={props.onChangeInput}
+        />
       )}
       <div
         style={{
