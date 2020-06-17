@@ -1,10 +1,9 @@
 {
-  "name": "testcomps",
+  "name": "feather-client-react",
   "version": "1.0.0",
-  "description": "Made with create-react-library",
-  "author": "nickgarfield",
+  "description": "Feather ",
   "license": "MIT",
-  "repository": "nickgarfield/testcomps",
+  "repository": "feather-id/feather-client-react",
   "main": "dist/index.js",
   "module": "dist/index.modern.js",
   "source": "src/index.js",

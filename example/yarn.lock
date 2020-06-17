@@ -9773,7 +9773,7 @@ test-exclude@^5.2.3:
     read-pkg-up "^4.0.0"
     require-main-filename "^2.0.0"
 
-"testcomps@link:..":
+"feather-client-react@link:..":
   version "0.0.0"
   uid ""
 

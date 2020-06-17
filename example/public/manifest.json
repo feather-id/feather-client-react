@@ -1,6 +1,6 @@
 {
-  "short_name": "testcomps",
-  "name": "testcomps",
+  "short_name": "feather-client-react",
+  "name": "feather-client-react",
   "icons": [
     {
       "src": "favicon.ico",

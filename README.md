@@ -1,13 +1,13 @@
-# testcomps
+# feather-client-react
 
 > Made with create-react-library
 
-[![NPM](https://img.shields.io/npm/v/testcomps.svg)](https://www.npmjs.com/package/testcomps) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+[![NPM](https://img.shields.io/npm/v/feather-client-react.svg)](https://www.npmjs.com/package/feather-client-react) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
 ## Install
 
 ```bash
-npm install --save testcomps
+npm install --save feather-client-react
 ```
 
 ## Usage
@@ -15,8 +15,8 @@ npm install --save testcomps
 ```jsx
 import React, { Component } from 'react'
 
-import MyComponent from 'testcomps'
-import 'testcomps/dist/index.css'
+import MyComponent from 'feather-client-react'
+import 'feather-client-react/dist/index.css'
 
 class Example extends Component {
   render() {
