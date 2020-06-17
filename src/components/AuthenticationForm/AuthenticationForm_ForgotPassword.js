@@ -7,7 +7,7 @@ import {
   defaultForgotPasswordButtonStyle,
   defaultFormStyleButton,
   defaultSubmitButtonStyle
-} from './AuthenticationFormStyles.js'
+} from '../styles.js'
 
 export default function AuthenticationForm_ForgotPassword(props) {
   const inputs = props.form.inputs ? props.form.inputs : []

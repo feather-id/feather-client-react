@@ -3,7 +3,7 @@ import Feather from '../../feather'
 import SignIn from './AuthenticationForm_SignIn.js'
 import SignUp from './AuthenticationForm_SignUp.js'
 import ForgotPassword from './AuthenticationForm_ForgotPassword.js'
-import { defaultFormStyle } from './AuthenticationFormStyles.js'
+import { defaultFormStyle } from '../styles.js'
 
 const INITIAL_STATE = {
   emailInput: '',

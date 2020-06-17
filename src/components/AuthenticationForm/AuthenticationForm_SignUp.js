@@ -1,4 +1,5 @@
 import React from 'react'
+import FormInput from '../FormInput'
 import {
   defaultTitleStyle,
   defaultInputStyle,
@@ -7,7 +8,7 @@ import {
   defaultForgotPasswordButtonStyle,
   defaultFormStyleButton,
   defaultSubmitButtonStyle
-} from './AuthenticationFormStyles.js'
+} from '../styles.js'
 
 // TODO Custom checkboxes (e.g. for TOS/Privacy/etc.)
 
@@ -17,62 +18,44 @@ export default function AuthenticationForm_SignUp(props) {
     <div>
       {props.form.title && <p style={defaultTitleStyle}>{props.form.title}</p>}
       {inputs.hasOwnProperty('username') && (
-        <div style={defaultInputStyle}>
-          <p style={defaultInputTitleStyle}>
-            {inputs.username.title ? inputs.username.title : 'Username'}
-          </p>
-          <input
-            type='text'
-            name='usernameInput'
-            onChange={props.onChangeInput}
-            value={props.input.username}
-            style={defaultInputFieldStyle}
-          />
-        </div>
+        <FormInput
+          type='text'
+          name='usernameInput'
+          title={inputs.username.title ? inputs.username.title : 'Username'}
+          value={props.input.username}
+          onChange={props.onChangeInput}
+        />
       )}
       {inputs.hasOwnProperty('email') && (
-        <div style={defaultInputStyle}>
-          <p style={defaultInputTitleStyle}>
-            {inputs.email.title ? inputs.email.title : 'Email'}
-          </p>
-          <input
-            type='email'
-            name='emailInput'
-            onChange={props.onChangeInput}
-            value={props.input.email}
-            style={defaultInputFieldStyle}
-          />
-        </div>
+        <FormInput
+          type='email'
+          name='emailInput'
+          title={inputs.email.title ? inputs.email.title : 'Email'}
+          value={props.input.email}
+          onChange={props.onChangeInput}
+        />
       )}
       {inputs.hasOwnProperty('password') && (
-        <div style={defaultInputStyle}>
-          <p style={defaultInputTitleStyle}>
-            {inputs.password.title ? inputs.password.title : 'Password'}
-          </p>
-          <input
-            type='password'
-            name='passwordInput'
-            onChange={props.onChangeInput}
-            value={props.input.password}
-            style={defaultInputFieldStyle}
-          />
-        </div>
+        <FormInput
+          type='password'
+          name='passwordInput'
+          title={inputs.password.title ? inputs.password.title : 'Password'}
+          value={props.input.password}
+          onChange={props.onChangeInput}
+        />
       )}
       {inputs.hasOwnProperty('confirmPassword') && (
-        <div style={defaultInputStyle}>
-          <p style={defaultInputTitleStyle}>
-            {inputs.confirmPassword.title
+        <FormInput
+          type='password'
+          name='confirmPasswordInput'
+          title={
+            inputs.confirmPassword.title
               ? inputs.confirmPassword.title
-              : 'Confirm password'}
-          </p>
-          <input
-            type='password'
-            name='confirmPasswordInput'
-            onChange={props.onChangeInput}
-            value={props.input.confirmPassword}
-            style={defaultInputFieldStyle}
-          />
-        </div>
+              : 'Confirm password'
+          }
+          value={props.input.confirmPassword}
+          onChange={props.onChangeInput}
+        />
       )}
       <div
         style={{
