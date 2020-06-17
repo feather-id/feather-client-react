@@ -4,11 +4,7 @@ import SignIn from './AuthenticationForm_SignIn.js'
 import SignUp from './AuthenticationForm_SignUp.js'
 import ForgotPassword from './AuthenticationForm_ForgotPassword.js'
 import ComponentConfigWarning from './AuthenticationForm_ComponentConfigWarning.js'
-import {
-  defaultSignInForm,
-  defaultSignUpForm,
-  defaultForgotPasswordForm
-} from './defaultForms.js'
+import { defaultConfig } from './defaultConfig.js'
 import { defaultFormStyle } from '../styles.js'
 
 const INITIAL_STATE = {
@@ -61,12 +57,12 @@ class AuthenticationForm extends React.Component {
       })
   }
 
-  getConfigWarnings = () => {
+  getConfigWarnings = (config) => {
     var configWarnings = []
     if (
-      this.props.signInForm &&
-      this.props.signInForm.inputs.hasOwnProperty('email') &&
-      this.props.signInForm.inputs.hasOwnProperty('username')
+      config.signIn &&
+      config.signIn.inputs.hasOwnProperty('email') &&
+      config.signIn.inputs.hasOwnProperty('username')
     ) {
       configWarnings.push(
         'Your sign-in form has both an email and username field. You can reduce user friction by removing one of these fields.'
@@ -74,9 +70,9 @@ class AuthenticationForm extends React.Component {
     }
 
     if (
-      this.props.signInForm &&
-      this.props.signInForm.inputs.hasOwnProperty('username') &&
-      !this.props.signInForm.inputs.hasOwnProperty('password')
+      config.signIn &&
+      config.signIn.inputs.hasOwnProperty('username') &&
+      !config.signIn.inputs.hasOwnProperty('password')
     ) {
       configWarnings.push(
         'Your sign-in form has a username field without a password field.'
@@ -84,10 +80,10 @@ class AuthenticationForm extends React.Component {
     }
 
     if (
-      this.props.signInForm &&
-      this.props.signInForm.inputs.hasOwnProperty('username') &&
-      !!this.props.signUpForm &&
-      !this.props.signUpForm.inputs.hasOwnProperty('username')
+      config.signIn &&
+      config.signIn.inputs.hasOwnProperty('username') &&
+      !!config.signUp &&
+      !config.signUp.inputs.hasOwnProperty('username')
     ) {
       configWarnings.push(
         'Your sign-in form has a username field, but your sign-up from does not.'
@@ -95,10 +91,10 @@ class AuthenticationForm extends React.Component {
     }
 
     if (
-      this.props.signInForm &&
-      this.props.signInForm.inputs.hasOwnProperty('email') &&
-      !!this.props.signUpForm &&
-      !this.props.signUpForm.inputs.hasOwnProperty('email')
+      config.signIn &&
+      config.signIn.inputs.hasOwnProperty('email') &&
+      !!config.signUp &&
+      !config.signUp.inputs.hasOwnProperty('email')
     ) {
       configWarnings.push(
         'Your sign-in form has an email field, but your sign-up from does not.'
@@ -106,10 +102,10 @@ class AuthenticationForm extends React.Component {
     }
 
     if (
-      this.props.signInForm &&
-      this.props.signInForm.inputs.hasOwnProperty('password') &&
-      !!this.props.signUpForm &&
-      !this.props.signUpForm.inputs.hasOwnProperty('password')
+      config.signIn &&
+      config.signIn.inputs.hasOwnProperty('password') &&
+      !!config.signUp &&
+      !config.signUp.inputs.hasOwnProperty('password')
     ) {
       configWarnings.push(
         'Your sign-in form has an password field, but your sign-up from does not.'
@@ -117,8 +113,8 @@ class AuthenticationForm extends React.Component {
     }
 
     if (
-      this.props.signInForm &&
-      !this.props.signInForm.inputs.hasOwnProperty('password') &&
+      config.signIn &&
+      !config.signIn.inputs.hasOwnProperty('password') &&
       !this.props.verificationUrl
     ) {
       configWarnings.push(
@@ -127,16 +123,16 @@ class AuthenticationForm extends React.Component {
     }
 
     if (
-      this.props.signInForm &&
-      !this.props.signInForm.inputs.hasOwnProperty('password') &&
-      !!this.props.signUpForm
+      config.signIn &&
+      !config.signIn.inputs.hasOwnProperty('password') &&
+      !!config.signUp
     ) {
       configWarnings.push(
         'Your sign-in form is passwordless, but you additionally included a sign-up form. You can reduce user friction by removing the sign-up form.'
       )
     }
 
-    if (!!this.props.forgotPasswordForm && !this.props.verificationUrl) {
+    if (!!config.forgotPassword && !this.props.verificationUrl) {
       configWarnings.push(
         "You did not include a 'verificationUrl' for your forgot-password form. This is the URL your user is redirected from the password reset email."
       )
@@ -150,18 +146,11 @@ class AuthenticationForm extends React.Component {
     var signUpFields = this.props.signUpFields ? this.props.signUpFields : []
 
     // Test for warnings
-    const configWarnings = this.getConfigWarnings()
+
+    const config = this.props.config ? this.props.config : defaultConfig
+    const configWarnings = this.getConfigWarnings(config)
     const showConfigWarning =
       configWarnings.length > 0 && !this.props.silenceWarnings
-
-    var signInForm = this.props.signInForm
-    var signUpForm = this.props.signUpForm
-    var forgotPasswordForm = this.props.forgotPasswordForm
-    if (!signInForm && !signUpForm && !forgotPasswordForm) {
-      signInForm = defaultSignInForm
-      signUpForm = defaultSignUpForm
-      forgotPasswordForm = defaultForgotPasswordForm
-    }
 
     return (
       <form style={defaultFormStyle}>
@@ -170,12 +159,12 @@ class AuthenticationForm extends React.Component {
         )}
         {this.state.formType == 'sign_in' && (
           <SignIn
-            form={signInForm}
+            form={config.signIn}
             onSubmit={this.onSubmit}
             onChangeInput={this.onChangeInput}
             onClickFormTypeButton={this.onClickFormTypeButton}
-            linkToSignUp={!!signUpForm}
-            linkToForgotPassword={!!forgotPasswordForm}
+            linkToSignUp={!!config.signUp}
+            linkToForgotPassword={!!config.forgotPassword}
             input={{
               email: this.state.emailInput,
               username: this.state.usernameInput,
@@ -185,11 +174,11 @@ class AuthenticationForm extends React.Component {
         )}
         {this.state.formType == 'sign_up' && (
           <SignUp
-            form={signUpForm}
+            form={config.signUp}
             onSubmit={this.onSubmit}
             onChangeInput={this.onChangeInput}
             onClickFormTypeButton={this.onClickFormTypeButton}
-            linkToSignIn={!!signInForm}
+            linkToSignIn={!!config.signIn}
             input={{
               email: this.state.emailInput,
               username: this.state.usernameInput,
@@ -200,7 +189,7 @@ class AuthenticationForm extends React.Component {
         )}
         {this.state.formType == 'forgot_password' && (
           <ForgotPassword
-            form={forgotPasswordForm}
+            form={config.forgotPassword}
             onSubmit={this.onSubmit}
             onChangeInput={this.onChangeInput}
             onClickFormTypeButton={this.onClickFormTypeButton}
