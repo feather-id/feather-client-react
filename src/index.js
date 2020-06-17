@@ -1,4 +1,4 @@
 import Feather from './feather'
-import { SignInForm } from './components'
+import { AuthenticationForm } from './components'
 
-export { Feather, SignInForm }
+export { Feather, AuthenticationForm }
