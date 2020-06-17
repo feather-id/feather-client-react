@@ -56,7 +56,7 @@ export default function AuthenticationForm_SignIn(props) {
             </p>
             {props.linkToForgotPassword && (
               <button
-                type='submit'
+                type='button'
                 name='forgot_password'
                 onClick={props.onClickFormTypeButton}
                 style={defaultForgotPasswordButtonStyle}
@@ -85,7 +85,7 @@ export default function AuthenticationForm_SignIn(props) {
       >
         {props.linkToSignUp && (
           <button
-            type='submit'
+            type='button'
             name='sign_up'
             onClick={props.onClickFormTypeButton}
             style={defaultFormStyleButton}

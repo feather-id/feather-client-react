@@ -36,7 +36,7 @@ export default function AuthenticationForm_ForgotPassword(props) {
         }}
       >
         <button
-          type='submit'
+          type='button'
           name='sign_in'
           onClick={props.onClickFormTypeButton}
           style={defaultFormStyleButton}

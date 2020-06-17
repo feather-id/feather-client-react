@@ -10,12 +10,16 @@ const INITIAL_STATE = {
   usernameInput: '',
   passwordInput: '',
   confirmPasswordInput: '',
-  formType: 'sign_in'
+  formType: 'sign_in',
+  componentConfigurationError: null
 }
 
 class AuthenticationForm extends React.Component {
   constructor(props) {
     super(props)
+
+    // TODO smartly choose the formType
+
     this.state = { ...INITIAL_STATE }
   }
 
@@ -108,134 +112,5 @@ class AuthenticationForm extends React.Component {
     )
   }
 }
-
-// {this.props.forgotPasswordTitle && (
-//   <p style={defaultTitleStyle}>{this.props.forgotPasswordTitle}</p>
-// )}
-// <div style={defaultInputStyle}>
-//   <p style={defaultInputTitleStyle}>Email</p>
-//   <input
-//     type='email'
-//     name='emailInput'
-//     onChange={this.onChangeInput}
-//     value={this.state.emailInput}
-//     style={defaultInputFieldStyle}
-//   />
-// </div>
-// <div
-//   style={{
-//     display: 'flex',
-//     flexDirection: 'row',
-//     width: '100%'
-//   }}
-// >
-//   {signUpFields.length > 0 && (
-//     <button
-//       type='submit'
-//       name='sign_in'
-//       onClick={this.onClickFormTypeButton}
-//       style={defaultFormStyleButton}
-//     >
-//       {this.props.submitButtonTitle
-//         ? this.props.submitButtonTitle
-//         : 'Cancel'}
-//     </button>
-//   )}
-//   <button
-//     type='submit'
-//     onClick={this.onSubmit}
-//     style={defaultSubmitButtonStyle}
-//   >
-//     {this.props.signInSubmitButtonTitle
-//       ? this.props.signInSubmitButtonTitle
-//       : 'Continue'}
-//   </button>
-// </div>
-// </div>
-
-///////////////////////////////////////////////////////////////
-
-// <div>
-// {this.props.signUpTitle && (
-//   <p style={defaultTitleStyle}>{this.props.signUpTitle}</p>
-// )}
-// {signUpFields.includes('username') && (
-//   <div style={defaultInputStyle}>
-//     <p style={defaultInputTitleStyle}>Username</p>
-//     <input
-//       type='text'
-//       name='usernameInput'
-//       onChange={this.onChangeInput}
-//       value={this.state.usernameInput}
-//       style={defaultInputFieldStyle}
-//     />
-//   </div>
-// )}
-// {signUpFields.includes('email') && (
-//   <div style={defaultInputStyle}>
-//     <p style={defaultInputTitleStyle}>Email</p>
-//     <input
-//       type='email'
-//       name='emailInput'
-//       onChange={this.onChangeInput}
-//       value={this.state.emailInput}
-//       style={defaultInputFieldStyle}
-//     />
-//   </div>
-// )}
-// {signUpFields.includes('password') && (
-//   <div style={defaultInputStyle}>
-//     <p style={defaultInputTitleStyle}>Password</p>
-//     <input
-//       type='password'
-//       name='passwordInput'
-//       onChange={this.onChangeInput}
-//       value={this.state.passwordInput}
-//       style={defaultInputFieldStyle}
-//     />
-//   </div>
-// )}
-// {signUpFields.includes('confirmPassword') && (
-//   <div style={defaultInputStyle}>
-//     <p style={defaultInputTitleStyle}>Confirm password</p>
-//     <input
-//       type='password'
-//       name='passwordInput'
-//       onChange={this.onChangeInput}
-//       value={this.state.confirmPasswordInput}
-//       style={defaultInputFieldStyle}
-//     />
-//   </div>
-// )}
-// <div
-//   style={{
-//     display: 'flex',
-//     flexDirection: 'row',
-//     width: '100%'
-//   }}
-// >
-//   {signInFields.length > 0 && (
-//     <button
-//       type='submit'
-//       name='sign_in'
-//       onClick={this.onClickFormTypeButton}
-//       style={defaultFormStyleButton}
-//     >
-//       {this.props.signUpButtonTitle
-//         ? this.props.submitButtonTitle
-//         : 'I have an account'}
-//     </button>
-//   )}
-//   <button
-//     type='submit'
-//     onClick={this.onSubmit}
-//     style={defaultSubmitButtonStyle}
-//   >
-//     {this.props.signUpSubmitButtonTitle
-//       ? this.props.signUpSubmitButtonTitle
-//       : 'Continue'}
-//   </button>
-// </div>
-// </div>
 
 export default AuthenticationForm

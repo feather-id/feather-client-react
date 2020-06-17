@@ -83,7 +83,7 @@ export default function AuthenticationForm_SignUp(props) {
       >
         {props.linkToSignIn && (
           <button
-            type='submit'
+            type='button'
             name='sign_in'
             onClick={props.onClickFormTypeButton}
             style={defaultFormStyleButton}
