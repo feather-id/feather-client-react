@@ -20,7 +20,16 @@ export default function Feather(apiKey, config = {}) {
   if (!(this instanceof Feather)) {
     return new Feather(apiKey, config)
   }
+  if (!window.indexedDB) {
+    console.log(
+      // TODO
+      "Your browser doesn't support a stable version of IndexedDB. This interface of Feather is not available."
+    )
+  }
   this._api = new API(apiKey, config)
+  this._currentSession = null
+  this._currentUser = null
+  this._currentCredential = null
   this.confirmEmailVerificationLink = confirmEmailVerificationLink
   this.confirmForgotPasswordLink = confirmForgotPasswordLink
   this.confirmSignInLink = confirmSignInLink

@@ -9,8 +9,8 @@ const ALLOWED_PROTOCOLS = ['https', 'http']
 const ALLOWED_CONFIG_PROPERTIES = ['protocol', 'host', 'port', 'basePath']
 
 export default function API(apiKey, config = {}) {
-  if (!(this instanceof Feather)) {
-    return new Feather(apiKey, config)
+  if (!(this instanceof API)) {
+    return new API(apiKey, config)
   }
 
   // Validate inputs
@@ -37,7 +37,7 @@ API.prototype = {
   _prepareResources() {
     for (let name in resources) {
       var resource = { ...resources[name] }
-      resource._gateway = this._gateway
+      resource._httpGateway = this._httpGateway
       this[utils.pascalToCamelCase(name)] = resource
     }
   },
