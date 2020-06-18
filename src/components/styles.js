@@ -1,12 +1,3 @@
-// export const defaultFormCSS =
-// export const defaultTitleCSS =
-// export const defaultInputCSS =
-// export const defaultInputFieldCSS =
-// export const defaultInputTitleCSS =
-// export const defaultForgotPasswordButtonCSS =
-// export const defaultSubmitButtonCSS =
-// export const defaultFormStyleButton =
-
 export const defaultStyles = {
   container: {
     display: 'flex',
