@@ -1,4 +1,5 @@
 import API from '../api'
+import Database from './database'
 import confirmEmailVerificationLink from './confirmEmailVerificationLink.js'
 import confirmForgotPasswordLink from './confirmForgotPasswordLink.js'
 import confirmSignInLink from './confirmSignInLink.js'
@@ -26,6 +27,31 @@ export default function Feather(apiKey, config = {}) {
       "Your browser doesn't support a stable version of IndexedDB. This interface of Feather is not available."
     )
   }
+
+  this._database = new Database(
+    (database) => {
+      database
+        .fetchCurrentState()
+        .then((state) => {
+          console.log('State ' + state)
+          if (!state) {
+            database.updateCurrentState({
+              credential: null,
+              session: null,
+              user: null
+            })
+          }
+        })
+        .catch((error) => {
+          console.log('catch an error')
+          console.log(error)
+        })
+    },
+    (error) => {
+      console.log('Failed to initialize database')
+    }
+  )
+
   this._api = new API(apiKey, config)
   this._currentSession = null
   this._currentUser = null
