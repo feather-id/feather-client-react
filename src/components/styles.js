@@ -7,7 +7,7 @@
 // export const defaultSubmitButtonCSS =
 // export const defaultFormStyleButton =
 
-export const defaultStyle = {
+export const defaultStyles = {
   container: {
     display: 'flex',
     flexDirection: 'column',
@@ -34,7 +34,9 @@ export const defaultStyle = {
     border: '1px solid hsl(214, 36%, 84%)',
     color: 'hsl(214, 24%, 32%)',
     borderRadius: '4px',
-    '::placeholder': '#f00' // TODO
+    '::placeholder': {
+      color: 'hsl(214, 36%, 84%)'
+    }
   },
   inputTitle: {
     fontSize: '1.2em',

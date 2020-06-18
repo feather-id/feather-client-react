@@ -4,8 +4,9 @@ import SignIn from './AuthenticationForm_SignIn.js'
 import SignUp from './AuthenticationForm_SignUp.js'
 import ForgotPassword from './AuthenticationForm_ForgotPassword.js'
 import ComponentConfigWarning from './AuthenticationForm_ComponentConfigWarning.js'
+import { css } from 'emotion'
 import { defaultConfig } from './defaultConfig.js'
-import { defaultStyle } from '../styles.js'
+import { defaultStyles } from '../styles.js'
 import { mergeStyles } from './utils.js'
 
 const INITIAL_STATE = {
@@ -153,9 +154,19 @@ class AuthenticationForm extends React.Component {
       configWarnings.length > 0 && !this.props.silenceWarnings
 
     // Get custom styling
+    var styles = { ...defaultStyles }
+    if (!!this.props.styles) {
+      styles = mergeStyles(styles, this.props.styles)
+    }
+
+    console.log(styles)
 
     return (
-      <form style={defaultStyle.container}>
+      <form
+        className={css`
+          ${styles.container}
+        `}
+      >
         {showConfigWarning && (
           <ComponentConfigWarning warnings={configWarnings} />
         )}

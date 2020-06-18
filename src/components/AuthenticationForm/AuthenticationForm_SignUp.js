@@ -1,11 +1,7 @@
 import React from 'react'
 import FormInput from '../FormInput'
 import { css } from 'emotion'
-import { defaultStyle } from '../styles.js'
-
-// defaultTitleStyle,
-// defaultFormStyleButton,
-// defaultSubmitButtonStyle
+import { defaultStyles } from '../styles.js'
 
 // TODO Custom checkboxes (e.g. for TOS/Privacy/etc.)
 
@@ -16,7 +12,7 @@ export default function AuthenticationForm_SignUp(props) {
       {props.form.title && (
         <p
           className={css`
-            ${defaultStyle.title}
+            ${defaultStyles.title}
           `}
         >
           {props.form.title}
@@ -79,7 +75,7 @@ export default function AuthenticationForm_SignUp(props) {
             name='sign_in'
             onClick={props.onClickFormTypeButton}
             className={css`
-              ${defaultStyle.secondaryCtaButton}
+              ${defaultStyles.secondaryCtaButton}
             `}
           >
             {props.form.secondaryCtaButtonTitle
@@ -91,7 +87,7 @@ export default function AuthenticationForm_SignUp(props) {
           type='submit'
           onClick={props.onSubmit}
           className={css`
-            ${defaultStyle.primaryCtaButton}
+            ${defaultStyles.primaryCtaButton}
           `}
         >
           {props.form.primaryCtaButtonTitle
