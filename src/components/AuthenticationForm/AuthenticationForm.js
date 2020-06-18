@@ -153,13 +153,11 @@ class AuthenticationForm extends React.Component {
     const showConfigWarning =
       configWarnings.length > 0 && !this.props.silenceWarnings
 
-    // Get custom styling
+    // Merge in custom styling
     var styles = { ...defaultStyles }
     if (!!this.props.styles) {
       styles = mergeStyles(styles, this.props.styles)
     }
-
-    console.log(styles)
 
     return (
       <form
@@ -178,6 +176,7 @@ class AuthenticationForm extends React.Component {
             onClickFormTypeButton={this.onClickFormTypeButton}
             linkToSignUp={!!config.signUp}
             linkToForgotPassword={!!config.forgotPassword}
+            styles={styles}
             input={{
               email: this.state.emailInput,
               username: this.state.usernameInput,
@@ -192,6 +191,7 @@ class AuthenticationForm extends React.Component {
             onChangeInput={this.onChangeInput}
             onClickFormTypeButton={this.onClickFormTypeButton}
             linkToSignIn={!!config.signIn}
+            styles={styles}
             input={{
               email: this.state.emailInput,
               username: this.state.usernameInput,
@@ -206,6 +206,7 @@ class AuthenticationForm extends React.Component {
             onSubmit={this.onSubmit}
             onChangeInput={this.onChangeInput}
             onClickFormTypeButton={this.onClickFormTypeButton}
+            styles={styles}
             input={{
               email: this.state.emailInput
             }}

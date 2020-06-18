@@ -1,7 +1,6 @@
 import React from 'react'
 import FormInput from '../FormInput'
 import { css } from 'emotion'
-import { defaultStyles } from '../styles.js'
 
 // TODO Custom checkboxes (e.g. for TOS/Privacy/etc.)
 
@@ -12,7 +11,7 @@ export default function AuthenticationForm_SignUp(props) {
       {props.form.title && (
         <p
           className={css`
-            ${defaultStyles.title}
+            ${props.styles.title}
           `}
         >
           {props.form.title}
@@ -26,6 +25,7 @@ export default function AuthenticationForm_SignUp(props) {
           placeholder={inputs.username.placeholder}
           value={props.input.username}
           onChange={props.onChangeInput}
+          styles={props.styles}
         />
       )}
       {inputs.hasOwnProperty('email') && (
@@ -36,6 +36,7 @@ export default function AuthenticationForm_SignUp(props) {
           placeholder={inputs.email.placeholder}
           value={props.input.email}
           onChange={props.onChangeInput}
+          styles={props.styles}
         />
       )}
       {inputs.hasOwnProperty('password') && (
@@ -46,6 +47,7 @@ export default function AuthenticationForm_SignUp(props) {
           placeholder={inputs.password.placeholder}
           value={props.input.password}
           onChange={props.onChangeInput}
+          styles={props.styles}
         />
       )}
       {inputs.hasOwnProperty('confirmPassword') && (
@@ -60,6 +62,7 @@ export default function AuthenticationForm_SignUp(props) {
           placeholder={inputs.confirmPassword.placeholder}
           value={props.input.confirmPassword}
           onChange={props.onChangeInput}
+          styles={props.styles}
         />
       )}
       <div
@@ -75,7 +78,7 @@ export default function AuthenticationForm_SignUp(props) {
             name='sign_in'
             onClick={props.onClickFormTypeButton}
             className={css`
-              ${defaultStyles.secondaryCtaButton}
+              ${props.styles.secondaryCtaButton}
             `}
           >
             {props.form.secondaryCtaButtonTitle
@@ -87,7 +90,7 @@ export default function AuthenticationForm_SignUp(props) {
           type='submit'
           onClick={props.onSubmit}
           className={css`
-            ${defaultStyles.primaryCtaButton}
+            ${props.styles.primaryCtaButton}
           `}
         >
           {props.form.primaryCtaButtonTitle

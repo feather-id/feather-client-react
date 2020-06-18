@@ -1,7 +1,6 @@
 import React from 'react'
 import FormInput from '../FormInput'
 import { css } from 'emotion'
-import { defaultStyles } from '../styles.js'
 
 export default function AuthenticationForm_ForgotPassword(props) {
   const inputs = props.form.inputs ? props.form.inputs : []
@@ -10,7 +9,7 @@ export default function AuthenticationForm_ForgotPassword(props) {
       {props.form.title && (
         <p
           className={css`
-            ${defaultStyles.title}
+            ${props.styles.title}
           `}
         >
           {props.form.title}
@@ -24,6 +23,7 @@ export default function AuthenticationForm_ForgotPassword(props) {
           placeholder={inputs.email.placeholder}
           value={props.input.email}
           onChange={props.onChangeInput}
+          styles={props.styles}
         />
       )}
       <div
@@ -38,7 +38,7 @@ export default function AuthenticationForm_ForgotPassword(props) {
           name='sign_in'
           onClick={props.onClickFormTypeButton}
           className={css`
-            ${defaultStyles.secondaryCtaButton}
+            ${props.styles.secondaryCtaButton}
           `}
         >
           {props.form.secondaryCtaButtonTitle
@@ -49,7 +49,7 @@ export default function AuthenticationForm_ForgotPassword(props) {
           type='submit'
           onClick={props.onSubmit}
           className={css`
-            ${defaultStyles.primaryCtaButton}
+            ${props.styles.primaryCtaButton}
           `}
         >
           {props.form.primaryCtaButtonTitle

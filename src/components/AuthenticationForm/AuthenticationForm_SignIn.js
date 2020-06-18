@@ -1,7 +1,6 @@
 import React from 'react'
 import FormInput from '../FormInput'
 import { css } from 'emotion'
-import { defaultStyles } from '../styles.js'
 
 export default function AuthenticationForm_SignIn(props) {
   const inputs = props.form.inputs ? props.form.inputs : []
@@ -10,7 +9,7 @@ export default function AuthenticationForm_SignIn(props) {
       {props.form.title && (
         <p
           className={css`
-            ${defaultStyles.title}
+            ${props.styles.title}
           `}
         >
           {props.form.title}
@@ -24,6 +23,7 @@ export default function AuthenticationForm_SignIn(props) {
           placeholder={inputs.username.placeholder}
           value={props.input.username}
           onChange={props.onChangeInput}
+          styles={props.styles}
         />
       )}
       {inputs.hasOwnProperty('email') && (
@@ -34,6 +34,7 @@ export default function AuthenticationForm_SignIn(props) {
           placeholder={inputs.email.placeholder}
           value={props.input.email}
           onChange={props.onChangeInput}
+          styles={props.styles}
         />
       )}
       {inputs.hasOwnProperty('password') && (
@@ -53,6 +54,7 @@ export default function AuthenticationForm_SignIn(props) {
           }
           value={props.input.password}
           onChange={props.onChangeInput}
+          styles={props.styles}
         />
       )}
       <div
@@ -68,7 +70,7 @@ export default function AuthenticationForm_SignIn(props) {
             name='sign_up'
             onClick={props.onClickFormTypeButton}
             className={css`
-              ${defaultStyles.secondaryCtaButton}
+              ${props.styles.secondaryCtaButton}
             `}
           >
             {props.form.secondaryCtaButtonTitle
@@ -80,7 +82,7 @@ export default function AuthenticationForm_SignIn(props) {
           type='submit'
           onClick={props.onSubmit}
           className={css`
-            ${defaultStyles.primaryCtaButton}
+            ${props.styles.primaryCtaButton}
           `}
         >
           {props.form.primaryCtaButtonTitle

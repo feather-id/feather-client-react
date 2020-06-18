@@ -1,12 +1,11 @@
 import React from 'react'
 import { css } from 'emotion'
-import { defaultStyles } from '../styles.js'
 
 export default function FormInput(props) {
   return (
     <div
       className={css`
-        ${defaultStyles.inputContainer}
+        ${props.styles.inputContainer}
       `}
     >
       <div
@@ -18,7 +17,7 @@ export default function FormInput(props) {
       >
         <p
           className={css`
-            ${defaultStyles.inputTitle}
+            ${props.styles.inputTitle}
           `}
         >
           {props.title}
@@ -29,7 +28,7 @@ export default function FormInput(props) {
             name={props.helpButton.name}
             onClick={props.helpButton.onClick}
             className={css`
-              ${defaultStyles.forgotPasswordButton}
+              ${props.styles.forgotPasswordButton}
             `}
           >
             {props.helpButton.title}
@@ -43,7 +42,7 @@ export default function FormInput(props) {
         value={props.value}
         placeholder={props.placeholder}
         className={css`
-          ${defaultStyles.inputField}
+          ${props.styles.inputField}
         `}
       />
     </div>
