@@ -1,4 +1,5 @@
 import React from 'react'
+import { css } from 'emotion'
 import {
   defaultInputStyle,
   defaultInputFieldStyle,
@@ -8,21 +9,33 @@ import {
 
 export default function FormInput(props) {
   return (
-    <div style={defaultInputStyle}>
+    <div
+      className={css`
+        ${defaultInputStyle}
+      `}
+    >
       <div
-        style={{
-          display: 'flex',
-          flexDirection: 'row',
-          width: '100%'
-        }}
+        className={css`
+          display: flex;
+          flexdirection: row;
+          width: 100%;
+        `}
       >
-        <p style={defaultInputTitleStyle}>{props.title}</p>
+        <p
+          className={css`
+            ${defaultInputTitleStyle}
+          `}
+        >
+          {props.title}
+        </p>
         {props.helpButton && (
           <button
             type='button'
             name={props.helpButton.name}
             onClick={props.helpButton.onClick}
-            style={defaultForgotPasswordButtonStyle}
+            className={css`
+              ${defaultForgotPasswordButtonStyle}
+            `}
           >
             {props.helpButton.title}
           </button>
@@ -34,7 +47,9 @@ export default function FormInput(props) {
         onChange={props.onChange}
         value={props.value}
         placeholder={props.placeholder}
-        style={defaultInputFieldStyle}
+        className={css`
+          ${defaultInputFieldStyle}
+        `}
       />
     </div>
   )

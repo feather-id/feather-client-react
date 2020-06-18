@@ -1,11 +1,8 @@
 import React from 'react'
 import FormInput from '../FormInput'
+import { css } from 'emotion'
 import {
   defaultTitleStyle,
-  defaultInputStyle,
-  defaultInputFieldStyle,
-  defaultInputTitleStyle,
-  defaultForgotPasswordButtonStyle,
   defaultFormStyleButton,
   defaultSubmitButtonStyle
 } from '../styles.js'
@@ -14,7 +11,15 @@ export default function AuthenticationForm_SignIn(props) {
   const inputs = props.form.inputs ? props.form.inputs : []
   return (
     <div>
-      {props.form.title && <p style={defaultTitleStyle}>{props.form.title}</p>}
+      {props.form.title && (
+        <p
+          className={css`
+            ${defaultTitleStyle}
+          `}
+        >
+          {props.form.title}
+        </p>
+      )}
       {inputs.hasOwnProperty('username') && (
         <FormInput
           type='text'
@@ -55,18 +60,20 @@ export default function AuthenticationForm_SignIn(props) {
         />
       )}
       <div
-        style={{
-          display: 'flex',
-          flexDirection: 'row',
-          width: '100%'
-        }}
+        className={css`
+          display: flex;
+          flex-direction: row;
+          width: 100%;
+        `}
       >
         {props.linkToSignUp && (
           <button
             type='button'
             name='sign_up'
             onClick={props.onClickFormTypeButton}
-            style={defaultFormStyleButton}
+            className={css`
+              ${defaultFormStyleButton}
+            `}
           >
             {props.form.TODO ? props.form.TODO : 'Create an account'}
           </button>
@@ -74,7 +81,9 @@ export default function AuthenticationForm_SignIn(props) {
         <button
           type='submit'
           onClick={props.onSubmit}
-          style={defaultSubmitButtonStyle}
+          className={css`
+            ${defaultSubmitButtonStyle}
+          `}
         >
           {props.form.submitButtonTitle
             ? props.form.submitButtonTitle

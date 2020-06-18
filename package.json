@@ -50,6 +50,7 @@
     "dist"
   ],
   "dependencies": {
+    "emotion": "^10.0.27",
     "jws": "^4.0.0",
     "querystring": "^0.2.0"
   }
