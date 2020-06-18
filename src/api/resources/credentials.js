@@ -9,7 +9,7 @@ const credentials = {
 
   /**
    * Creates a credential
-   * @arg { type, email, username, password }
+   * @arg { email, username, password, verificationUrl, templateName }
    * @return credential
    */
   create: function (data) {
@@ -20,10 +20,6 @@ const credentials = {
         utils.validateData(data, {
           isRequired: false,
           params: {
-            type: {
-              type: 'string',
-              isRequired: true
-            },
             email: {
               type: 'string'
             },
@@ -31,6 +27,9 @@ const credentials = {
               type: 'string'
             },
             password: {
+              type: 'string'
+            },
+            verificationUrl: {
               type: 'string'
             },
             templateName: {
@@ -44,7 +43,7 @@ const credentials = {
       }
 
       // Send request
-      that._gateway
+      that._httpGateway
         .sendRequest('POST', '/credentials', data)
         .then((res) => resolve(res))
         .catch((err) => reject(err))
@@ -54,7 +53,7 @@ const credentials = {
   /**
    * Updates a credential
    * @arg id
-   * @arg { one_time_code }
+   * @arg { verificationCode }
    * @return the updated credential
    */
   update: function (id, data) {
@@ -88,7 +87,7 @@ const credentials = {
 
       // Send request
       const path = '/credentials/' + id
-      that._gateway
+      that._httpGateway
         .sendRequest('POST', path, data)
         .then((res) => resolve(res))
         .catch((err) => reject(err))

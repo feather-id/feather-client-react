@@ -1,6 +1,6 @@
-import gateway from './gateway'
 import resources from './resources'
 import utils from './utils'
+import HttpGateway from './httpGateway.js'
 import FeatherError from './errors/featherError'
 import ErrorType from './errors/errorType'
 import ErrorCode from './errors/errorCode'
@@ -8,7 +8,7 @@ import ErrorCode from './errors/errorCode'
 const ALLOWED_PROTOCOLS = ['https', 'http']
 const ALLOWED_CONFIG_PROPERTIES = ['protocol', 'host', 'port', 'basePath']
 
-export default function Feather(apiKey, config = {}) {
+export default function API(apiKey, config = {}) {
   if (!(this instanceof Feather)) {
     return new Feather(apiKey, config)
   }
@@ -24,12 +24,12 @@ export default function Feather(apiKey, config = {}) {
   config = this._validateConfig(config)
 
   // Initialize the SDK
-  this._gateway = new gateway(apiKey, config)
+  this._httpGateway = new HttpGateway(apiKey, config)
   this._prepareResources()
   return this
 }
 
-Feather.prototype = {
+API.prototype = {
   /**
    * @private
    * This may be removed in the future.

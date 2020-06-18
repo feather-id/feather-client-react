@@ -9,9 +9,9 @@ const DEFAULT_HOST = 'api.feather.id'
 const DEFAULT_PORT = '443'
 const DEFAULT_BASE_PATH = '/v1'
 
-function Gateway(apiKey, config = {}) {
-  if (!(this instanceof Gateway)) {
-    return new Gateway(apiKey, config)
+function HttpGateway(apiKey, config = {}) {
+  if (!(this instanceof HttpGateway)) {
+    return new HttpGateway(apiKey, config)
   }
 
   this._api = {
@@ -31,7 +31,7 @@ function handleApiResult(res, resolve, reject) {
   }
 }
 
-Gateway.prototype = {
+HttpGateway.prototype = {
   sendRequest(method, path, data) {
     const that = this
     return new Promise(function (resolve, reject) {
@@ -97,4 +97,4 @@ Gateway.prototype = {
   }
 }
 
-export default Gateway
+export default HttpGateway

@@ -36,7 +36,7 @@ const users = {
       }
 
       // Send request
-      that._gateway
+      that._httpGateway
         .sendRequest('GET', '/users', data)
         .then((res) => resolve(res))
         .catch((err) => reject(err))
@@ -65,7 +65,7 @@ const users = {
 
       // Send request
       const path = '/users/' + id
-      that._gateway
+      that._httpGateway
         .sendRequest('GET', path, null)
         .then((res) => resolve(res))
         .catch((err) => reject(err))
@@ -112,7 +112,7 @@ const users = {
         return
       }
 
-      that._gateway
+      that._httpGateway
         .sendRequest('POST', '/users/' + id, data)
         .then((res) => resolve(res))
         .catch((err) => reject(err))
@@ -159,7 +159,7 @@ const users = {
       }
 
       const path = '/users/' + id + '/password'
-      that._gateway
+      that._httpGateway
         .sendRequest('POST', path, data)
         .then((res) => resolve(res))
         .catch((err) => reject(err))

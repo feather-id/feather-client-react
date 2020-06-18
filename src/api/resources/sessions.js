@@ -33,7 +33,7 @@ const sessions = {
       }
 
       // Send request
-      that._gateway
+      that._httpGateway
         .sendRequest('POST', '/sessions', data)
         .then((res) => resolve(res))
         .catch((err) => reject(err))
@@ -74,7 +74,7 @@ const sessions = {
       }
 
       // Send request
-      that._gateway
+      that._httpGateway
         .sendRequest('GET', '/sessions', data)
         .then((res) => resolve(res))
         .catch((err) => reject(err))
@@ -103,7 +103,7 @@ const sessions = {
 
       // Send request
       const path = '/sessions/' + id
-      that._gateway
+      that._httpGateway
         .sendRequest('GET', path, null)
         .then((res) => resolve(res))
         .catch((err) => reject(err))
@@ -147,7 +147,7 @@ const sessions = {
 
       // Send request
       const path = '/sessions/' + id + '/revoke'
-      that._gateway
+      that._httpGateway
         .sendRequest('POST', path, data)
         .then((res) => resolve(res))
         .catch((err) => reject(err))
@@ -191,7 +191,7 @@ const sessions = {
 
       // Send request
       const path = '/sessions/' + id + '/upgrade'
-      that._gateway
+      that._httpGateway
         .sendRequest('POST', path, data)
         .then((res) => resolve(res))
         .catch((err) => reject(err))
@@ -222,7 +222,7 @@ const sessions = {
 
         // Send request
         var path = '/publicKeys/' + id
-        that._gateway
+        that._httpGateway
           .sendRequest('GET', path, null)
           .then((pubKey) => {
             // Cache the key
@@ -262,7 +262,7 @@ const sessions = {
 
           // Send request
           const path = '/sessions/' + session.id + '/validate'
-          that._gateway
+          that._httpGateway
             .sendRequest('POST', path, data)
             .then((res) => resolve(res))
             .catch((err) => reject(err))

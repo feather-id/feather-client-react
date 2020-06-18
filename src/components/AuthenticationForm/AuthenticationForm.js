@@ -1,5 +1,5 @@
 import React from 'react'
-import Feather from '../../feather'
+// import Feather from '../../feather'
 import SignIn from './AuthenticationForm_SignIn.js'
 import SignUp from './AuthenticationForm_SignUp.js'
 import ForgotPassword from './AuthenticationForm_ForgotPassword.js'
@@ -40,15 +40,22 @@ class AuthenticationForm extends React.Component {
     event.preventDefault()
 
     // TODO
-    const apiKey = 'live_ZkPKKTbXR2MkJ0RIiueGVWGZA9yBJM'
-    const config = { host: 'localhost', port: '8080', protocol: 'http' }
-    const client = Feather(apiKey, config)
-    client.credentials
-      .create({
-        type: 'email|password',
-        email: this.state.emailInput,
-        password: this.state.passwordInput
-      })
+    // const apiKey = 'live_ZkPKKTbXR2MkJ0RIiueGVWGZA9yBJM'
+    // this.props.feather
+    // const config = { host: 'localhost', port: '8080', protocol: 'http' }
+    // const client = Feather(apiKey, config)
+    if (!this.props.feather) {
+      // TODO throw error
+      return
+    }
+    // this.props.feather.credentials
+    //   .create({
+    //     type: 'email|password',
+    //     email: this.state.emailInput,
+    //     password: this.state.passwordInput
+    //   })
+    this.props.feather
+      .signIn({ email, password })
       .then((credential) => {
         // A new credential
         console.log(credential)
