@@ -61,7 +61,6 @@ export default function Database(onSuccess, onError) {
 
       request.onsuccess = function (event) {
         if (request.result) {
-          console.log(request.result)
           resolve(request.result)
         } else {
           console.log('No data record')
@@ -77,7 +76,7 @@ export default function Database(onSuccess, onError) {
       var request = _db
         .transaction(['state'], 'readwrite')
         .objectStore('state')
-        .add(state)
+        .put(state)
       //.add({ id: 1, name: 'Jam', age: 24, email: 'jam@example.com' })
 
       request.onsuccess = function (event) {

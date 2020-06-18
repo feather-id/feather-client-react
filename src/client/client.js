@@ -28,12 +28,12 @@ export default function Feather(apiKey, config = {}) {
     )
   }
 
+  this._api = new API(apiKey, config)
   this._database = new Database(
     (database) => {
       database
         .fetchCurrentState()
         .then((state) => {
-          console.log('State ' + state)
           if (!state) {
             database.updateCurrentState({
               credential: null,
@@ -41,9 +41,9 @@ export default function Feather(apiKey, config = {}) {
               user: null
             })
           }
+          this._notifyStateChage()
         })
         .catch((error) => {
-          console.log('catch an error')
           console.log(error)
         })
     },
@@ -52,10 +52,15 @@ export default function Feather(apiKey, config = {}) {
     }
   )
 
-  this._api = new API(apiKey, config)
-  this._currentSession = null
-  this._currentUser = null
-  this._currentCredential = null
+  this._onStateChangeObservers = []
+  var that = this
+  this._notifyStateChage = function () {
+    that._database.fetchCurrentState().then((state) => {
+      that._onStateChangeObservers.forEach((observer) =>
+        observer(state.session, state.user)
+      )
+    })
+  }
   this.confirmEmailVerificationLink = confirmEmailVerificationLink
   this.confirmForgotPasswordLink = confirmForgotPasswordLink
   this.confirmSignInLink = confirmSignInLink
