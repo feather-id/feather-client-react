@@ -5,7 +5,8 @@ import SignUp from './AuthenticationForm_SignUp.js'
 import ForgotPassword from './AuthenticationForm_ForgotPassword.js'
 import ComponentConfigWarning from './AuthenticationForm_ComponentConfigWarning.js'
 import { defaultConfig } from './defaultConfig.js'
-import { defaultFormStyle } from '../styles.js'
+import { defaultStyle } from '../styles.js'
+import { mergeStyles } from './utils.js'
 
 const INITIAL_STATE = {
   emailInput: '',
@@ -145,15 +146,16 @@ class AuthenticationForm extends React.Component {
     var signInFields = this.props.signInFields ? this.props.signInFields : []
     var signUpFields = this.props.signUpFields ? this.props.signUpFields : []
 
-    // Test for warnings
-
+    // Get configuration warnings
     const config = this.props.config ? this.props.config : defaultConfig
     const configWarnings = this.getConfigWarnings(config)
     const showConfigWarning =
       configWarnings.length > 0 && !this.props.silenceWarnings
 
+    // Get custom styling
+
     return (
-      <form style={defaultFormStyle}>
+      <form style={defaultStyle.container}>
         {showConfigWarning && (
           <ComponentConfigWarning warnings={configWarnings} />
         )}

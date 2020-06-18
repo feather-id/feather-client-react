@@ -1,11 +1,11 @@
 import React from 'react'
 import FormInput from '../FormInput'
 import { css } from 'emotion'
-import {
-  defaultTitleStyle,
-  defaultFormStyleButton,
-  defaultSubmitButtonStyle
-} from '../styles.js'
+import { defaultStyle } from '../styles.js'
+
+// defaultTitleStyle,
+// defaultFormStyleButton,
+// defaultSubmitButtonStyle
 
 // TODO Custom checkboxes (e.g. for TOS/Privacy/etc.)
 
@@ -16,7 +16,7 @@ export default function AuthenticationForm_SignUp(props) {
       {props.form.title && (
         <p
           className={css`
-            ${defaultTitleStyle}
+            ${defaultStyle.title}
           `}
         >
           {props.form.title}
@@ -79,21 +79,23 @@ export default function AuthenticationForm_SignUp(props) {
             name='sign_in'
             onClick={props.onClickFormTypeButton}
             className={css`
-              ${defaultFormStyleButton}
+              ${defaultStyle.secondaryCtaButton}
             `}
           >
-            {props.form.TODO ? props.form.TODO : 'I have an account'}
+            {props.form.secondaryCtaButtonTitle
+              ? props.form.secondaryCtaButtonTitle
+              : 'I have an account'}
           </button>
         )}
         <button
           type='submit'
           onClick={props.onSubmit}
           className={css`
-            ${defaultSubmitButtonStyle}
+            ${defaultStyle.primaryCtaButton}
           `}
         >
-          {props.form.submitButtonTitle
-            ? props.form.submitButtonTitle
+          {props.form.primaryCtaButtonTitle
+            ? props.form.primaryCtaButtonTitle
             : 'Continue'}
         </button>
       </div>

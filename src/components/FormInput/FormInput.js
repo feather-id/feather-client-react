@@ -1,17 +1,17 @@
 import React from 'react'
 import { css } from 'emotion'
-import {
-  defaultInputStyle,
-  defaultInputFieldStyle,
-  defaultInputTitleStyle,
-  defaultForgotPasswordButtonStyle
-} from '../styles.js'
+import { defaultStyle } from '../styles.js'
+
+// defaultInputStyle,
+// defaultInputFieldStyle,
+// defaultInputTitleStyle,
+// defaultForgotPasswordButtonStyle
 
 export default function FormInput(props) {
   return (
     <div
       className={css`
-        ${defaultInputStyle}
+        ${defaultStyle.inputContainer}
       `}
     >
       <div
@@ -23,7 +23,7 @@ export default function FormInput(props) {
       >
         <p
           className={css`
-            ${defaultInputTitleStyle}
+            ${defaultStyle.inputTitle}
           `}
         >
           {props.title}
@@ -34,7 +34,7 @@ export default function FormInput(props) {
             name={props.helpButton.name}
             onClick={props.helpButton.onClick}
             className={css`
-              ${defaultForgotPasswordButtonStyle}
+              ${defaultStyle.forgotPasswordButton}
             `}
           >
             {props.helpButton.title}
@@ -48,7 +48,7 @@ export default function FormInput(props) {
         value={props.value}
         placeholder={props.placeholder}
         className={css`
-          ${defaultInputFieldStyle}
+          ${defaultStyle.inputField}
         `}
       />
     </div>
