@@ -19,7 +19,7 @@ export default function signInAnonymously() {
         ])
       )
       .then(([session, user]) =>
-        that._database.updateCurrentState({ session, user })
+        that._database.updateCurrentState({ session, user, credential: null })
       )
       .then(() => {
         that._notifyStateObservers()

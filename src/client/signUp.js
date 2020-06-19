@@ -1,3 +1,3 @@
 export default function signUp(params) {
-  // TODO
+  return this.signIn(params)
 }

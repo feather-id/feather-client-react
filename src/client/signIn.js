@@ -34,7 +34,7 @@ export default function signIn(params) {
         ])
       )
       .then(([session, user]) =>
-        that._database.updateCurrentState({ session, user })
+        that._database.updateCurrentState({ session, user, credential: null })
       )
       .then(() => {
         that._notifyStateObservers()

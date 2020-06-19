@@ -1,3 +1,3 @@
 export default function sendSignUpLink(params) {
-  // TODO
+  return this.sendSignInLink(params)
 }
