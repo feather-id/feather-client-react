@@ -41,7 +41,7 @@ export default function Feather(apiKey, config = {}) {
               user: null
             })
           }
-          this._notifyStateChage()
+          this._notifyStateObservers()
         })
         .catch((error) => {
           console.log(error)
@@ -54,7 +54,7 @@ export default function Feather(apiKey, config = {}) {
 
   this._onStateChangeObservers = []
   var that = this
-  this._notifyStateChage = function () {
+  this._notifyStateObservers = function () {
     that._database.fetchCurrentState().then((state) => {
       that._onStateChangeObservers.forEach((observer) =>
         observer(state.session, state.user)
