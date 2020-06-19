@@ -29,7 +29,7 @@ const credentials = {
             password: {
               type: 'string'
             },
-            verificationUrl: {
+            redirectUrl: {
               type: 'string'
             },
             templateName: {

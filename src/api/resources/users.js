@@ -48,7 +48,7 @@ const users = {
    * @arg id
    * @return user
    */
-  retrieve: function (id) {
+  retrieve: function (id, sessionToken) {
     const that = this
     return new Promise(function (resolve, reject) {
       // Validate input

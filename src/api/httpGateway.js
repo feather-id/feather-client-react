@@ -91,6 +91,7 @@ HttpGateway.prototype = {
       // Execute request
       fetch(url, options)
         .then((res) => res.json())
+        .then((res) => utils.snakeToCamelCase(res))
         .then((res) => handleApiResult(res, resolve, reject))
         .catch((err) => reject(err))
     })
