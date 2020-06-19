@@ -1,4 +1,4 @@
-const errA = 'There is no currently registered user'
+const errA = 'There is no currently active user'
 const errB = 'The current user is anonymous and does not have an email address'
 const errC = "The current user doesn't have an email address"
 const errD = "The current user's email address is already verified"
@@ -32,9 +32,6 @@ export default function sendEmailVerificationLink(redirectUrl) {
         }
       })
       .then(([state, credential]) => {
-        console.log('send link')
-        console.log(state)
-        console.log(credential)
         state.credential = credential
         return that._database.updateCurrentState(state)
       })

@@ -9,13 +9,13 @@ export default function sendSignInLink(params) {
         if (state.user && !state.user.isAnonymous) {
           throw new Error(errA)
         } else {
-          const email = state.user.email
+          const email = params.email
           const templateName = 'sign_in'
           return Promise.all([
             state,
             that._api.credentials.create({
               type: 'email',
-              // redirectUrl,
+              // params.redirectUrl,
               email,
               templateName
             })

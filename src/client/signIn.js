@@ -1,6 +1,8 @@
 const errA = 'The current user is already authenticated'
 const errB = 'The provided credentials were invalid'
 
+// TODO Update user with provided (optional) metadata after sign-in
+
 export default function signIn(params) {
   var that = this
   return new Promise(function (resolve, reject) {

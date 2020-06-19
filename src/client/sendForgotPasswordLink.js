@@ -9,13 +9,15 @@ export default function sendForgotPasswordLink(params) {
         if (state.user && !state.user.isAnonymous) {
           throw new Error(errA)
         } else {
-          const email = state.user.email
+          const email = params.email
+          const redirectUrl = params.redirectURL
           const templateName = 'reset_password'
           return Promise.all([
             state,
             that._api.credentials.create({
+              type: 'email',
+              // redirectUrl,
               email,
-              redirectUrl,
               templateName
             })
           ])

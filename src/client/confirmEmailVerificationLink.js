@@ -1,6 +1,6 @@
 import { parseQueryParams } from './utils.js'
 
-const errA = 'There is no active email verification request on this device.'
+const errA = 'There is no active email verification request from this device.'
 const errB = "The verification URL is missing a 'code' query parameter."
 const errC = 'The verification code is invalid.'
 

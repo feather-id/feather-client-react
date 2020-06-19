@@ -1,5 +1,7 @@
 const errA = 'There is already an active session'
 
+// TODO Update user with provided (optional) metadata after sign-in
+
 export default function signInAnonymously() {
   const that = this
   return new Promise(function (resolve, reject) {
