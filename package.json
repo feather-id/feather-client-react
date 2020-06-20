@@ -1,9 +1,12 @@
 {
   "name": "feather-client-react",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "Feather ",
   "license": "MIT",
-  "repository": "feather-id/feather-client-react",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/feather-id/feather-client-react.git"
+  },
   "main": "dist/index.js",
   "module": "dist/index.modern.js",
   "source": "src/index.js",
@@ -53,5 +56,12 @@
     "emotion": "^10.0.27",
     "jws": "^4.0.0",
     "querystring": "^0.2.0"
-  }
+  },
+  "keywords": [
+    "authentication",
+    "authorization",
+    "feather",
+    "id",
+    "identity"
+  ]
 }
