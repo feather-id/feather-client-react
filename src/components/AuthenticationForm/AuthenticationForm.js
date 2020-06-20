@@ -38,22 +38,10 @@ class AuthenticationForm extends React.Component {
 
   onSubmit = (event) => {
     event.preventDefault()
-
-    // TODO
-    // const apiKey = 'live_ZkPKKTbXR2MkJ0RIiueGVWGZA9yBJM'
-    // this.props.feather
-    // const config = { host: 'localhost', port: '8080', protocol: 'http' }
-    // const client = Feather(apiKey, config)
     if (!this.props.feather) {
       // TODO throw error
       return
     }
-    // this.props.feather.credentials
-    //   .create({
-    //     type: 'email|password',
-    //     email: this.state.emailInput,
-    //     password: this.state.passwordInput
-    //   })
     this.props.feather
       .signIn({ email, password })
       .then((credential) => {
@@ -124,10 +112,10 @@ class AuthenticationForm extends React.Component {
     if (
       config.signIn &&
       !config.signIn.inputs.hasOwnProperty('password') &&
-      !this.props.verificationUrl
+      !this.props.redirectUrl
     ) {
       configWarnings.push(
-        "Your sign-in form is passwordless, but you did not provide a 'verificationUrl'. This is the URL your user is redirected from the passwordless verification email."
+        "Your sign-in form is passwordless, but you did not provide a 'redirectUrl'. This is the URL your user is redirected from the passwordless verification email."
       )
     }
 
@@ -141,9 +129,9 @@ class AuthenticationForm extends React.Component {
       )
     }
 
-    if (!!config.forgotPassword && !this.props.verificationUrl) {
+    if (!!config.forgotPassword && !this.props.redirectUrl) {
       configWarnings.push(
-        "You did not include a 'verificationUrl' for your forgot-password form. This is the URL your user is redirected from the password reset email."
+        "You did not include a 'redirectUrl' for your forgot-password form. This is the URL your user is redirected from the password reset email."
       )
     }
 
