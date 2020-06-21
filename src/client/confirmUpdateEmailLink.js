@@ -10,20 +10,19 @@ export default function confirmUpdateEmailLink(url) {
     that._database
       .fetchCurrentState()
       .then((state) => {
+        const params = parseQueryParams(url)
         if (!state.credential) {
           throw new Error(errA)
-        }
-        const params = parseQueryParams(url)
-        if (!params.code) {
+        } else if (!params.code) {
           throw new Error(errB)
+        } else {
+          return Promise.all([
+            state,
+            that._api.credentials.update(state.credential.id, {
+              verificationCode: params.code
+            })
+          ])
         }
-        const verificationCode = params.code
-        return Promise.all([
-          state,
-          that._api.credentials.update(state.credential.id, {
-            verificationCode
-          })
-        ])
       })
       .then(([state, credential]) => {
         if (credential.status != 'valid') {

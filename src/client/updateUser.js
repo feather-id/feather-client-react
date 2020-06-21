@@ -8,18 +8,14 @@ export default function updateUser(params) {
       .then((state) => {
         if (!state.user) {
           throw new Error(errA)
+        } else {
+          return Promise.all([
+            state,
+            that._api.users.updateEmail(state.user.id, {
+              metadata: params.metadata
+            })
+          ])
         }
-        var params = {
-          password,
-          email: state.user.email,
-          scopes: 'update_user_email'
-        }
-        return Promise.all([
-          state,
-          that._api.users.updateEmail(state.user.id, {
-            metadata: params.metadata
-          })
-        ])
       })
       .then(([state, user]) => {
         state.user = user

@@ -2,13 +2,14 @@ export const defaultStyles = {
   container: {
     display: 'flex',
     flexDirection: 'column',
+    flexBasis: '100%',
     maxWidth: '512px',
     padding: '64px 32px',
     margin: 'auto',
     background: 'none'
   },
   title: {
-    fontSize: '1.64em',
+    fontSize: '1.5em',
     color: 'hsl(214, 12%, 12%)',
     margin: '32px 4px',
     textAlign: 'left'
@@ -21,7 +22,7 @@ export const defaultStyles = {
     padding: '0px'
   },
   inputField: {
-    fontSize: '1.2em',
+    fontSize: '1em',
     padding: '16px',
     border: '1px solid hsl(214, 36%, 84%)',
     color: 'hsl(214, 24%, 32%)',
@@ -31,13 +32,13 @@ export const defaultStyles = {
     }
   },
   inputTitle: {
-    fontSize: '1.2em',
+    fontSize: '1em',
     color: 'hsl(214, 24%, 32%)',
     textAlign: 'left',
     margin: '4px auto 8px 4px'
   },
   forgotPasswordButton: {
-    fontSize: '1em',
+    fontSize: '0.8em',
     fontWeight: '500',
     background: 'none',
     border: 'none',
@@ -47,7 +48,7 @@ export const defaultStyles = {
     cursor: 'pointer'
   },
   primaryCtaButton: {
-    fontSize: '1.2em',
+    fontSize: '1em',
     fontWeight: '500',
     borderRadius: '4px',
     border: 'none',
@@ -61,7 +62,7 @@ export const defaultStyles = {
     }
   },
   secondaryCtaButton: {
-    fontSize: '1.2em',
+    fontSize: '1em',
     fontWeight: '500',
     background: 'none',
     border: 'none',

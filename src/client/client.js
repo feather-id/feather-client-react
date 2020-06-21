@@ -3,15 +3,18 @@ import Database from './database'
 import confirmEmailVerificationLink from './confirmEmailVerificationLink.js'
 import confirmForgotPasswordLink from './confirmForgotPasswordLink.js'
 import confirmSignInLink from './confirmSignInLink.js'
+import confirmUpdateEmailLink from './confirmUpdateEmailLink.js'
 import currentSession from './currentSession.js'
 import onStateChange from './onStateChange.js'
 import sendEmailVerificationLink from './sendEmailVerificationLink.js'
 import sendForgotPasswordLink from './sendForgotPasswordLink.js'
 import sendSignInLink from './sendSignInLink.js'
+import sendUpdateEmailLink from './sendUpdateEmailLink.js'
 import signIn from './signIn.js'
 import signInAnonymously from './signInAnonymously.js'
 import signOut from './signOut.js'
 import updateUser from './updateUser.js'
+import updateUserEmail from './updateUserEmail.js'
 import updateUserPassword from './updateUserPassword.js'
 
 export default function Feather(apiKey, config = {}) {
@@ -24,7 +27,6 @@ export default function Feather(apiKey, config = {}) {
       "Your browser doesn't support a stable version of IndexedDB. This interface of Feather is not available."
     )
   }
-
   this._api = new API(apiKey, config)
   this._database = new Database(
     (database) => {
@@ -48,7 +50,6 @@ export default function Feather(apiKey, config = {}) {
       console.log('Failed to initialize database')
     }
   )
-
   this._onStateChangeObservers = []
   var that = this
   this._notifyStateObservers = function () {
@@ -71,5 +72,6 @@ export default function Feather(apiKey, config = {}) {
   this.signOut = signOut
   this.updateUser = updateUser
   this.updateUserPassword = updateUserPassword
+  this.updateUserEmail = updateUserEmail
   return this
 }

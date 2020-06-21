@@ -12,9 +12,14 @@ export default function sendUpdateEmailLink(params) {
         } else if (state.user.isAnonymous) {
           throw new Error(errB)
         } else {
-          params.templateName = 'update_email'
-          params.scopes = 'update_user_email'
-          return Promise.all([state, that._api.credentials.create(params)])
+          return Promise.all([
+            state,
+            that._api.credentials.create({
+              ...params,
+              templateName: 'update_email',
+              scopes: 'update_user_email'
+            })
+          ])
         }
       })
       .then(([state, credential]) => {

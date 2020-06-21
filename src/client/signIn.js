@@ -11,13 +11,15 @@ export default function signIn(params) {
       .then((state) => {
         if (!!state.user && !state.user.isAnonymous) {
           throw new Error(errA)
+        } else {
+          return Promise.all([
+            state.session,
+            that._api.credentials.create({
+              templateName: 'sign_in',
+              scopes: 'upgrade_session'
+            })
+          ])
         }
-        params.templateName = 'sign_in'
-        params.scopes = 'upgrade_session'
-        return Promise.all([
-          state.session,
-          that._api.credentials.create(params)
-        ])
       })
       .then(([session, credential]) => {
         if (credential.status != 'valid') {

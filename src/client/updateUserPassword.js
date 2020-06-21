@@ -10,16 +10,18 @@ export default function updateUserPassword(currentPassword, newPassword) {
       .then((state) => {
         if (!state.user) {
           throw new Error(errA)
-        }
-        if (state.user.isAnonymous) {
+        } else if (state.user.isAnonymous) {
           throw new Error(errB)
+        } else {
+          return Promise.all([
+            state,
+            that._api.credentials.create({
+              password: currentPassword,
+              email: state.user.email,
+              scopes: 'update_user_password'
+            })
+          ])
         }
-        var params = {
-          password: currentPassword,
-          email: state.user.email,
-          scopes: 'update_user_password'
-        }
-        return Promise.all([state, that._api.credentials.create(params)])
       })
       .then(([state, credential]) => {
         if (credential.status != 'valid') {

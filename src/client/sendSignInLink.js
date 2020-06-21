@@ -9,9 +9,14 @@ export default function sendSignInLink(params) {
         if (!!state.user && !state.user.isAnonymous) {
           throw new Error(errA)
         } else {
-          params.templateName = 'sign_in'
-          params.scopes = 'upgrade_session'
-          return Promise.all([state, that._api.credentials.create(params)])
+          return Promise.all([
+            state,
+            that._api.credentials.create({
+              ...params,
+              templateName: 'sign_in',
+              scopes: 'upgrade_session'
+            })
+          ])
         }
       })
       .then(([state, credential]) => {
