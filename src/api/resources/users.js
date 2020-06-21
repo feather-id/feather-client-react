@@ -11,37 +11,37 @@ const users = {
    * @arg { limit, startingAfter, endingBefore  }
    * @return list
    */
-  list: function (data) {
-    const that = this
-    return new Promise(function (resolve, reject) {
-      // Validate data
-      try {
-        utils.validateData(data, {
-          isRequired: false,
-          params: {
-            limit: {
-              type: 'number'
-            },
-            startingAfter: {
-              type: 'string'
-            },
-            endingBefore: {
-              type: 'string'
-            }
-          }
-        })
-      } catch (error) {
-        reject(error)
-        return
-      }
-
-      // Send request
-      that._httpGateway
-        .sendRequest('GET', '/users', data)
-        .then((res) => resolve(res))
-        .catch((err) => reject(err))
-    })
-  },
+  // list: function (data) {
+  //   const that = this
+  //   return new Promise(function (resolve, reject) {
+  //     // Validate data
+  //     try {
+  //       utils.validateData(data, {
+  //         isRequired: false,
+  //         params: {
+  //           limit: {
+  //             type: 'number'
+  //           },
+  //           startingAfter: {
+  //             type: 'string'
+  //           },
+  //           endingBefore: {
+  //             type: 'string'
+  //           }
+  //         }
+  //       })
+  //     } catch (error) {
+  //       reject(error)
+  //       return
+  //     }
+  //
+  //     // Send request
+  //     that._httpGateway
+  //       .sendRequest('GET', '/users', data)
+  //       .then((res) => resolve(res))
+  //       .catch((err) => reject(err))
+  //   })
+  // },
 
   /**
    * Retrieves a user
@@ -64,9 +64,10 @@ const users = {
       }
 
       // Send request
+      const headers = { 'x-feather-session': sessionToken }
       const path = '/users/' + id
       that._httpGateway
-        .sendRequest('GET', path, null)
+        .sendRequest('GET', path, null, headers)
         .then((res) => resolve(res))
         .catch((err) => reject(err))
     })

@@ -20,13 +20,14 @@ export default function sendEmailVerificationLink(redirectUrl) {
         } else {
           const email = state.user.email
           const templateName = 'verify_email'
+          const redirectUrl = params.redirectUrl
           return Promise.all([
             state,
             that._api.credentials.create({
-              type: 'email',
-              // redirectUrl,
               email,
-              templateName
+              templateName,
+              redirectUrl,
+              scopes: 'verify_user_email'
             })
           ])
         }

@@ -10,15 +10,15 @@ export default function sendForgotPasswordLink(params) {
           throw new Error(errA)
         } else {
           const email = params.email
-          const redirectUrl = params.redirectURL
           const templateName = 'reset_password'
+          const redirectUrl = params.redirectUrl
           return Promise.all([
             state,
             that._api.credentials.create({
-              type: 'email',
-              // redirectUrl,
               email,
-              templateName
+              templateName,
+              redirectUrl,
+              scopes: 'upgrade_session, update_user_password'
             })
           ])
         }

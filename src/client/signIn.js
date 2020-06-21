@@ -13,6 +13,7 @@ export default function signIn(params) {
           throw new Error(errA)
         }
         params.templateName = 'sign_in'
+        params.scopes = 'upgrade_session'
         return Promise.all([
           state.session,
           that._api.credentials.create(params)

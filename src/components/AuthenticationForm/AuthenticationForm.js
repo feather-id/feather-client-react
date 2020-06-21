@@ -11,7 +11,6 @@ import { mergeStyles } from './utils.js'
 
 const INITIAL_STATE = {
   emailInput: '',
-  usernameInput: '',
   passwordInput: '',
   confirmPasswordInput: '',
   formType: 'sign_in'
@@ -21,7 +20,7 @@ class AuthenticationForm extends React.Component {
   constructor(props) {
     super(props)
 
-    // TODO smartly choose the formType
+    // TODO smartly choose the initial formType
 
     this.state = { ...INITIAL_STATE }
   }
@@ -36,56 +35,23 @@ class AuthenticationForm extends React.Component {
     this.setState({ formType: [event.target.name] })
   }
 
-  onSubmit = (event) => {
+  onSubmitSignIn = (event) => {
     event.preventDefault()
     if (!this.props.feather) {
       // TODO throw error
+      console.error('Feather client not provided.')
       return
     }
-    this.props.feather
-      .signIn({ email, password })
-      .then((credential) => {
-        // A new credential
-        console.log(credential)
-      })
-      .catch((error) => {
-        // Handle an error
-        console.log(error)
-      })
+    const email = this.state.emailInput
+    const password = this.state.passwordInput
+    this.props.feather.signIn({ email, password }).catch((error) => {
+      // Handle an error
+      console.log(error)
+    })
   }
 
   getConfigWarnings = (config) => {
     var configWarnings = []
-    if (
-      config.signIn &&
-      config.signIn.inputs.hasOwnProperty('email') &&
-      config.signIn.inputs.hasOwnProperty('username')
-    ) {
-      configWarnings.push(
-        'Your sign-in form has both an email and username field. You can reduce user friction by removing one of these fields.'
-      )
-    }
-
-    if (
-      config.signIn &&
-      config.signIn.inputs.hasOwnProperty('username') &&
-      !config.signIn.inputs.hasOwnProperty('password')
-    ) {
-      configWarnings.push(
-        'Your sign-in form has a username field without a password field.'
-      )
-    }
-
-    if (
-      config.signIn &&
-      config.signIn.inputs.hasOwnProperty('username') &&
-      !!config.signUp &&
-      !config.signUp.inputs.hasOwnProperty('username')
-    ) {
-      configWarnings.push(
-        'Your sign-in form has a username field, but your sign-up from does not.'
-      )
-    }
 
     if (
       config.signIn &&
@@ -166,7 +132,7 @@ class AuthenticationForm extends React.Component {
         {this.state.formType == 'sign_in' && (
           <SignIn
             form={config.signIn}
-            onSubmit={this.onSubmit}
+            onSubmit={this.onSubmitSignIn}
             onChangeInput={this.onChangeInput}
             onClickFormTypeButton={this.onClickFormTypeButton}
             linkToSignUp={!!config.signUp}
@@ -174,7 +140,6 @@ class AuthenticationForm extends React.Component {
             styles={styles}
             input={{
               email: this.state.emailInput,
-              username: this.state.usernameInput,
               password: this.state.passwordInput
             }}
           />
@@ -182,14 +147,13 @@ class AuthenticationForm extends React.Component {
         {this.state.formType == 'sign_up' && (
           <SignUp
             form={config.signUp}
-            onSubmit={this.onSubmit}
+            onSubmit={this.onSubmitSignUp}
             onChangeInput={this.onChangeInput}
             onClickFormTypeButton={this.onClickFormTypeButton}
             linkToSignIn={!!config.signIn}
             styles={styles}
             input={{
               email: this.state.emailInput,
-              username: this.state.usernameInput,
               password: this.state.passwordInput,
               confirmPassword: this.state.confirmPasswordInput
             }}
@@ -198,7 +162,7 @@ class AuthenticationForm extends React.Component {
         {this.state.formType == 'forgot_password' && (
           <ForgotPassword
             form={config.forgotPassword}
-            onSubmit={this.onSubmit}
+            onSubmit={this.onSubmitForgotPassword}
             onChangeInput={this.onChangeInput}
             onClickFormTypeButton={this.onClickFormTypeButton}
             styles={styles}

@@ -17,17 +17,6 @@ export default function AuthenticationForm_SignUp(props) {
           {props.form.title}
         </p>
       )}
-      {inputs.hasOwnProperty('username') && (
-        <FormInput
-          type='text'
-          name='usernameInput'
-          title={inputs.username.title ? inputs.username.title : 'Username'}
-          placeholder={inputs.username.placeholder}
-          value={props.input.username}
-          onChange={props.onChangeInput}
-          styles={props.styles}
-        />
-      )}
       {inputs.hasOwnProperty('email') && (
         <FormInput
           type='email'
