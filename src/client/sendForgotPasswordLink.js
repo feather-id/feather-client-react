@@ -6,7 +6,7 @@ export default function sendForgotPasswordLink(params) {
     that._database
       .fetchCurrentState()
       .then((state) => {
-        if (state.user && !state.user.isAnonymous) {
+        if (!!state.user && !state.user.isAnonymous) {
           throw new Error(errA)
         } else {
           const email = params.email

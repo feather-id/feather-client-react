@@ -38,7 +38,6 @@ class AuthenticationForm extends React.Component {
   onSubmitSignIn = (event) => {
     event.preventDefault()
     if (!this.props.feather) {
-      // TODO throw error
       console.error('Feather client not provided.')
       return
     }
@@ -48,6 +47,26 @@ class AuthenticationForm extends React.Component {
       // Handle an error
       console.log(error)
     })
+  }
+
+  onSubmitSignUp = (event) => {
+    this.onSubmitSignIn(event)
+  }
+
+  onSubmitForgotPassword = (event) => {
+    event.preventDefault()
+    if (!this.props.feather) {
+      console.error('Feather client not provided.')
+      return
+    }
+    const email = this.state.emailInput
+    const redirectUrl = this.props.redirectUrl
+    this.props.feather
+      .sendForgotPasswordLink({ email, redirectUrl })
+      .catch((error) => {
+        // Handle an error
+        console.log(error)
+      })
   }
 
   getConfigWarnings = (config) => {

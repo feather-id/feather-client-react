@@ -9,7 +9,7 @@ export default function signIn(params) {
     that._database
       .fetchCurrentState()
       .then((state) => {
-        if (state.user && !state.user.isAnonymous) {
+        if (!!state.user && !state.user.isAnonymous) {
           throw new Error(errA)
         }
         params.templateName = 'sign_in'
