@@ -89,9 +89,6 @@ HttpGateway.prototype = {
         path +
         query
 
-      console.log(url)
-      console.log(options)
-
       // Execute request
       fetch(url, options)
         .then((res) => res.json())

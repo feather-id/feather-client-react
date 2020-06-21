@@ -1,10 +1,10 @@
 import { parseQueryParams } from './utils.js'
 
-const errA = 'There is no active email verification request from this device.'
+const errA = 'There is no active update email request from this device.'
 const errB = "The provided URL is missing a 'code' query parameter."
 const errC = 'The verification code is invalid.'
 
-export default function confirmEmailVerificationLink(url) {
+export default function confirmUpdateEmailLink(url) {
   const that = this
   return new Promise(function (resolve, reject) {
     that._database
@@ -19,24 +19,26 @@ export default function confirmEmailVerificationLink(url) {
         }
         const verificationCode = params.code
         return Promise.all([
-          state.session,
+          state,
           that._api.credentials.update(state.credential.id, {
             verificationCode
           })
         ])
       })
-      .then(([session, credential]) => {
+      .then(([state, credential]) => {
         if (credential.status != 'valid') {
           throw new Error(errC)
         }
-        return Promise.all([
-          session,
-          that._api.users.retrieve(session.userId, session.token)
+        const credentialToken = credential.token
+        Promise.all([
+          state,
+          that._api.users.update(session.userId, session.token)
         ])
       })
-      .then(([session, user]) =>
-        that._database.updateCurrentState({ session, user, credential: null })
-      )
+      .then(([state, user]) => {
+        state.user = user
+        that._database.updateCurrentState(state)
+      })
       .then(() => {
         that._notifyStateObservers()
         resolve()

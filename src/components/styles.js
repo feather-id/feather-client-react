@@ -4,7 +4,8 @@ export const defaultStyles = {
     flexDirection: 'column',
     maxWidth: '512px',
     padding: '64px 32px',
-    margin: 'auto'
+    margin: 'auto',
+    background: 'none'
   },
   title: {
     fontSize: '1.64em',
@@ -51,10 +52,13 @@ export const defaultStyles = {
     borderRadius: '4px',
     border: 'none',
     color: '#fff',
-    background: 'hsl(230, 75%, 65%)',
+    backgroundColor: 'hsl(230, 75%, 65%)',
     padding: '16px 32px',
     margin: '16px 0px 0px auto',
-    cursor: 'pointer'
+    cursor: 'pointer',
+    ':hover': {
+      backgroundColor: 'hsl(230, 75%, 68%)'
+    }
   },
   secondaryCtaButton: {
     fontSize: '1.2em',
@@ -74,7 +78,7 @@ export const configWarningCSS = {
   display: 'flex',
   flexDirection: 'column',
   textAlign: 'left',
-  background: '#f00',
+  backgroundColor: '#f00',
   color: '#fff',
   padding: '16px'
 }

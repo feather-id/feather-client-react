@@ -1,7 +1,7 @@
 import { parseQueryParams } from './utils.js'
 
 const errA = 'There is no active passwordless sign in request from this device.'
-const errB = "The verification URL is missing a 'code' query parameter."
+const errB = "The provided URL is missing a 'code' query parameter."
 const errC = 'The verification code is invalid.'
 
 export default function confirmSignInLink(url) {
