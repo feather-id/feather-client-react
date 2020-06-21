@@ -1,3 +1,4 @@
+// import { FeatherError, ErrorType, ErrorCode } from '../errors'
 import { parseQueryParams } from './utils.js'
 
 const errA = 'There is no active email verification request from this device.'

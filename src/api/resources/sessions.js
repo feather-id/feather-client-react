@@ -1,7 +1,5 @@
 import utils from '../utils'
-import FeatherError from '../errors/featherError'
-import ErrorType from '../errors/errorType'
-import ErrorCode from '../errors/errorCode'
+import { FeatherError, ErrorType, ErrorCode } from '../../errors'
 import parseToken from '../parseToken'
 
 const sessions = {
@@ -35,47 +33,6 @@ const sessions = {
       // Send request
       that._httpGateway
         .sendRequest('POST', '/sessions', data)
-        .then((res) => resolve(res))
-        .catch((err) => reject(err))
-    })
-  },
-
-  /**
-   * List a user's sessions
-   * @arg { userId, limit, startingAfter, endingBefore  }
-   * @return list
-   */
-  list: function (data) {
-    const that = this
-    return new Promise(function (resolve, reject) {
-      // Validate data
-      try {
-        utils.validateData(data, {
-          isRequired: true,
-          params: {
-            userId: {
-              type: 'string',
-              isRequired: true
-            },
-            limit: {
-              type: 'number'
-            },
-            startingAfter: {
-              type: 'string'
-            },
-            endingBefore: {
-              type: 'string'
-            }
-          }
-        })
-      } catch (error) {
-        reject(error)
-        return
-      }
-
-      // Send request
-      that._httpGateway
-        .sendRequest('GET', '/sessions', data)
         .then((res) => resolve(res))
         .catch((err) => reject(err))
     })

@@ -1,47 +1,8 @@
 import utils from '../utils'
-import FeatherError from '../errors/featherError'
-import ErrorType from '../errors/errorType'
-import ErrorCode from '../errors/errorCode'
+import { FeatherError, ErrorType, ErrorCode } from '../../errors'
 
 const users = {
   _gateway: null,
-
-  /**
-   * Lists users
-   * @arg { limit, startingAfter, endingBefore  }
-   * @return list
-   */
-  // list: function (data) {
-  //   const that = this
-  //   return new Promise(function (resolve, reject) {
-  //     // Validate data
-  //     try {
-  //       utils.validateData(data, {
-  //         isRequired: false,
-  //         params: {
-  //           limit: {
-  //             type: 'number'
-  //           },
-  //           startingAfter: {
-  //             type: 'string'
-  //           },
-  //           endingBefore: {
-  //             type: 'string'
-  //           }
-  //         }
-  //       })
-  //     } catch (error) {
-  //       reject(error)
-  //       return
-  //     }
-  //
-  //     // Send request
-  //     that._httpGateway
-  //       .sendRequest('GET', '/users', data)
-  //       .then((res) => resolve(res))
-  //       .catch((err) => reject(err))
-  //   })
-  // },
 
   /**
    * Retrieves a user

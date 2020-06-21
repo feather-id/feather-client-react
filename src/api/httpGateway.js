@@ -1,8 +1,6 @@
 import querystring from 'querystring'
 import utils from './utils'
-import FeatherError from './errors/featherError'
-import ErrorType from './errors/errorType'
-import ErrorCode from './errors/errorCode'
+import { ErrorCode, ErrorType, FeatherError } from '../errors'
 
 const DEFAULT_PROTOCOL = 'https'
 const DEFAULT_HOST = 'api.feather.id'

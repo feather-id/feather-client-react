@@ -1,7 +1,6 @@
 const credentialType = {
-  EMAIL: 'email',
-  EMAIL_PASSWORD: 'email|password',
-  USERNAME_PASSWORD: 'username|password' // TODO remove
+  EMAIL_VERIFICATION_CODE: 'email|verification_code',
+  EMAIL_PASSWORD: 'email|password'
 }
 
 export default credentialType

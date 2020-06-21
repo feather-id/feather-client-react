@@ -1,7 +1,5 @@
 import jws from 'jws'
-import FeatherError from './errors/featherError'
-import ErrorType from './errors/errorType'
-import ErrorCode from './errors/errorCode'
+import { ErrorCode, ErrorType, FeatherError } from '../errors'
 
 function parseToken(tokenString, getPublicKey) {
   return new Promise(function (resolve, reject) {
@@ -89,5 +87,4 @@ function parseToken(tokenString, getPublicKey) {
   })
 }
 
-// module.exports = parseToken;
 export default parseToken

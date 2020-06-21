@@ -62,16 +62,18 @@ export default function Feather(apiKey, config = {}) {
   this.confirmEmailVerificationLink = confirmEmailVerificationLink
   this.confirmForgotPasswordLink = confirmForgotPasswordLink
   this.confirmSignInLink = confirmSignInLink
+  this.confirmUpdateEmailLink = confirmUpdateEmailLink
   this.currentSession = currentSession
   this.onStateChange = onStateChange
   this.sendEmailVerificationLink = sendEmailVerificationLink
   this.sendForgotPasswordLink = sendForgotPasswordLink
   this.sendSignInLink = sendSignInLink
+  this.sendUpdateEmailLink = sendUpdate
   this.signIn = signIn
   this.signInAnonymously = signInAnonymously
   this.signOut = signOut
   this.updateUser = updateUser
-  this.updateUserPassword = updateUserPassword
   this.updateUserEmail = updateUserEmail
+  this.updateUserPassword = updateUserPassword
   return this
 }

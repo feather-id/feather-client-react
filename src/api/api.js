@@ -1,9 +1,7 @@
 import resources from './resources'
 import utils from './utils'
 import HttpGateway from './httpGateway.js'
-import FeatherError from './errors/featherError'
-import ErrorType from './errors/errorType'
-import ErrorCode from './errors/errorCode'
+import { ErrorCode, ErrorType, FeatherError } from '../errors'
 
 const ALLOWED_PROTOCOLS = ['https', 'http']
 const ALLOWED_CONFIG_PROPERTIES = ['protocol', 'host', 'port', 'basePath']

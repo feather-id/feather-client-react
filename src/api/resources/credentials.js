@@ -1,8 +1,6 @@
 import credentialTypes from '../credentialTypes'
 import utils from '../utils'
-import FeatherError from '../errors/featherError'
-import ErrorType from '../errors/errorType'
-import ErrorCode from '../errors/errorCode'
+import { ErrorCode, ErrorType, FeatherError } from '../../errors'
 
 const credentials = {
   _gateway: null,

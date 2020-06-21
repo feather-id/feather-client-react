@@ -1,23 +1,13 @@
-// import fetchCurrentState from './fetchCurrentState.js'
-// import updateCurrentState from './updateCurrentState.js'
-
 const dbName = 'FeatherDB'
 const version = 1
 var _db = null
+
+// TODO remove console statements
 
 export default function Database(onSuccess, onError) {
   if (!(this instanceof Database)) {
     return new Database()
   }
-
-  // Set to true to the entire local IndexedDB
-  // if (true) {
-  //   var req = indexedDB.deleteDatabase(dbName)
-  //   req.onsuccess = function () {
-  //     console.log('Deleted database successfully')
-  //   }
-  //   return
-  // }
 
   var that = this
   var request = window.indexedDB.open(dbName, 1)
@@ -77,7 +67,6 @@ export default function Database(onSuccess, onError) {
         .transaction(['state'], 'readwrite')
         .objectStore('state')
         .put(state)
-      //.add({ id: 1, name: 'Jam', age: 24, email: 'jam@example.com' })
 
       request.onsuccess = function (event) {
         console.log('The data has been written successfully')

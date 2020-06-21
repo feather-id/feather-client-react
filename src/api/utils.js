@@ -1,6 +1,4 @@
-import FeatherError from './errors/featherError'
-import ErrorType from './errors/errorType'
-import ErrorCode from './errors/errorCode'
+import { FeatherError, ErrorType, ErrorCode } from '../errors'
 
 const utils = {
   /**
