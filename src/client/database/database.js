@@ -2,8 +2,6 @@ const dbName = 'FeatherDB'
 const version = 1
 var _db = null
 
-// TODO remove console statements
-
 export default function Database(onSuccess, onError) {
   if (!(this instanceof Database)) {
     return new Database()
@@ -12,7 +10,6 @@ export default function Database(onSuccess, onError) {
   var that = this
   var request = window.indexedDB.open(dbName, 1)
   request.onerror = function (event) {
-    console.log('The database is opened failed')
     if (onError) {
       onError(event)
     }
@@ -20,7 +17,6 @@ export default function Database(onSuccess, onError) {
 
   request.onsuccess = function (event) {
     _db = request.result
-    console.log('The database is opened successfully')
     if (onSuccess) {
       onSuccess(that)
     }
@@ -45,7 +41,6 @@ export default function Database(onSuccess, onError) {
       var request = objectStore.get('current')
 
       request.onerror = function (event) {
-        console.log('Transaction failed')
         reject(event)
       }
 
@@ -53,7 +48,6 @@ export default function Database(onSuccess, onError) {
         if (request.result) {
           resolve(request.result)
         } else {
-          console.log('No data record')
           resolve(null)
         }
       }
@@ -69,12 +63,10 @@ export default function Database(onSuccess, onError) {
         .put(state)
 
       request.onsuccess = function (event) {
-        console.log('The data has been written successfully')
         resolve(event)
       }
 
       request.onerror = function (event) {
-        console.log('The data has been written failed')
         reject(event)
       }
     })

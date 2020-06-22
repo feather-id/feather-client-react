@@ -1,5 +1,4 @@
-const errA = 'The current user is already authenticated'
-const errB = 'The provided credentials were invalid'
+import { FeatherError, ErrorType, ErrorCode } from '../errors'
 
 // TODO Update user with provided (optional) metadata after sign-in
 
@@ -10,7 +9,11 @@ export default function signIn(params) {
       .fetchCurrentState()
       .then((state) => {
         if (!!state.user && !state.user.isAnonymous) {
-          throw new Error(errA)
+          throw new FeatherError({
+            type: ErrorType.VALIDATION,
+            code: ErrorCode.CURRENT_STATE_INCONSISTENT,
+            message: 'The current user is already authenticated.'
+          })
         } else {
           return Promise.all([
             state.session,
@@ -23,7 +26,11 @@ export default function signIn(params) {
       })
       .then(([session, credential]) => {
         if (credential.status != 'valid') {
-          throw new Error(errB) // TODO work out more complete/helpful error messages
+          throw new FeatherError({
+            type: ErrorType.VALIDATION,
+            code: ErrorCode.CURRENT_STATE_INCONSISTENT,
+            message: 'The provided credentials were invalid.'
+          })
         }
         const credentialToken = credential.token
         if (session) {

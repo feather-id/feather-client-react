@@ -1,4 +1,4 @@
-const errA = 'There is already an active session'
+import { FeatherError, ErrorType, ErrorCode } from '../errors'
 
 // TODO Update user with provided (optional) metadata after sign-in
 
@@ -9,7 +9,11 @@ export default function signInAnonymously() {
       .currentSession()
       .then((session) => {
         if (session) {
-          throw new Error(errA)
+          throw new FeatherError({
+            type: ErrorType.VALIDATION,
+            code: ErrorCode.CURRENT_STATE_INCONSISTENT,
+            message: 'There is already an active session on this client.'
+          })
         } else {
           return that._api.sessions.create()
         }

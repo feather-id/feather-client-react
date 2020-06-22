@@ -1,4 +1,4 @@
-const errA = 'There is no currently active user'
+import { FeatherError, ErrorType, ErrorCode } from '../errors'
 
 export default function updateUser(params) {
   const that = this
@@ -7,7 +7,11 @@ export default function updateUser(params) {
       .fetchCurrentState()
       .then((state) => {
         if (!state.user) {
-          throw new Error(errA)
+          throw new FeatherError({
+            type: ErrorType.VALIDATION,
+            code: ErrorCode.CURRENT_STATE_INCONSISTENT,
+            message: 'There is no current user on this client.'
+          })
         } else {
           return Promise.all([
             state,

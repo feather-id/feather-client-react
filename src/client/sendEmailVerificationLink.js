@@ -1,7 +1,4 @@
-const errA = 'There is no currently active user'
-const errB = 'The current user is anonymous and does not have an email address'
-const errC = "The current user doesn't have an email address"
-const errD = "The current user's email address is already verified"
+import { FeatherError, ErrorType, ErrorCode } from '../errors'
 
 export default function sendEmailVerificationLink(redirectUrl) {
   const that = this
@@ -10,13 +7,30 @@ export default function sendEmailVerificationLink(redirectUrl) {
       .fetchCurrentState()
       .then((state) => {
         if (!state.user) {
-          throw new Error(errA)
+          throw new FeatherError({
+            type: ErrorType.VALIDATION,
+            code: ErrorCode.CURRENT_STATE_INCONSISTENT,
+            message: 'There is no current user on this client.'
+          })
         } else if (state.user.isAnonymous) {
-          throw new Error(errB)
+          throw new FeatherError({
+            type: ErrorType.VALIDATION,
+            code: ErrorCode.CURRENT_STATE_INCONSISTENT,
+            message:
+              'The current user is anonymous and does not have an email address.'
+          })
         } else if (!state.user.email) {
-          throw new Error(errC)
+          throw new FeatherError({
+            type: ErrorType.VALIDATION,
+            code: ErrorCode.CURRENT_STATE_INCONSISTENT,
+            message: "The current user doesn't have an email address."
+          })
         } else if (state.user.isEmailVerified) {
-          throw new Error(errD)
+          throw new FeatherError({
+            type: ErrorType.VALIDATION,
+            code: ErrorCode.CURRENT_STATE_INCONSISTENT,
+            message: "The current user's email address is already verified."
+          })
         } else {
           return Promise.all([
             state,

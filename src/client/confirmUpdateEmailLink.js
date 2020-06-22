@@ -1,8 +1,5 @@
+import { FeatherError, ErrorType, ErrorCode } from '../errors'
 import { parseQueryParams } from './utils.js'
-
-const errA = 'There is no active update email request from this device.'
-const errB = "The provided URL is missing a 'code' query parameter."
-const errC = 'The verification code is invalid.'
 
 export default function confirmUpdateEmailLink(url) {
   const that = this
@@ -12,9 +9,18 @@ export default function confirmUpdateEmailLink(url) {
       .then((state) => {
         const params = parseQueryParams(url)
         if (!state.credential) {
-          throw new Error(errA)
+          throw new FeatherError({
+            type: ErrorType.VALIDATION,
+            code: ErrorCode.CURRENT_STATE_INCONSISTENT,
+            message:
+              'There is no current passwordless update-email request on this client. Please note a passwordless update-email request can only be confirmed from the device and browser it was initiated from.'
+          })
         } else if (!params.code) {
-          throw new Error(errB)
+          throw new FeatherError({
+            type: ErrorType.VALIDATION,
+            code: ErrorCode.VERIFICATION_CODE_INVALID,
+            message: "The provided URL is missing a 'code' query parameter."
+          })
         } else {
           return Promise.all([
             state,
@@ -26,7 +32,11 @@ export default function confirmUpdateEmailLink(url) {
       })
       .then(([state, credential]) => {
         if (credential.status != 'valid') {
-          throw new Error(errC)
+          throw new FeatherError({
+            type: ErrorType.VALIDATION,
+            code: ErrorCode.VERIFICATION_CODE_INVALID,
+            message: 'The verification code is invalid.'
+          })
         }
         const credentialToken = credential.token
         Promise.all([

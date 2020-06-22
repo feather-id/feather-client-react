@@ -22,9 +22,8 @@ export default function Feather(apiKey, config = {}) {
     return new Feather(apiKey, config)
   }
   if (!window.indexedDB) {
-    console.log(
-      // TODO
-      "Your browser doesn't support a stable version of IndexedDB. This interface of Feather is not available."
+    throw new Error(
+      "Your browser does not support a stable version of IndexedDB. This means Feather's stateful client interface is not supported on this device. For help or more information, please contact us at hello@feather.id."
     )
   }
   this._api = new API(apiKey, config)
@@ -47,7 +46,7 @@ export default function Feather(apiKey, config = {}) {
         })
     },
     (error) => {
-      console.log('Failed to initialize database')
+      throw new Error('Failed to initialize Feather database.')
     }
   )
   this._onStateChangeObservers = []
@@ -68,7 +67,7 @@ export default function Feather(apiKey, config = {}) {
   this.sendEmailVerificationLink = sendEmailVerificationLink
   this.sendForgotPasswordLink = sendForgotPasswordLink
   this.sendSignInLink = sendSignInLink
-  this.sendUpdateEmailLink = sendUpdate
+  this.sendUpdateEmailLink = sendUpdateEmailLink
   this.signIn = signIn
   this.signInAnonymously = signInAnonymously
   this.signOut = signOut

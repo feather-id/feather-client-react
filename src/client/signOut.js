@@ -1,4 +1,4 @@
-const errA = "There isn't an active session on this device"
+import { FeatherError, ErrorType, ErrorCode } from '../errors'
 
 export default function signOut(params) {
   const that = this
@@ -7,7 +7,11 @@ export default function signOut(params) {
       .fetchCurrentState()
       .then((state) => {
         if (!!state.session) {
-          throw new Error(errA)
+          throw new FeatherError({
+            type: ErrorType.VALIDATION,
+            code: ErrorCode.CURRENT_STATE_INCONSISTENT,
+            message: 'There is no currently active session on this client.'
+          })
         } else {
           return Promise.all([
             state,

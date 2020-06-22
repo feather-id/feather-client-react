@@ -1,4 +1,4 @@
-const errA = 'The current user is already authenticated'
+import { FeatherError, ErrorType, ErrorCode } from '../errors'
 
 export default function sendSignInLink(params) {
   const that = this
@@ -7,7 +7,11 @@ export default function sendSignInLink(params) {
       .fetchCurrentState()
       .then((state) => {
         if (!!state.user && !state.user.isAnonymous) {
-          throw new Error(errA)
+          throw new FeatherError({
+            type: ErrorType.VALIDATION,
+            code: ErrorCode.CURRENT_STATE_INCONSISTENT,
+            message: 'The current user is already authenticated.'
+          })
         } else {
           return Promise.all([
             state,

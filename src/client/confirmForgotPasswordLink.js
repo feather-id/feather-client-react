@@ -1,8 +1,5 @@
+import { FeatherError, ErrorType, ErrorCode } from '../errors'
 import { parseQueryParams } from './utils.js'
-
-const errA = 'There is no active password reset request from this device.'
-const errB = "The provided URL is missing a 'code' query parameter."
-const errC = 'The verification code is invalid.'
 
 export default function confirmForgotPasswordLink(url, newPassword) {
   const that = this
@@ -12,9 +9,18 @@ export default function confirmForgotPasswordLink(url, newPassword) {
       .then((state) => {
         const params = parseQueryParams(url)
         if (!state.credential) {
-          throw new Error(errA)
+          throw new FeatherError({
+            type: ErrorType.VALIDATION,
+            code: ErrorCode.CURRENT_STATE_INCONSISTENT,
+            message:
+              'There is no current forgot-password request on this client. Please note a forgot-password request can only be confirmed from the device and browser it was initiated from.'
+          })
         } else if (!params.code) {
-          throw new Error(errB)
+          throw new FeatherError({
+            type: ErrorType.VALIDATION,
+            code: ErrorCode.VERIFICATION_CODE_INVALID,
+            message: "The provided URL is missing a 'code' query parameter."
+          })
         } else {
           return Promise.all([
             state.session,
@@ -26,7 +32,11 @@ export default function confirmForgotPasswordLink(url, newPassword) {
       })
       .then(([session, credential]) => {
         if (credential.status != 'valid') {
-          throw new Error(errC)
+          throw new FeatherError({
+            type: ErrorType.VALIDATION,
+            code: ErrorCode.VERIFICATION_CODE_INVALID,
+            message: 'The verification code is invalid.'
+          })
         }
         const credentialToken = credential.token
         if (session) {

@@ -1,5 +1,4 @@
-const errA = 'There is no currently active user'
-const errB = 'The current user is anonymous and their email cannot be updated'
+import { FeatherError, ErrorType, ErrorCode } from '../errors'
 
 export default function sendUpdateEmailLink(params) {
   const that = this
@@ -8,9 +7,18 @@ export default function sendUpdateEmailLink(params) {
       .fetchCurrentState()
       .then((state) => {
         if (!!state.user) {
-          throw new Error(errA)
+          throw new FeatherError({
+            type: ErrorType.VALIDATION,
+            code: ErrorCode.CURRENT_STATE_INCONSISTENT,
+            message: 'There is no current user on this client.'
+          })
         } else if (state.user.isAnonymous) {
-          throw new Error(errB)
+          throw new FeatherError({
+            type: ErrorType.VALIDATION,
+            code: ErrorCode.CURRENT_STATE_INCONSISTENT,
+            message:
+              'The current user is anonymous and their email cannot be updated.'
+          })
         } else {
           return Promise.all([
             state,
