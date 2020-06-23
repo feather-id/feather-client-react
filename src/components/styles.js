@@ -3,12 +3,12 @@ export const defaultStyles = {
     display: 'flex',
     flexDirection: 'column',
     flexBasis: '100%',
-    maxWidth: '512px',
+    maxWidth: '384px',
     padding: '64px 32px',
     margin: 'auto',
     background: 'none',
     '@media(max-width: 512pt)': {
-      padding: '32px 24px'
+      padding: '64px 24px'
     }
   },
   title: {
@@ -34,7 +34,8 @@ export const defaultStyles = {
   inputField: {
     '-webkit-appearance': 'none',
     fontSize: '1em',
-    padding: '16px',
+    padding: '0px 16px',
+    height: '48px',
     border: '1px solid hsl(214, 36%, 84%)',
     color: 'hsl(214, 24%, 32%)',
     borderRadius: '4px',
@@ -56,8 +57,8 @@ export const defaultStyles = {
     color: 'hsl(230, 75%, 65%)',
     padding: '0px',
     margin: '0px 4px 8px auto',
-    cursor: 'pointer',
-    ':hover': {
+    ':hover:enabled': {
+      cursor: 'pointer',
       color: 'hsl(230, 75%, 68%)'
     }
   },
@@ -86,29 +87,31 @@ export const defaultStyles = {
     color: 'hsl(356, 75%, 50%)'
   },
   primaryCtaButton: {
-    fontSize: '1.15em',
+    fontSize: '1em',
     fontWeight: '500',
     borderRadius: '4px',
     border: 'none',
     color: '#fff',
     backgroundColor: 'hsl(230, 75%, 65%)',
-    padding: '16px 32px',
-    margin: '16px 4px 0px auto',
-    cursor: 'pointer',
-    ':hover': {
+    width: '100%',
+    height: '48px',
+    margin: '32px 0px 16px 0px',
+    ':hover:enabled': {
+      cursor: 'pointer',
       backgroundColor: 'hsl(230, 75%, 68%)'
     }
   },
   secondaryCtaButton: {
-    fontSize: '1.15em',
+    fontSize: '1em',
     fontWeight: '500',
     background: 'none',
     border: 'none',
     color: 'hsl(230, 75%, 65%)',
     padding: '16px 0px',
-    margin: '16px auto 0px 4px',
-    cursor: 'pointer',
-    ':hover': {
+    width: '100%',
+    margin: '16px 0px',
+    ':hover:enabled': {
+      cursor: 'pointer',
       color: 'hsl(230, 75%, 68%)'
     }
   }

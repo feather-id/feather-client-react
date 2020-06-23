@@ -38,7 +38,7 @@ class AuthenticationForm extends React.Component {
     var configWarnings = []
     if (!this.props.redirectUrl) {
       configWarnings.push(
-        "You did not include a 'redirectUrl' for your forgot-password form. This is the URL your user will be redirected to after receiving the password reset email."
+        "You did not include a 'redirectUrl' for the forgot-password form. This is the URL your users will be redirected to after click the link in a password reset email."
       )
     }
     return configWarnings
@@ -60,6 +60,7 @@ class AuthenticationForm extends React.Component {
     if (!!this.props.styles) {
       styles = mergeStyles(styles, this.props.styles)
     }
+    //
 
     return (
       <form

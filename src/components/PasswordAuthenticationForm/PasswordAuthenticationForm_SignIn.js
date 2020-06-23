@@ -1,10 +1,12 @@
 import React from 'react'
 import FormInput from '../FormInput'
 import ErrorMessage from '../ErrorMessage'
+import Spinner from '../Spinner'
 import { css } from 'emotion'
 import { isValidEmail } from '../../utils.js'
 
 const INITIAL_STATE = {
+  isBusy: false,
   errorMessage: null
 }
 
@@ -37,10 +39,15 @@ class AuthenticationForm_SignIn extends React.Component {
         )
         .focus()
     } else {
-      this.setState({ errorMessage: null, infoMessage: null })
-      this.props.feather.signIn(email, password).catch((error) => {
-        this.setState({ errorMessage: error.message })
-      })
+      this.setState({ isBusy: true })
+      this.props.feather
+        .signIn(email, password)
+        .then(() => {
+          this.setState({ isBusy: false, errorMessage: null })
+        })
+        .catch((error) => {
+          this.setState({ isBusy: false, errorMessage: error.message })
+        })
     }
   }
 
@@ -75,6 +82,7 @@ class AuthenticationForm_SignIn extends React.Component {
           value={this.props.input.email}
           onChange={this.props.onChangeInput}
           styles={this.props.styles}
+          disabled={this.state.isBusy}
         />
         <FormInput
           id='feather-id__password-authentication-form__sign-in__password-input'
@@ -82,6 +90,7 @@ class AuthenticationForm_SignIn extends React.Component {
           name='passwordInput'
           title={inputs.password.title ? inputs.password.title : 'Password'}
           placeholder={inputs.password.placeholder}
+          disabled={this.state.isBusy}
           helpButton={
             this.props.linkToForgotPassword && {
               title: inputs.password.forgotPasswordButtonTitle
@@ -101,39 +110,29 @@ class AuthenticationForm_SignIn extends React.Component {
             message={this.state.errorMessage}
           />
         )}
-        <div
+        <button
+          type='submit'
+          onClick={this.onSubmit}
+          disabled={this.state.isBusy}
           className={css`
-            display: flex;
-            flex-direction: row;
-            width: 100%;
+            ${this.props.styles.primaryCtaButton}
           `}
         >
-          {this.props.linkToSignUp && (
-            <button
-              type='button'
-              name='sign_up'
-              onClick={this.props.onClickFormTypeButton}
-              className={css`
-                ${this.props.styles.secondaryCtaButton}
-              `}
-            >
-              {this.props.form.secondaryCtaButtonTitle
-                ? this.props.form.secondaryCtaButtonTitle
-                : 'Create an account'}
-            </button>
-          )}
+          {this.state.isBusy ? <Spinner /> : 'Continue'}
+        </button>
+        {this.props.linkToSignUp && (
           <button
-            type='submit'
-            onClick={this.onSubmit}
+            type='button'
+            name='sign_up'
+            onClick={this.props.onClickFormTypeButton}
+            disabled={this.state.isBusy}
             className={css`
-              ${this.props.styles.primaryCtaButton}
+              ${this.props.styles.secondaryCtaButton}
             `}
           >
-            {this.props.form.primaryCtaButtonTitle
-              ? this.props.form.primaryCtaButtonTitle
-              : 'Continue'}
+            Create an account
           </button>
-        </div>
+        )}
       </div>
     )
   }

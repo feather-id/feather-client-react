@@ -1,12 +1,14 @@
 import React from 'react'
 import FormInput from '../FormInput'
 import ErrorMessage from '../ErrorMessage'
+import Spinner from '../Spinner'
 import { css } from 'emotion'
 import { isValidEmail } from '../../utils.js'
 
 // TODO Custom checkboxes (e.g. for TOS/Privacy/etc.)
 
 const INITIAL_STATE = {
+  isBusy: false,
   errorMessage: null
 }
 
@@ -45,7 +47,7 @@ class AuthenticationForm_SignUp extends React.Component {
         )
         .focus()
     } else {
-      this.setState({ errorMessage: null, infoMessage: null })
+      this.setState({ isBusy: true })
 
       // TODO
     }
@@ -92,6 +94,7 @@ class AuthenticationForm_SignUp extends React.Component {
           value={this.props.input.password}
           onChange={this.props.onChangeInput}
           styles={this.props.styles}
+          disabled={this.state.isBusy}
         />
 
         <FormInput
@@ -107,6 +110,7 @@ class AuthenticationForm_SignUp extends React.Component {
           value={this.props.input.confirmPassword}
           onChange={this.props.onChangeInput}
           styles={this.props.styles}
+          disabled={this.state.isBusy}
         />
         {this.state.errorMessage && (
           <ErrorMessage
@@ -114,39 +118,29 @@ class AuthenticationForm_SignUp extends React.Component {
             message={this.state.errorMessage}
           />
         )}
-        <div
+        <button
+          type='submit'
+          onClick={this.onSubmit}
+          disabled={this.state.isBusy}
           className={css`
-            display: flex;
-            flex-direction: row;
-            width: 100%;
+            ${this.props.styles.primaryCtaButton}
           `}
         >
-          {this.props.linkToSignIn && (
-            <button
-              type='button'
-              name='sign_in'
-              onClick={this.props.onClickFormTypeButton}
-              className={css`
-                ${this.props.styles.secondaryCtaButton}
-              `}
-            >
-              {this.props.form.secondaryCtaButtonTitle
-                ? this.props.form.secondaryCtaButtonTitle
-                : 'I have an account'}
-            </button>
-          )}
+          {this.state.isBusy ? <Spinner /> : 'Continue'}
+        </button>
+        {this.props.linkToSignIn && (
           <button
-            type='submit'
-            onClick={this.onSubmit}
+            type='button'
+            name='sign_in'
+            disabled={this.state.isBusy}
+            onClick={this.props.onClickFormTypeButton}
             className={css`
-              ${this.props.styles.primaryCtaButton}
+              ${this.props.styles.secondaryCtaButton}
             `}
           >
-            {this.props.form.primaryCtaButtonTitle
-              ? this.props.form.primaryCtaButtonTitle
-              : 'Continue'}
+            Already have an account?
           </button>
-        </div>
+        )}
       </div>
     )
   }

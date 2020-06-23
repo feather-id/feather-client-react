@@ -2,10 +2,12 @@ import React from 'react'
 import FormInput from '../FormInput'
 import ErrorMessage from '../ErrorMessage'
 import InfoMessage from '../InfoMessage'
+import Spinner from '../Spinner'
 import { css } from 'emotion'
 import { isValidEmail } from '../../utils.js'
 
 const INITIAL_STATE = {
+  isBusy: false,
   errorMessage: null,
   infoMessage: null
 }
@@ -32,18 +34,23 @@ class AuthenticationForm_ForgotPassword extends React.Component {
         )
         .focus()
     } else {
-      this.setState({ errorMessage: null, infoMessage: null })
+      this.setState({ isBusy: true })
       this.props.feather
         .sendForgotPasswordLink(email, redirectUrl)
         .then(() => {
           this.setState({
+            isBusy: false,
             infoMessage:
-              'Please check your email for a link to reset your password.'
+              'Please check your email for a link to reset your password.',
+            errorMessage: null
           })
         })
         .catch((error) => {
-          // Handle an error
-          this.setState({ errorMessage: error.message })
+          this.setState({
+            isBusy: true,
+            errorMessage: error.message,
+            infoMessage: null
+          })
         })
     }
   }
@@ -79,6 +86,7 @@ class AuthenticationForm_ForgotPassword extends React.Component {
           value={this.props.input.email}
           onChange={this.props.onChangeInput}
           styles={this.props.styles}
+          disabled={this.state.isBusy}
         />
         {this.state.errorMessage && (
           <ErrorMessage
@@ -92,37 +100,31 @@ class AuthenticationForm_ForgotPassword extends React.Component {
             message={this.state.infoMessage}
           />
         )}
-        <div
-          className={css`
-            display: flex;
-            flex-direction: row;
-            width: 100%;
-          `}
-        >
-          <button
-            type='button'
-            name='sign_in'
-            onClick={this.props.onClickFormTypeButton}
-            className={css`
-              ${this.props.styles.secondaryCtaButton}
-            `}
-          >
-            {this.props.form.secondaryCtaButtonTitle
-              ? this.props.form.secondaryCtaButtonTitle
-              : 'Cancel'}
-          </button>
-          <button
-            type='submit'
-            onClick={this.onSubmit}
-            className={css`
-              ${this.props.styles.primaryCtaButton}
-            `}
-          >
-            {this.props.form.primaryCtaButtonTitle
-              ? this.props.form.primaryCtaButtonTitle
-              : 'Continue'}
-          </button>
-        </div>
+        {!this.state.infoMessage && (
+          <div>
+            <button
+              type='submit'
+              onClick={this.onSubmit}
+              disabled={this.state.isBusy}
+              className={css`
+                ${this.props.styles.primaryCtaButton}
+              `}
+            >
+              {this.state.isBusy ? <Spinner /> : 'Continue'}
+            </button>
+            <button
+              type='button'
+              name='sign_in'
+              onClick={this.props.onClickFormTypeButton}
+              disabled={this.state.isBusy}
+              className={css`
+                ${this.props.styles.secondaryCtaButton}
+              `}
+            >
+              Cancel
+            </button>
+          </div>
+        )}
       </div>
     )
   }
