@@ -1,2 +1,4 @@
-export { PasswordAuthenticationForm } from './PasswordAuthenticationForm'
-export { PasswordlessAuthenticationForm } from './PasswordlessAuthenticationForm'
+import PasswordAuthenticationForm from './PasswordAuthenticationForm'
+import PasswordlessAuthenticationForm from './PasswordlessAuthenticationForm'
+
+export { PasswordAuthenticationForm, PasswordlessAuthenticationForm }

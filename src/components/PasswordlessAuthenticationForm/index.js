@@ -1,1 +1,1 @@
-export { PasswordlessAuthenticationForm } from './PasswordlessAuthenticationForm.js'
+export { default } from './PasswordlessAuthenticationForm.js'

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import SignIn from './PasswordAuthenticationForm_SignIn.js'
 import SignUp from './PasswordAuthenticationForm_SignUp.js'
 import ForgotPassword from './PasswordAuthenticationForm_ForgotPassword.js'
@@ -15,28 +15,40 @@ const INITIAL_STATE = {
   formType: 'sign_in'
 }
 
-class PasswordAuthenticationForm extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = { ...INITIAL_STATE }
-  }
+export default function PasswordAuthenticationForm(params) {
+  const [emailInput, setEmailInput] = useState('')
+  const [passwordInput, setPasswordInput] = useState('')
+  const [confirmPasswordInput, setConfirmPasswordInput] = useState('')
+  const [currentForm, setCurrentForm] = useState('sign_in')
 
-  onChangeInput = (event) => {
+  const onChangeInput = (event) => {
     event.preventDefault()
-    this.setState({ [event.target.name]: event.target.value })
+    switch (event.target.name) {
+      case 'emailInput':
+        setEmailInput(event.target.value)
+        break
+      case 'passwordInput':
+        setPasswordInput(event.target.value)
+        break
+      case 'confirmPasswordInput':
+        setConfirmPasswordInput(event.target.value)
+        break
+      default:
+        break
+    }
   }
 
-  onClickFormTypeButton = (event) => {
+  const onClickFormTypeButton = (event) => {
     event.preventDefault()
-    this.setState({ formType: [event.target.name] })
+    setCurrentForm(event.target.name)
   }
 
-  getConfigWarnings = (config) => {
+  const getConfigWarnings = (config) => {
     var configWarnings = []
-    if (!this.props.feather) {
+    if (!params.feather) {
       configWarnings.push("You did not configure a 'feather' client.")
     }
-    if (!this.props.redirectUrl) {
+    if (!params.redirectUrl) {
       configWarnings.push(
         "You did not configure a 'redirectUrl' for the forgot-password form. This is the URL your users will be redirected to after clicking the link in a password reset email."
       )
@@ -44,80 +56,67 @@ class PasswordAuthenticationForm extends React.Component {
     return configWarnings
   }
 
-  render() {
-    var signInFields = this.props.signInFields ? this.props.signInFields : []
-    var signUpFields = this.props.signUpFields ? this.props.signUpFields : []
+  // Get configuration warnings
+  const config = defaultConfig
+  const configWarnings = getConfigWarnings(config)
+  const showConfigWarning = configWarnings.length > 0 && !params.silenceWarnings
 
-    // Get configuration warnings
-    // const config = this.props.config ? this.props.config : defaultConfig
-    const config = defaultConfig
-    const configWarnings = this.getConfigWarnings(config)
-    const showConfigWarning =
-      configWarnings.length > 0 && !this.props.silenceWarnings
-
-    // Merge in custom styling
-    var styles = { ...defaultStyles }
-    if (!!this.props.styles) {
-      styles = mergeStyles(styles, this.props.styles)
-    }
-    //
-
-    return (
-      <form
-        className={css`
-          ${styles.container}
-        `}
-      >
-        {showConfigWarning && <ConfigWarning warnings={configWarnings} />}
-        {this.state.formType == 'sign_in' && (
-          <SignIn
-            feather={this.props.feather}
-            form={config.signIn}
-            onSubmit={this.onSubmitSignIn}
-            onChangeInput={this.onChangeInput}
-            onClickFormTypeButton={this.onClickFormTypeButton}
-            linkToSignUp={!!config.signUp}
-            linkToForgotPassword={!!config.forgotPassword}
-            styles={styles}
-            input={{
-              email: this.state.emailInput,
-              password: this.state.passwordInput
-            }}
-          />
-        )}
-        {this.state.formType == 'sign_up' && (
-          <SignUp
-            feather={this.props.feather}
-            form={config.signUp}
-            onSubmit={this.onSubmitSignUp}
-            onChangeInput={this.onChangeInput}
-            onClickFormTypeButton={this.onClickFormTypeButton}
-            linkToSignIn={!!config.signIn}
-            styles={styles}
-            input={{
-              email: this.state.emailInput,
-              password: this.state.passwordInput,
-              confirmPassword: this.state.confirmPasswordInput
-            }}
-          />
-        )}
-        {this.state.formType == 'forgot_password' && (
-          <ForgotPassword
-            feather={this.props.feather}
-            form={config.forgotPassword}
-            onSubmit={this.onSubmitForgotPassword}
-            onChangeInput={this.onChangeInput}
-            onClickFormTypeButton={this.onClickFormTypeButton}
-            redirectUrl={this.props.redirectUrl}
-            styles={styles}
-            input={{
-              email: this.state.emailInput
-            }}
-          />
-        )}
-      </form>
-    )
+  // Merge in custom styling
+  var styles = { ...defaultStyles }
+  if (!!params.styles) {
+    styles = mergeStyles(styles, params.styles)
   }
-}
 
-export { PasswordAuthenticationForm }
+  return (
+    <form
+      className={css`
+        ${styles.container}
+      `}
+    >
+      {showConfigWarning && <ConfigWarning warnings={configWarnings} />}
+      {currentForm == 'sign_in' && (
+        <SignIn
+          feather={params.feather}
+          form={config.signIn}
+          onChangeInput={onChangeInput}
+          onClickFormTypeButton={onClickFormTypeButton}
+          linkToSignUp={!!config.signUp}
+          linkToForgotPassword={!!config.forgotPassword}
+          styles={styles}
+          input={{
+            email: emailInput,
+            password: passwordInput
+          }}
+        />
+      )}
+      {currentForm == 'sign_up' && (
+        <SignUp
+          feather={params.feather}
+          form={config.signUp}
+          onChangeInput={onChangeInput}
+          onClickFormTypeButton={onClickFormTypeButton}
+          linkToSignIn={!!config.signIn}
+          styles={styles}
+          input={{
+            email: emailInput,
+            password: passwordInput,
+            confirmPassword: confirmPasswordInput
+          }}
+        />
+      )}
+      {currentForm == 'forgot_password' && (
+        <ForgotPassword
+          feather={params.feather}
+          form={config.forgotPassword}
+          onChangeInput={onChangeInput}
+          onClickFormTypeButton={onClickFormTypeButton}
+          redirectUrl={params.redirectUrl}
+          styles={styles}
+          input={{
+            email: emailInput
+          }}
+        />
+      )}
+    </form>
+  )
+}

@@ -1,16 +1,16 @@
 import React from 'react'
 import { css, keyframes } from 'emotion'
 
-const spin = keyframes`
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-`
-
 export default function Spinner(params) {
+  const spin = keyframes`
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  `
+
   return (
     <div>
       <div

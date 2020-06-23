@@ -1,144 +1,123 @@
-import React from 'react'
+import React, { useRef, useState } from 'react'
 import FormInput from '../FormInput'
 import ErrorMessage from '../ErrorMessage'
 import Spinner from '../Spinner'
 import { css } from 'emotion'
 import { isValidEmail } from '../../utils.js'
 
-const INITIAL_STATE = {
-  isBusy: false,
-  errorMessage: null
-}
+export default function AuthenticationForm_SignIn(params) {
+  const [isBusy, setIsBusy] = useState()
+  const [errorMessage, setErrorMessage] = useState()
+  const emailInputRef = useRef()
+  const passwordInputRef = useRef()
 
-class AuthenticationForm_SignIn extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = { ...INITIAL_STATE }
-  }
-
-  onSubmit = (event) => {
+  const onSubmit = (event) => {
     event.preventDefault()
-    if (!this.props.feather) {
-      this.setState({
-        errorMessage:
-          "A Feather client was not provided. To learn more about using Feather's React components, please see our documentation at https://feather.id/docs."
-      })
+    if (!params.feather) {
+      setErrorMessage(
+        "A Feather client was not provided. To learn more about using Feather's React components, please see our documentation at https://feather.id/docs."
+      )
       return
     }
-    const email = this.props.input.email
-    const password = this.props.input.password
+    const email = params.input.email
+    const password = params.input.password
     if (!isValidEmail(email)) {
-      this.setState({ errorMessage: 'Please enter a valid email address.' })
-      this.emailInput = window.document
-        .getElementById(
-          'feather-id__password-authentication-form__sign-in__email-input'
-        )
-        .focus()
+      setErrorMessage('Please enter a valid email address.')
+      emailInputRef.current.focus()
     } else if (password === '') {
-      this.setState({ errorMessage: 'Please enter a password.' })
-      this.emailInput = window.document
-        .getElementById(
-          'feather-id__password-authentication-form__sign-in__password-input'
-        )
-        .focus()
+      setErrorMessage('Please enter a password.')
+      passwordInputRef.current.focus()
     } else {
-      this.setState({ isBusy: true })
-      this.props.feather
+      setIsBusy(true)
+      params.feather
         .signIn(email, password)
         .then(() => {
-          this.setState({ isBusy: false, errorMessage: null })
+          setIsBusy(false)
+          setErrorMessage(null)
         })
         .catch((error) => {
-          this.setState({ isBusy: false, errorMessage: error.message })
+          setIsBusy(false)
+          setErrorMessage(error.message)
         })
     }
   }
 
-  render() {
-    const inputs = this.props.form.inputs ? this.props.form.inputs : []
-    return (
-      <div>
-        {this.props.form.title && (
-          <p
-            className={css`
-              ${this.props.styles.title}
-            `}
-          >
-            {this.props.form.title}
-          </p>
-        )}
-        {this.props.form.subtitle && (
-          <p
-            className={css`
-              ${this.props.styles.subtitle}
-            `}
-          >
-            {this.props.form.subtitle}
-          </p>
-        )}
-        <FormInput
-          id='feather-id__password-authentication-form__sign-in__email-input'
-          type='email'
-          name='emailInput'
-          title={inputs.email.title ? inputs.email.title : 'Email'}
-          placeholder={inputs.email.placeholder}
-          value={this.props.input.email}
-          onChange={this.props.onChangeInput}
-          styles={this.props.styles}
-          disabled={this.state.isBusy}
-        />
-        <FormInput
-          id='feather-id__password-authentication-form__sign-in__password-input'
-          type='password'
-          name='passwordInput'
-          title={inputs.password.title ? inputs.password.title : 'Password'}
-          placeholder={inputs.password.placeholder}
-          disabled={this.state.isBusy}
-          helpButton={
-            this.props.linkToForgotPassword && {
-              title: inputs.password.forgotPasswordButtonTitle
-                ? inputs.password.forgotPasswordButtonTitle
-                : 'Forgot password?',
-              onClick: this.props.onClickFormTypeButton,
-              name: 'forgot_password'
-            }
-          }
-          value={this.props.input.password}
-          onChange={this.props.onChangeInput}
-          styles={this.props.styles}
-        />
-        {this.state.errorMessage && (
-          <ErrorMessage
-            styles={this.props.styles}
-            message={this.state.errorMessage}
-          />
-        )}
-        <button
-          type='submit'
-          onClick={this.onSubmit}
-          disabled={this.state.isBusy}
+  const inputs = params.form.inputs ? params.form.inputs : []
+  return (
+    <div>
+      {params.form.title && (
+        <p
           className={css`
-            ${this.props.styles.primaryCtaButton}
+            ${params.styles.title}
           `}
         >
-          {this.state.isBusy ? <Spinner /> : 'Continue'}
+          {params.form.title}
+        </p>
+      )}
+      {params.form.subtitle && (
+        <p
+          className={css`
+            ${params.styles.subtitle}
+          `}
+        >
+          {params.form.subtitle}
+        </p>
+      )}
+      <FormInput
+        inputRef={emailInputRef}
+        type='email'
+        name='emailInput'
+        title='Email'
+        placeholder={inputs.email.placeholder}
+        value={params.input.email}
+        onChange={params.onChangeInput}
+        styles={params.styles}
+        disabled={isBusy}
+      />
+      <FormInput
+        inputRef={passwordInputRef}
+        type='password'
+        name='passwordInput'
+        title='Password'
+        placeholder={inputs.password.placeholder}
+        disabled={isBusy}
+        helpButton={
+          params.linkToForgotPassword && {
+            title: 'Forgot password?',
+            onClick: params.onClickFormTypeButton,
+            name: 'forgot_password'
+          }
+        }
+        value={params.input.password}
+        onChange={params.onChangeInput}
+        styles={params.styles}
+      />
+      {errorMessage && (
+        <ErrorMessage styles={params.styles} message={errorMessage} />
+      )}
+      <button
+        type='submit'
+        onClick={onSubmit}
+        disabled={isBusy}
+        className={css`
+          ${params.styles.primaryCtaButton}
+        `}
+      >
+        {isBusy ? <Spinner /> : 'Continue'}
+      </button>
+      {params.linkToSignUp && (
+        <button
+          type='button'
+          name='sign_up'
+          onClick={params.onClickFormTypeButton}
+          disabled={isBusy}
+          className={css`
+            ${params.styles.secondaryCtaButton}
+          `}
+        >
+          Create an account
         </button>
-        {this.props.linkToSignUp && (
-          <button
-            type='button'
-            name='sign_up'
-            onClick={this.props.onClickFormTypeButton}
-            disabled={this.state.isBusy}
-            className={css`
-              ${this.props.styles.secondaryCtaButton}
-            `}
-          >
-            Create an account
-          </button>
-        )}
-      </div>
-    )
-  }
+      )}
+    </div>
+  )
 }
-
-export default AuthenticationForm_SignIn

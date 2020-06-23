@@ -1,56 +1,54 @@
 import React from 'react'
 import { css } from 'emotion'
 
-class FormInput extends React.Component {
-  render() {
-    return (
+export default function FormInput(params) {
+  return (
+    <div
+      className={css`
+        ${params.styles.inputContainer}
+      `}
+    >
       <div
         className={css`
-          ${this.props.styles.inputContainer}
+          display: flex;
+          flexdirection: row;
+          width: 100%;
         `}
       >
-        <div
+        <p
           className={css`
-            display: flex;
-            flexdirection: row;
-            width: 100%;
+            ${params.styles.inputTitle}
           `}
         >
-          <p
+          {params.title}
+        </p>
+        {params.helpButton && (
+          <button
+            type='button'
+            name={params.helpButton.name}
+            onClick={params.helpButton.onClick}
             className={css`
-              ${this.props.styles.inputTitle}
+              ${params.styles.forgotPasswordButton}
             `}
           >
-            {this.props.title}
-          </p>
-          {this.props.helpButton && (
-            <button
-              type='button'
-              name={this.props.helpButton.name}
-              onClick={this.props.helpButton.onClick}
-              className={css`
-                ${this.props.styles.forgotPasswordButton}
-              `}
-            >
-              {this.props.helpButton.title}
-            </button>
-          )}
-        </div>
-        <input
-          id={this.props.id}
-          type={this.props.type}
-          name={this.props.name}
-          onChange={this.props.onChange}
-          value={this.props.value}
-          placeholder={this.props.placeholder}
-          className={css`
-            ${this.props.styles.inputField}
-          `}
-        />
+            {params.helpButton.title}
+          </button>
+        )}
       </div>
-    )
-  }
+      <input
+        ref={params.inputRef}
+        type={params.type}
+        name={params.name}
+        onChange={params.onChange}
+        value={params.value}
+        placeholder={params.placeholder}
+        className={css`
+          ${params.styles.inputField}
+        `}
+      />
+    </div>
+  )
 }
 
-// onHide={this.handleClose.bind(this)}
-export default FormInput
+// onHide={handleClose.bind(this)}
+// export default FormInput

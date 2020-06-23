@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef, useState } from 'react'
 import FormInput from '../FormInput'
 import ErrorMessage from '../ErrorMessage'
 import InfoMessage from '../InfoMessage'
@@ -12,110 +12,92 @@ const INITIAL_STATE = {
   errorMessage: null
 }
 
-class PasswordlessAuthenticationForm_SignIn extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = { ...INITIAL_STATE }
-  }
+export default function PasswordlessAuthenticationForm_SignIn(params) {
+  const [isBusy, setIsBusy] = useState()
+  const [infoMessage, setInfoMessage] = useState()
+  const [errorMessage, setErrorMessage] = useState()
+  const emailInputRef = useRef()
 
-  onSubmit = (event) => {
+  const onSubmit = (event) => {
     event.preventDefault()
-    if (!this.props.feather) {
-      this.setState({
-        errorMessage:
-          "A Feather client was not provided. To learn more about using Feather's React components, please see our documentation at https://feather.id/docs."
-      })
+    if (!params.feather) {
+      setErrorMessage(
+        "A Feather client was not provided. To learn more about using Feather's React components, please see our documentation at https://feather.id/docs."
+      )
       return
     }
-    const email = this.props.input.email
-    const redirectUrl = this.props.redirectUrl
+    const email = params.input.email
+    const redirectUrl = params.redirectUrl
     if (!isValidEmail(email)) {
-      this.setState({ errorMessage: 'Please enter a valid email address.' })
-      this.emailInput = window.document
-        .getElementById(
-          'feather-id__password-authentication-form__sign-in__email-input'
-        )
-        .focus()
+      setErrorMessage('Please enter a valid email address.')
+      emailInputRef.current.focus()
     } else {
-      this.setState({ isBusy: true })
-      this.props.feather
+      setIsBusy(true)
+      params.feather
         .sendSignInLink(email, redirectUrl)
         .then(() => {
-          this.setState({
-            isBusy: false,
-            infoMessage:
-              'Please check your email for a link to reset your password.',
-            errorMessage: null
-          })
+          setIsBusy(false)
+          setInfoMessage(
+            'Please check your email for a link to reset your password.'
+          )
+          setErrorMessage(null)
         })
         .catch((error) => {
-          this.setState({
-            isBusy: false,
-            infoMessage: null,
-            errorMessage: error.message
-          })
+          setIsBusy(false)
+          setInfoMessage(null)
+          setErrorMessage(errorMessage)
         })
     }
   }
 
-  render() {
-    const inputs = this.props.form.inputs ? this.props.form.inputs : []
-    return (
-      <div>
-        {this.props.form.title && (
-          <p
-            className={css`
-              ${this.props.styles.title}
-            `}
-          >
-            {this.props.form.title}
-          </p>
-        )}
-        {this.props.form.subtitle && (
-          <p
-            className={css`
-              ${this.props.styles.subtitle}
-            `}
-          >
-            {this.props.form.subtitle}
-          </p>
-        )}
-        <FormInput
-          id='feather-id__password-authentication-form__sign-in__email-input'
-          type='email'
-          name='emailInput'
-          title={inputs.email.title ? inputs.email.title : 'Email'}
-          placeholder={inputs.email.placeholder}
-          value={this.props.input.email}
-          onChange={this.props.onChangeInput}
-          styles={this.props.styles}
-          disabled={this.state.isBusy}
-        />
-        {this.state.infoMessage && (
-          <InfoMessage
-            styles={this.props.styles}
-            message={this.state.infoMessage}
-          />
-        )}
-        {this.state.errorMessage && (
-          <ErrorMessage
-            styles={this.props.styles}
-            message={this.state.errorMessage}
-          />
-        )}
-        <button
-          type='submit'
-          onClick={this.onSubmit}
-          disabled={this.state.isBusy}
+  const inputs = params.form.inputs ? params.form.inputs : []
+  return (
+    <div>
+      {params.form.title && (
+        <p
           className={css`
-            ${this.props.styles.primaryCtaButton}
+            ${params.styles.title}
           `}
         >
-          {this.state.isBusy ? <Spinner /> : 'Continue'}
-        </button>
-      </div>
-    )
-  }
+          {params.form.title}
+        </p>
+      )}
+      {params.form.subtitle && (
+        <p
+          className={css`
+            ${params.styles.subtitle}
+          `}
+        >
+          {params.form.subtitle}
+        </p>
+      )}
+      <FormInput
+        inputRef={emailInputRef}
+        type='email'
+        name='emailInput'
+        title='Email'
+        placeholder={inputs.email.placeholder}
+        value={params.input.email}
+        onChange={params.onChangeInput}
+        styles={params.styles}
+        disabled={isBusy}
+      />
+      {infoMessage && (
+        <InfoMessage styles={params.styles} message={infoMessage} />
+      )}
+      {errorMessage && (
+        <ErrorMessage styles={params.styles} message={errorMessage} />
+      )}
+      <button
+        type='submit'
+        onClick={onSubmit}
+        disabled={isBusy}
+        className={css`
+          ${params.styles.primaryCtaButton}
+        `}
+      >
+        {isBusy ? <Spinner /> : 'Continue'}
+      </button>
+    </div>
+  )
 }
-
-export default PasswordlessAuthenticationForm_SignIn

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef, useState } from 'react'
 import FormInput from '../FormInput'
 import ErrorMessage from '../ErrorMessage'
 import InfoMessage from '../InfoMessage'
@@ -6,135 +6,110 @@ import Spinner from '../Spinner'
 import { css } from 'emotion'
 import { isValidEmail } from '../../utils.js'
 
-const INITIAL_STATE = {
-  isBusy: false,
-  errorMessage: null,
-  infoMessage: null
-}
+export default function AuthenticationForm_ForgotPassword(params) {
+  const [isBusy, setIsBusy] = useState(false)
+  const [errorMessage, setErrorMessage] = useState(null)
+  const [infoMessage, setInfoMessage] = useState(null)
+  const emailInputRef = useRef()
 
-class AuthenticationForm_ForgotPassword extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = { ...INITIAL_STATE }
-  }
-
-  onSubmit = (event) => {
+  const onSubmit = (event) => {
     event.preventDefault()
-    if (!this.props.feather) {
-      this.setState({
+    if (!params.feather) {
+      setState({
         errorMessage:
           "A Feather client was not provided. To learn more about using Feather's React components, please see our documentation at https://feather.id/docs."
       })
       return
     }
-    const email = this.props.input.email
-    const redirectUrl = this.props.redirectUrl
+    const email = params.input.email
+    const redirectUrl = params.redirectUrl
     if (!isValidEmail(email)) {
-      this.setState({ errorMessage: 'Please enter a valid email address.' })
-      this.emailInput = window.document
-        .getElementById(
-          'feather-id__password-authentication-form__forgot-password__email-input'
-        )
-        .focus()
+      setErrorMessage('Please enter a valid email address.')
+      emailInputRef.current.focus()
     } else if (!redirectUrl) {
-      this.setState({
-        errorMessage: 'A redirect URL has not been configured.'
-      })
+      setErrorMessage('A redirect URL has not been configured.')
     } else {
-      this.setState({ isBusy: true })
-      this.props.feather
+      setIsBusy(true)
+      params.feather
         .sendForgotPasswordLink(email, redirectUrl)
         .then(() => {
-          this.setState({
-            isBusy: false,
-            infoMessage:
-              'Please check your email for a link to reset your password.',
-            errorMessage: null
-          })
+          setIsBusy(false)
+          setInfoMessage(
+            'Please check your email for a link to reset your password.'
+          )
+          setErrorMessage(null)
         })
         .catch((error) => {
-          this.setState({
-            isBusy: true,
-            errorMessage: error.message,
-            infoMessage: null
-          })
+          setIsBusy(true)
+          setErrorMessage(error.message)
+          setInfoMessage(null)
         })
     }
   }
 
-  render() {
-    const inputs = this.props.form.inputs ? this.props.form.inputs : []
-    return (
-      <div>
-        {this.props.form.title && (
-          <p
+  const inputs = params.form.inputs ? params.form.inputs : []
+  return (
+    <div>
+      {params.form.title && (
+        <p
+          className={css`
+            ${params.styles.title}
+          `}
+        >
+          {params.form.title}
+        </p>
+      )}
+      {params.form.subtitle && (
+        <p
+          className={css`
+            ${params.styles.subtitle}
+          `}
+        >
+          {params.form.subtitle}
+        </p>
+      )}
+      <FormInput
+        inputRef={emailInputRef}
+        type='email'
+        name='emailInput'
+        title={inputs.email.title ? inputs.email.title : 'Email'}
+        placeholder={inputs.email.placeholder}
+        value={params.input.email}
+        onChange={params.onChangeInput}
+        styles={params.styles}
+        disabled={isBusy}
+      />
+      {errorMessage && (
+        <ErrorMessage styles={params.styles} message={errorMessage} />
+      )}
+      {infoMessage && (
+        <InfoMessage styles={params.styles} message={infoMessage} />
+      )}
+      {!infoMessage && (
+        <div>
+          <button
+            type='submit'
+            onClick={onSubmit}
+            disabled={isBusy}
             className={css`
-              ${this.props.styles.title}
+              ${params.styles.primaryCtaButton}
             `}
           >
-            {this.props.form.title}
-          </p>
-        )}
-        {this.props.form.subtitle && (
-          <p
+            {isBusy ? <Spinner /> : 'Continue'}
+          </button>
+          <button
+            type='button'
+            name='sign_in'
+            onClick={params.onClickFormTypeButton}
+            disabled={isBusy}
             className={css`
-              ${this.props.styles.subtitle}
+              ${params.styles.secondaryCtaButton}
             `}
           >
-            {this.props.form.subtitle}
-          </p>
-        )}
-        <FormInput
-          id='feather-id__password-authentication-form__forgot-password__email-input'
-          type='email'
-          name='emailInput'
-          title={inputs.email.title ? inputs.email.title : 'Email'}
-          placeholder={inputs.email.placeholder}
-          value={this.props.input.email}
-          onChange={this.props.onChangeInput}
-          styles={this.props.styles}
-          disabled={this.state.isBusy}
-        />
-        {this.state.errorMessage && (
-          <ErrorMessage
-            styles={this.props.styles}
-            message={this.state.errorMessage}
-          />
-        )}
-        {this.state.infoMessage && (
-          <InfoMessage
-            styles={this.props.styles}
-            message={this.state.infoMessage}
-          />
-        )}
-        {!this.state.infoMessage && (
-          <div>
-            <button
-              type='submit'
-              onClick={this.onSubmit}
-              disabled={this.state.isBusy}
-              className={css`
-                ${this.props.styles.primaryCtaButton}
-              `}
-            >
-              {this.state.isBusy ? <Spinner /> : 'Continue'}
-            </button>
-            <button
-              type='button'
-              name='sign_in'
-              onClick={this.props.onClickFormTypeButton}
-              disabled={this.state.isBusy}
-              className={css`
-                ${this.props.styles.secondaryCtaButton}
-              `}
-            >
-              Cancel
-            </button>
-          </div>
-        )}
-      </div>
-    )
-  }
+            Cancel
+          </button>
+        </div>
+      )}
+    </div>
+  )
 }
-
-export default AuthenticationForm_ForgotPassword
