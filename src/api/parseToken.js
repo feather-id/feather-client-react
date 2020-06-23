@@ -69,8 +69,6 @@ function parseToken(tokenString, getPublicKey) {
           sessionStatus = 'stale'
         }
 
-        // TODO check the last_refreshed_at date
-
         const session = {
           id: parsedToken.payload.ses,
           object: 'session',
