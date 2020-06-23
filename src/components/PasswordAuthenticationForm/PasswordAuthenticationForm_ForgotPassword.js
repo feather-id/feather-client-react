@@ -21,7 +21,10 @@ class AuthenticationForm_ForgotPassword extends React.Component {
   onSubmit = (event) => {
     event.preventDefault()
     if (!this.props.feather) {
-      console.error('Feather client not provided.')
+      this.setState({
+        errorMessage:
+          "A Feather client was not provided. To learn more about using Feather's React components, please see our documentation at https://feather.id/docs."
+      })
       return
     }
     const email = this.props.input.email
@@ -33,6 +36,10 @@ class AuthenticationForm_ForgotPassword extends React.Component {
           'feather-id__password-authentication-form__forgot-password__email-input'
         )
         .focus()
+    } else if (!redirectUrl) {
+      this.setState({
+        errorMessage: 'A redirect URL has not been configured.'
+      })
     } else {
       this.setState({ isBusy: true })
       this.props.feather

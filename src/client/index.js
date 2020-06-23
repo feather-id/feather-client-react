@@ -1,1 +1,1 @@
-export { default } from './client.js'
+export { Feather } from './client.js'

@@ -6,7 +6,7 @@ import ConfigWarning from '../ConfigWarning'
 import { css } from 'emotion'
 import { defaultConfig } from './defaultConfig.js'
 import { defaultStyles } from '../styles.js'
-import { mergeStyles } from './utils.js'
+import { mergeStyles } from '../utils.js'
 
 const INITIAL_STATE = {
   emailInput: '',
@@ -15,12 +15,9 @@ const INITIAL_STATE = {
   formType: 'sign_in'
 }
 
-class AuthenticationForm extends React.Component {
+class PasswordAuthenticationForm extends React.Component {
   constructor(props) {
     super(props)
-
-    // TODO smartly choose the initial formType
-
     this.state = { ...INITIAL_STATE }
   }
 
@@ -36,9 +33,12 @@ class AuthenticationForm extends React.Component {
 
   getConfigWarnings = (config) => {
     var configWarnings = []
+    if (!this.props.feather) {
+      configWarnings.push("You did not configure a 'feather' client.")
+    }
     if (!this.props.redirectUrl) {
       configWarnings.push(
-        "You did not include a 'redirectUrl' for the forgot-password form. This is the URL your users will be redirected to after click the link in a password reset email."
+        "You did not configure a 'redirectUrl' for the forgot-password form. This is the URL your users will be redirected to after clicking the link in a password reset email."
       )
     }
     return configWarnings
@@ -120,4 +120,4 @@ class AuthenticationForm extends React.Component {
   }
 }
 
-export default AuthenticationForm
+export { PasswordAuthenticationForm }

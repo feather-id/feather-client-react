@@ -1,6 +1,6 @@
 import { FeatherError, ErrorType, ErrorCode } from '../errors'
 
-export default function sendSignInLink(params) {
+export default function sendSignInLink(email, redirectUrl) {
   const that = this
   return new Promise(function (resolve, reject) {
     that._database
@@ -16,7 +16,8 @@ export default function sendSignInLink(params) {
           return Promise.all([
             state,
             that._api.credentials.create({
-              ...params,
+              email,
+              redirectUrl,
               templateName: 'sign_in',
               scopes: 'upgrade_session'
             })

@@ -17,7 +17,7 @@ import updateUser from './updateUser.js'
 import updateUserEmail from './updateUserEmail.js'
 import updateUserPassword from './updateUserPassword.js'
 
-export default function Feather(apiKey, config = {}) {
+export function Feather(apiKey, config = {}) {
   if (!(this instanceof Feather)) {
     return new Feather(apiKey, config)
   }

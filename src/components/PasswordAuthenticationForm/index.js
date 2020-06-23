@@ -1,3 +1,1 @@
-import PasswordAuthenticationForm from './PasswordAuthenticationForm'
-
-export { PasswordAuthenticationForm }
+export { PasswordAuthenticationForm } from './PasswordAuthenticationForm'

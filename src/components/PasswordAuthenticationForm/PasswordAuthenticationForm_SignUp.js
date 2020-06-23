@@ -20,6 +20,13 @@ class AuthenticationForm_SignUp extends React.Component {
 
   onSubmit = (event) => {
     event.preventDefault()
+    if (!this.props.feather) {
+      this.setState({
+        errorMessage:
+          "A Feather client was not provided. To learn more about using Feather's React components, please see our documentation at https://feather.id/docs."
+      })
+      return
+    }
     const email = this.props.input.email
     const password = this.props.input.password
     const confirmPassword = this.props.input.confirmPassword

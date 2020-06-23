@@ -45,12 +45,13 @@ export const defaultStyles = {
   },
   inputTitle: {
     fontSize: '1em',
+    fontWeight: '500',
     color: 'hsl(214, 24%, 32%)',
     textAlign: 'left',
     margin: '4px auto 12px 4px'
   },
   forgotPasswordButton: {
-    fontSize: '0.95em',
+    fontSize: '1em',
     fontWeight: '500',
     background: 'none',
     border: 'none',
