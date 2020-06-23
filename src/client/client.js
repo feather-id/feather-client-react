@@ -1,5 +1,5 @@
-import Database from './database'
 import { Feather } from 'feather-client-js'
+import { fetchCurrentState, updateCurrentState } from './database'
 import confirmEmailVerificationLink from './confirmEmailVerificationLink.js'
 import confirmForgotPasswordLink from './confirmForgotPasswordLink.js'
 import confirmSignInLink from './confirmSignInLink.js'
@@ -27,32 +27,34 @@ export function Client(apiKey, config = {}) {
     )
   }
   this._client = Feather(apiKey, config)
-  this._database = new Database(
-    (database) => {
-      database
-        .fetchCurrentState()
-        .then((state) => {
-          if (!state) {
-            database.updateCurrentState({
-              credential: null,
-              session: null,
-              user: null
-            })
-          }
-          this._notifyStateObservers()
+
+  fetchCurrentState()
+    .then((state) => {
+      if (!state) {
+        updateCurrentState({
+          credential: null,
+          session: null,
+          user: null
         })
-        .catch((error) => {
-          console.log(error)
-        })
-    },
-    (error) => {
-      throw new Error('Failed to initialize Feather database: ' + error)
-    }
-  )
+      }
+      this._notifyStateObservers()
+    })
+    .catch((error) => {
+      console.log(error)
+    })
+
+  // this._database = new Database(
+  //   (database) => {
+  //     database.fetchCurrentState()
+  //   },
+  //   (error) => {
+  //     throw new Error('Failed to initialize Feather database: ' + error)
+  //   }
+  // )
   this._onStateChangeObservers = []
   var that = this
   this._notifyStateObservers = function () {
-    that._database.fetchCurrentState().then((state) => {
+    fetchCurrentState().then((state) => {
       that._onStateChangeObservers.forEach((observer) =>
         observer(state.session, state.user)
       )

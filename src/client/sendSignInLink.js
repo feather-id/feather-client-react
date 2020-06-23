@@ -1,15 +1,15 @@
-import { FeatherError, ErrorType, ErrorCode } from 'feather-client-js'
+import { FeatherError, FeatherErrorType, FeatherErrorCode } from 'feather-client-js'
+import { fetchCurrentState, updateCurrentState } from './database'
 
 export default function sendSignInLink(email, redirectUrl) {
   const that = this
   return new Promise(function (resolve, reject) {
-    that._database
-      .fetchCurrentState()
+    fetchCurrentState()
       .then((state) => {
         if (!!state.user && !state.user.isAnonymous) {
           throw new FeatherError({
-            type: ErrorType.VALIDATION,
-            code: ErrorCode.CURRENT_STATE_INCONSISTENT,
+            type: FeatherErrorType.VALIDATION,
+            code: FeatherErrorCode.CURRENT_STATE_INCONSISTENT,
             message: 'The current user is already authenticated.'
           })
         } else {
@@ -26,7 +26,7 @@ export default function sendSignInLink(email, redirectUrl) {
       })
       .then(([state, credential]) => {
         state.credential = credential
-        return that._database.updateCurrentState(state)
+        return updateCurrentState(state)
       })
       .then(() => resolve())
       .catch((error) => reject(error))

@@ -32,9 +32,7 @@ export default function PasswordlessAuthenticationFormSignIn(params) {
         .sendSignInLink(email, redirectUrl)
         .then(() => {
           setIsBusy(false)
-          setInfoMessage(
-            'Please check your email for a link to reset your password.'
-          )
+          setInfoMessage('Please check your email for a link to sign in.')
           setErrorMessage(null)
         })
         .catch((error) => {

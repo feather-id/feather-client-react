@@ -1,15 +1,15 @@
-import { FeatherError, ErrorType, ErrorCode } from 'feather-client-js'
+import { FeatherError, FeatherErrorType, FeatherErrorCode } from 'feather-client-js'
+import { fetchCurrentState, updateCurrentState } from './database'
 
 export default function signOut(params) {
   const that = this
   return new Promise(function (resolve, reject) {
-    that._database
-      .fetchCurrentState()
+    fetchCurrentState()
       .then((state) => {
         if (state.session) {
           throw new FeatherError({
-            type: ErrorType.VALIDATION,
-            code: ErrorCode.CURRENT_STATE_INCONSISTENT,
+            type: FeatherErrorType.VALIDATION,
+            code: FeatherErrorCode.CURRENT_STATE_INCONSISTENT,
             message: 'There is no currently active session on this client.'
           })
         } else {
@@ -23,7 +23,7 @@ export default function signOut(params) {
       })
       .then((state, session) => {
         state.session = session
-        that._database.updateCurrentState(state)
+        return updateCurrentState(state)
       })
       .then(() => {
         that._notifyStateObservers()

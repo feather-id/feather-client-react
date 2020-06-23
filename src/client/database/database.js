@@ -1,47 +1,46 @@
 const dbName = 'FeatherDB'
 const version = 1
-var _db = null
 
-export default function Database(onSuccess, onError) {
-  if (!(this instanceof Database)) {
-    return new Database()
-  }
+function openDb() {
+  return new Promise(function (resolve, reject) {
+    var request = window.indexedDB.open(dbName, version)
 
-  var that = this
-  var request = window.indexedDB.open(dbName, version)
-  request.onerror = function (event) {
-    if (onError) {
-      onError(event)
+    request.onerror = function (event) {
+      reject(event)
     }
-  }
 
-  request.onsuccess = function (event) {
-    _db = request.result
-    if (onSuccess) {
-      onSuccess(that)
+    request.onsuccess = function (event) {
+      resolve(request.result)
     }
-  }
 
-  request.onupgradeneeded = function (event) {
-    _db = request.result
-    if (!_db.objectStoreNames.contains('state')) {
-      _db.createObjectStore('state', {
-        keyPath: 'id'
-      })
+    request.onupgradeneeded = function (event) {
+      const db = request.result
+      if (!db.objectStoreNames.contains('state')) {
+        db.createObjectStore('state', {
+          keyPath: 'id'
+        })
+        var txn = event.target.transaction
+        txn.oncomplete = function (event) {
+          resolve(db)
+        }
+      } else {
+        resolve(db)
+      }
     }
-    if (onSuccess) {
-      onSuccess(that)
-    }
-  }
+  })
+}
 
-  this.fetchCurrentState = function () {
-    return new Promise(function (resolve, reject) {
-      var transaction = _db.transaction(['state'])
-      var objectStore = transaction.objectStore('state')
-      var request = objectStore.get('current')
+export function fetchCurrentState() {
+  return new Promise(function (resolve, reject) {
+    openDb().then((db) => {
+      var request = db
+        .transaction(['state'])
+        .objectStore('state')
+        .get('current')
 
       request.onerror = function (event) {
         reject(event)
+        db.close()
       }
 
       request.onsuccess = function (event) {
@@ -50,25 +49,28 @@ export default function Database(onSuccess, onError) {
         } else {
           resolve(null)
         }
+        db.close()
       }
     })
-  }
+  })
+}
 
-  this.updateCurrentState = function (state) {
-    return new Promise(function (resolve, reject) {
+export function updateCurrentState(state) {
+  return new Promise(function (resolve, reject) {
+    openDb().then((db) => {
       state.id = 'current'
-      var request = _db
+      var request = db
         .transaction(['state'], 'readwrite')
         .objectStore('state')
         .put(state)
 
-      request.onsuccess = function (event) {
-        resolve(event)
-      }
-
       request.onerror = function (event) {
         reject(event)
       }
+
+      request.onsuccess = function (event) {
+        resolve(event)
+      }
     })
-  }
+  })
 }

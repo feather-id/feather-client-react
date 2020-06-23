@@ -1,4 +1,5 @@
-import { FeatherError, ErrorType, ErrorCode } from 'feather-client-js'
+import { FeatherError, FeatherErrorType, FeatherErrorCode } from 'feather-client-js'
+import { fetchCurrentState, updateCurrentState } from './database'
 
 // TODO Update user with provided (optional) metadata after sign-in
 
@@ -10,8 +11,8 @@ export default function signInAnonymously() {
       .then((session) => {
         if (session) {
           throw new FeatherError({
-            type: ErrorType.VALIDATION,
-            code: ErrorCode.CURRENT_STATE_INCONSISTENT,
+            type: FeatherErrorType.VALIDATION,
+            code: FeatherErrorCode.CURRENT_STATE_INCONSISTENT,
             message: 'There is already an active session on this client.'
           })
         } else {
@@ -25,7 +26,7 @@ export default function signInAnonymously() {
         ])
       )
       .then(([session, user]) =>
-        that._database.updateCurrentState({ session, user, credential: null })
+        updateCurrentState({ session, user, credential: null })
       )
       .then(() => {
         that._notifyStateObservers()

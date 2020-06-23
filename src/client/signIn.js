@@ -1,17 +1,17 @@
-import { FeatherError, ErrorType, ErrorCode } from 'feather-client-js'
+import { FeatherError, FeatherErrorType, FeatherErrorCode } from 'feather-client-js'
+import { fetchCurrentState, updateCurrentState } from './database'
 
 // TODO Update user with provided (optional) metadata after sign-in
 
 export default function signIn(email, password) {
   var that = this
   return new Promise(function (resolve, reject) {
-    that._database
-      .fetchCurrentState()
+    fetchCurrentState()
       .then((state) => {
         if (!!state.user && !state.user.isAnonymous) {
           throw new FeatherError({
-            type: ErrorType.VALIDATION,
-            code: ErrorCode.CURRENT_STATE_INCONSISTENT,
+            type: FeatherErrorType.VALIDATION,
+            code: FeatherErrorCode.CURRENT_STATE_INCONSISTENT,
             message: 'The current user is already authenticated.'
           })
         } else {
@@ -28,8 +28,8 @@ export default function signIn(email, password) {
       .then(([session, credential]) => {
         if (credential.status !== 'valid') {
           throw new FeatherError({
-            type: ErrorType.VALIDATION,
-            code: ErrorCode.CREDENTIAL_INVALID,
+            type: FeatherErrorType.VALIDATION,
+            code: FeatherErrorCode.CREDENTIAL_INVALID,
             message: 'Incorrect email or password.'
           })
         }
@@ -47,7 +47,7 @@ export default function signIn(email, password) {
         ])
       )
       .then(([session, user]) =>
-        that._database.updateCurrentState({ session, user, credential: null })
+        updateCurrentState({ session, user, credential: null })
       )
       .then(() => {
         that._notifyStateObservers()

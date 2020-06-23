@@ -1,21 +1,21 @@
-import { FeatherError, ErrorType, ErrorCode } from 'feather-client-js'
+import { FeatherError, FeatherErrorType, FeatherErrorCode } from 'feather-client-js'
+import { fetchCurrentState, updateCurrentState } from './database'
 
 export default function updateUserEmail(password, newEmail) {
   const that = this
   return new Promise(function (resolve, reject) {
-    that._database
-      .fetchCurrentState()
+    fetchCurrentState()
       .then((state) => {
         if (!state.user) {
           throw new FeatherError({
-            type: ErrorType.VALIDATION,
-            code: ErrorCode.CURRENT_STATE_INCONSISTENT,
+            type: FeatherErrorType.VALIDATION,
+            code: FeatherErrorCode.CURRENT_STATE_INCONSISTENT,
             message: 'There is no current user on this client.'
           })
         } else if (state.user.isAnonymous) {
           throw new FeatherError({
-            type: ErrorType.VALIDATION,
-            code: ErrorCode.CURRENT_STATE_INCONSISTENT,
+            type: FeatherErrorType.VALIDATION,
+            code: FeatherErrorCode.CURRENT_STATE_INCONSISTENT,
             message:
               'The current user is anonymous and their email cannot be updated.'
           })
@@ -33,8 +33,8 @@ export default function updateUserEmail(password, newEmail) {
       .then(([state, credential]) => {
         if (credential.status !== 'valid') {
           throw new FeatherError({
-            type: ErrorType.VALIDATION,
-            code: ErrorCode.CREDENTIAL_INVALID,
+            type: FeatherErrorType.VALIDATION,
+            code: FeatherErrorCode.CREDENTIAL_INVALID,
             message: 'Incorrect password.'
           })
         }
@@ -49,7 +49,7 @@ export default function updateUserEmail(password, newEmail) {
       })
       .then(([state, user]) => {
         state.user = user
-        return that._database.updateCurrentState(state)
+        return updateCurrentState(state)
       })
       .then(() => {
         that._notifyStateObservers()

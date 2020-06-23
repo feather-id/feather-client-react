@@ -1,1 +1,1 @@
-export { default } from './database.js'
+export { fetchCurrentState, updateCurrentState } from './database.js'

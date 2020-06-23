@@ -7,7 +7,7 @@ import { defaultStyles } from '../styles.js'
 import { mergeStyles } from '../utils.js'
 
 export default function PasswordlessAuthenticationForm(params) {
-  const [emailInput, setEmailInput] = useState()
+  const [emailInput, setEmailInput] = useState('')
 
   const onChangeInput = (event) => {
     event.preventDefault()
