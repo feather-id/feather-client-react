@@ -1,9 +1,8 @@
 import React from 'react'
-// import Feather from '../../feather'
-import SignIn from './AuthenticationForm_SignIn.js'
-import SignUp from './AuthenticationForm_SignUp.js'
-import ForgotPassword from './AuthenticationForm_ForgotPassword.js'
-import ComponentConfigWarning from './AuthenticationForm_ComponentConfigWarning.js'
+import SignIn from './PasswordAuthenticationForm_SignIn.js'
+import SignUp from './PasswordAuthenticationForm_SignUp.js'
+import ForgotPassword from './PasswordAuthenticationForm_ForgotPassword.js'
+import ConfigWarning from '../ConfigWarning'
 import { css } from 'emotion'
 import { defaultConfig } from './defaultConfig.js'
 import { defaultStyles } from '../styles.js'
@@ -35,91 +34,13 @@ class AuthenticationForm extends React.Component {
     this.setState({ formType: [event.target.name] })
   }
 
-  onSubmitSignIn = (event) => {
-    event.preventDefault()
-    if (!this.props.feather) {
-      console.error('Feather client not provided.')
-      return
-    }
-    const email = this.state.emailInput
-    const password = this.state.passwordInput
-    this.props.feather.signIn({ email, password }).catch((error) => {
-      // Handle an error
-      console.log(error)
-    })
-  }
-
-  onSubmitSignUp = (event) => {
-    this.onSubmitSignIn(event)
-  }
-
-  onSubmitForgotPassword = (event) => {
-    event.preventDefault()
-    if (!this.props.feather) {
-      console.error('Feather client not provided.')
-      return
-    }
-    const email = this.state.emailInput
-    const redirectUrl = this.props.redirectUrl
-    this.props.feather
-      .sendForgotPasswordLink({ email, redirectUrl })
-      .catch((error) => {
-        // Handle an error
-        console.log(error)
-      })
-  }
-
   getConfigWarnings = (config) => {
     var configWarnings = []
-
-    if (
-      config.signIn &&
-      config.signIn.inputs.hasOwnProperty('email') &&
-      !!config.signUp &&
-      !config.signUp.inputs.hasOwnProperty('email')
-    ) {
+    if (!this.props.redirectUrl) {
       configWarnings.push(
-        'Your sign-in form has an email field, but your sign-up from does not.'
+        "You did not include a 'redirectUrl' for your forgot-password form. This is the URL your user will be redirected to after receiving the password reset email."
       )
     }
-
-    if (
-      config.signIn &&
-      config.signIn.inputs.hasOwnProperty('password') &&
-      !!config.signUp &&
-      !config.signUp.inputs.hasOwnProperty('password')
-    ) {
-      configWarnings.push(
-        'Your sign-in form has an password field, but your sign-up from does not.'
-      )
-    }
-
-    if (
-      config.signIn &&
-      !config.signIn.inputs.hasOwnProperty('password') &&
-      !this.props.redirectUrl
-    ) {
-      configWarnings.push(
-        "Your sign-in form is passwordless, but you did not provide a 'redirectUrl'. This is the URL your user is redirected from the passwordless verification email."
-      )
-    }
-
-    if (
-      config.signIn &&
-      !config.signIn.inputs.hasOwnProperty('password') &&
-      !!config.signUp
-    ) {
-      configWarnings.push(
-        'Your sign-in form is passwordless, but you additionally included a sign-up form. You can reduce user friction by removing the sign-up form.'
-      )
-    }
-
-    if (!!config.forgotPassword && !this.props.redirectUrl) {
-      configWarnings.push(
-        "You did not include a 'redirectUrl' for your forgot-password form. This is the URL your user is redirected from the password reset email."
-      )
-    }
-
     return configWarnings
   }
 
@@ -128,7 +49,8 @@ class AuthenticationForm extends React.Component {
     var signUpFields = this.props.signUpFields ? this.props.signUpFields : []
 
     // Get configuration warnings
-    const config = this.props.config ? this.props.config : defaultConfig
+    // const config = this.props.config ? this.props.config : defaultConfig
+    const config = defaultConfig
     const configWarnings = this.getConfigWarnings(config)
     const showConfigWarning =
       configWarnings.length > 0 && !this.props.silenceWarnings
@@ -145,11 +67,10 @@ class AuthenticationForm extends React.Component {
           ${styles.container}
         `}
       >
-        {showConfigWarning && (
-          <ComponentConfigWarning warnings={configWarnings} />
-        )}
+        {showConfigWarning && <ConfigWarning warnings={configWarnings} />}
         {this.state.formType == 'sign_in' && (
           <SignIn
+            feather={this.props.feather}
             form={config.signIn}
             onSubmit={this.onSubmitSignIn}
             onChangeInput={this.onChangeInput}
@@ -165,6 +86,7 @@ class AuthenticationForm extends React.Component {
         )}
         {this.state.formType == 'sign_up' && (
           <SignUp
+            feather={this.props.feather}
             form={config.signUp}
             onSubmit={this.onSubmitSignUp}
             onChangeInput={this.onChangeInput}
@@ -180,10 +102,12 @@ class AuthenticationForm extends React.Component {
         )}
         {this.state.formType == 'forgot_password' && (
           <ForgotPassword
+            feather={this.props.feather}
             form={config.forgotPassword}
             onSubmit={this.onSubmitForgotPassword}
             onChangeInput={this.onChangeInput}
             onClickFormTypeButton={this.onClickFormTypeButton}
+            redirectUrl={this.props.redirectUrl}
             styles={styles}
             input={{
               email: this.state.emailInput

@@ -2,7 +2,7 @@ import { FeatherError, ErrorType, ErrorCode } from '../errors'
 
 // TODO Update user with provided (optional) metadata after sign-in
 
-export default function signIn(params) {
+export default function signIn(email, password) {
   var that = this
   return new Promise(function (resolve, reject) {
     that._database
@@ -18,7 +18,8 @@ export default function signIn(params) {
           return Promise.all([
             state.session,
             that._api.credentials.create({
-              templateName: 'sign_in',
+              email,
+              password,
               scopes: 'upgrade_session'
             })
           ])
@@ -28,8 +29,8 @@ export default function signIn(params) {
         if (credential.status != 'valid') {
           throw new FeatherError({
             type: ErrorType.VALIDATION,
-            code: ErrorCode.CURRENT_STATE_INCONSISTENT,
-            message: 'The provided credentials were invalid.'
+            code: ErrorCode.CREDENTIAL_INVALID,
+            message: 'Incorrect email or password.'
           })
         }
         const credentialToken = credential.token

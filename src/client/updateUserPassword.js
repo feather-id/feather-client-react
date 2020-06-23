@@ -34,15 +34,14 @@ export default function updateUserPassword(currentPassword, newPassword) {
         if (credential.status != 'valid') {
           throw new FeatherError({
             type: ErrorType.VALIDATION,
-            code: ErrorCode.CURRENT_STATE_INCONSISTENT,
-            message: 'The provided current password is invalid.'
+            code: ErrorCode.CREDENTIAL_INVALID,
+            message: 'Incorrect password.'
           })
         }
-        const credentialToken = credential.token
         return Promise.all([
           state,
           that._api.users.updatePassword(state.user.id, {
-            credentialToken,
+            credentialToken: credential.token,
             newPassword
           })
         ])

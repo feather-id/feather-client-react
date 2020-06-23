@@ -1,50 +1,56 @@
 import React from 'react'
 import { css } from 'emotion'
 
-export default function FormInput(props) {
-  return (
-    <div
-      className={css`
-        ${props.styles.inputContainer}
-      `}
-    >
+class FormInput extends React.Component {
+  render() {
+    return (
       <div
         className={css`
-          display: flex;
-          flexdirection: row;
-          width: 100%;
+          ${this.props.styles.inputContainer}
         `}
       >
-        <p
+        <div
           className={css`
-            ${props.styles.inputTitle}
+            display: flex;
+            flexdirection: row;
+            width: 100%;
           `}
         >
-          {props.title}
-        </p>
-        {props.helpButton && (
-          <button
-            type='button'
-            name={props.helpButton.name}
-            onClick={props.helpButton.onClick}
+          <p
             className={css`
-              ${props.styles.forgotPasswordButton}
+              ${this.props.styles.inputTitle}
             `}
           >
-            {props.helpButton.title}
-          </button>
-        )}
+            {this.props.title}
+          </p>
+          {this.props.helpButton && (
+            <button
+              type='button'
+              name={this.props.helpButton.name}
+              onClick={this.props.helpButton.onClick}
+              className={css`
+                ${this.props.styles.forgotPasswordButton}
+              `}
+            >
+              {this.props.helpButton.title}
+            </button>
+          )}
+        </div>
+        <input
+          id={this.props.id}
+          type={this.props.type}
+          name={this.props.name}
+          onChange={this.props.onChange}
+          value={this.props.value}
+          placeholder={this.props.placeholder}
+          className={css`
+            ${this.props.styles.inputField}
+          `}
+        />
       </div>
-      <input
-        type={props.type}
-        name={props.name}
-        onChange={props.onChange}
-        value={props.value}
-        placeholder={props.placeholder}
-        className={css`
-          ${props.styles.inputField}
-        `}
-      />
-    </div>
-  )
+    )
+  }
 }
+
+// onHide={this.handleClose.bind(this)}
+export default FormInput

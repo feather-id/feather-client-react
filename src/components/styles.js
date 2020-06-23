@@ -6,13 +6,23 @@ export const defaultStyles = {
     maxWidth: '512px',
     padding: '64px 32px',
     margin: 'auto',
-    background: 'none'
+    background: 'none',
+    '@media(max-width: 512pt)': {
+      padding: '32px 24px'
+    }
   },
   title: {
     fontSize: '1.5em',
     color: 'hsl(214, 12%, 12%)',
     margin: '32px 4px',
     textAlign: 'left'
+  },
+  subtitle: {
+    fontSize: '1em',
+    color: 'hsl(214, 24%, 32%)',
+    margin: '16px 4px 32px 4px',
+    textAlign: 'left',
+    lineHeight: '1.6'
   },
   inputContainer: {
     display: 'flex',
@@ -22,6 +32,7 @@ export const defaultStyles = {
     padding: '0px'
   },
   inputField: {
+    '-webkit-appearance': 'none',
     fontSize: '1em',
     padding: '16px',
     border: '1px solid hsl(214, 36%, 84%)',
@@ -35,41 +46,71 @@ export const defaultStyles = {
     fontSize: '1em',
     color: 'hsl(214, 24%, 32%)',
     textAlign: 'left',
-    margin: '4px auto 8px 4px'
+    margin: '4px auto 12px 4px'
   },
   forgotPasswordButton: {
-    fontSize: '0.8em',
+    fontSize: '0.95em',
     fontWeight: '500',
     background: 'none',
     border: 'none',
     color: 'hsl(230, 75%, 65%)',
     padding: '0px',
-    margin: '0px 4px 0px auto',
-    cursor: 'pointer'
+    margin: '0px 4px 8px auto',
+    cursor: 'pointer',
+    ':hover': {
+      color: 'hsl(230, 75%, 68%)'
+    }
+  },
+  infoIcon: {
+    fontSize: '0.85em',
+    margin: 'auto 8px auto 0px',
+    color: 'hsl(230, 75%, 65%)'
+  },
+  infoMessage: {
+    fontSize: '1em',
+    fontWeight: '500',
+    margin: '0px',
+    textAlign: 'left',
+    color: 'hsl(230, 75%, 65%)'
+  },
+  errorIcon: {
+    fontSize: '0.85em',
+    margin: 'auto 8px auto 0px',
+    color: 'hsl(356, 75%, 50%)'
+  },
+  errorMessage: {
+    fontSize: '1em',
+    fontWeight: '500',
+    margin: '0px',
+    textAlign: 'left',
+    color: 'hsl(356, 75%, 50%)'
   },
   primaryCtaButton: {
-    fontSize: '1em',
+    fontSize: '1.15em',
     fontWeight: '500',
     borderRadius: '4px',
     border: 'none',
     color: '#fff',
     backgroundColor: 'hsl(230, 75%, 65%)',
     padding: '16px 32px',
-    margin: '16px 0px 0px auto',
+    margin: '16px 4px 0px auto',
     cursor: 'pointer',
     ':hover': {
       backgroundColor: 'hsl(230, 75%, 68%)'
     }
   },
   secondaryCtaButton: {
-    fontSize: '1em',
+    fontSize: '1.15em',
     fontWeight: '500',
     background: 'none',
     border: 'none',
     color: 'hsl(230, 75%, 65%)',
     padding: '16px 0px',
-    margin: '16px auto 0px 0px',
-    cursor: 'pointer'
+    margin: '16px auto 0px 4px',
+    cursor: 'pointer',
+    ':hover': {
+      color: 'hsl(230, 75%, 68%)'
+    }
   }
 }
 

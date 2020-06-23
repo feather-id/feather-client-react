@@ -16,6 +16,8 @@ export const defaultConfig = {
   },
   forgotPassword: {
     title: 'Reset your password',
+    subtitle:
+      "Enter the email address associated with your account, and we'll send you a link to reset your password.",
     inputs: {
       email: {}
     }

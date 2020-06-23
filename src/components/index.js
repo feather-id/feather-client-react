@@ -1,1 +1,1 @@
-export { AuthenticationForm } from './AuthenticationForm'
+export { PasswordAuthenticationForm } from './PasswordAuthenticationForm'

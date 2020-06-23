@@ -1,6 +1,6 @@
 import { FeatherError, ErrorType, ErrorCode } from '../errors'
 
-export default function sendForgotPasswordLink(params) {
+export default function sendForgotPasswordLink(email, redirectUrl) {
   const that = this
   return new Promise(function (resolve, reject) {
     that._database
@@ -16,9 +16,9 @@ export default function sendForgotPasswordLink(params) {
           return Promise.all([
             state,
             that._api.credentials.create({
-              email: params.email,
+              email,
+              redirectUrl,
               templateName: 'reset_password',
-              redirectUrl: params.redirectUrl,
               scopes: 'upgrade_session, update_user_password'
             })
           ])
