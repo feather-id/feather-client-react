@@ -5,6 +5,8 @@ export {
   FeatherErrorCode
 } from 'feather-client-js'
 export {
+  FeatherContext,
   PasswordAuthenticationForm,
-  PasswordlessAuthenticationForm
+  PasswordlessAuthenticationForm,
+  withFeather
 } from './components'

@@ -1,4 +1,3 @@
-import PasswordAuthenticationForm from './PasswordAuthenticationForm'
-import PasswordlessAuthenticationForm from './PasswordlessAuthenticationForm'
-
-export { PasswordAuthenticationForm, PasswordlessAuthenticationForm }
+export { default as PasswordAuthenticationForm } from './PasswordAuthenticationForm'
+export { default as PasswordlessAuthenticationForm } from './PasswordlessAuthenticationForm'
+export { FeatherContext, withFeather } from './Context'
