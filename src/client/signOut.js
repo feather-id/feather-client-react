@@ -1,4 +1,4 @@
-import { FeatherError, ErrorType, ErrorCode } from '../errors'
+import { FeatherError, ErrorType, ErrorCode } from 'feather-client-js'
 
 export default function signOut(params) {
   const that = this
@@ -15,7 +15,7 @@ export default function signOut(params) {
         } else {
           return Promise.all([
             state,
-            that._api.sessions.revoke(state.session.id, {
+            that._client.sessions.revoke(state.session.id, {
               sessionToken: state.session.token
             })
           ])

@@ -1,4 +1,4 @@
-import { FeatherError, ErrorType, ErrorCode } from '../errors'
+import { FeatherError, ErrorType, ErrorCode } from 'feather-client-js'
 import { parseQueryParams } from './utils.js'
 
 export default function confirmForgotPasswordLink(url, newPassword) {
@@ -24,7 +24,7 @@ export default function confirmForgotPasswordLink(url, newPassword) {
         } else {
           return Promise.all([
             state.session,
-            that._api.credentials.update(state.credential.id, {
+            that._client.credentials.update(state.credential.id, {
               verificationCode: params.code
             })
           ])
@@ -42,19 +42,19 @@ export default function confirmForgotPasswordLink(url, newPassword) {
         if (session) {
           return Promise.all([
             credentialToken,
-            that._api.sessions.upgrade(session.id, { credentialToken })
+            that._client.sessions.upgrade(session.id, { credentialToken })
           ])
         } else {
           return Promise.all([
             credentialToken,
-            that._api.sessions.create({ credentialToken })
+            that._client.sessions.create({ credentialToken })
           ])
         }
       })
       .then(([credentialToken, session]) =>
         Promise.all([
           session,
-          that._api.users.updatePassword(session.userId, {
+          that._client.users.updatePassword(session.userId, {
             credentialToken,
             newPassword
           })

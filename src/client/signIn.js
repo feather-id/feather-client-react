@@ -1,4 +1,4 @@
-import { FeatherError, ErrorType, ErrorCode } from '../errors'
+import { FeatherError, ErrorType, ErrorCode } from 'feather-client-js'
 
 // TODO Update user with provided (optional) metadata after sign-in
 
@@ -17,7 +17,7 @@ export default function signIn(email, password) {
         } else {
           return Promise.all([
             state.session,
-            that._api.credentials.create({
+            that._client.credentials.create({
               email,
               password,
               scopes: 'upgrade_session'
@@ -35,15 +35,15 @@ export default function signIn(email, password) {
         }
         const credentialToken = credential.token
         if (session) {
-          return that._api.sessions.upgrade(session.id, { credentialToken })
+          return that._client.sessions.upgrade(session.id, { credentialToken })
         } else {
-          return that._api.sessions.create({ credentialToken })
+          return that._client.sessions.create({ credentialToken })
         }
       })
       .then((session) =>
         Promise.all([
           session,
-          that._api.users.retrieve(session.userId, session.token)
+          that._client.users.retrieve(session.userId, session.token)
         ])
       )
       .then(([session, user]) =>

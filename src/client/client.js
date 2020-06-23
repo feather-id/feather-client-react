@@ -1,5 +1,5 @@
-import API from '../api'
 import Database from './database'
+import { Feather } from 'feather-client-js'
 import confirmEmailVerificationLink from './confirmEmailVerificationLink.js'
 import confirmForgotPasswordLink from './confirmForgotPasswordLink.js'
 import confirmSignInLink from './confirmSignInLink.js'
@@ -17,16 +17,16 @@ import updateUser from './updateUser.js'
 import updateUserEmail from './updateUserEmail.js'
 import updateUserPassword from './updateUserPassword.js'
 
-export function Feather(apiKey, config = {}) {
-  if (!(this instanceof Feather)) {
-    return new Feather(apiKey, config)
+export function Client(apiKey, config = {}) {
+  if (!(this instanceof Client)) {
+    return new Client(apiKey, config)
   }
   if (!window.indexedDB) {
     throw new Error(
       "Your browser does not support a stable version of IndexedDB. This means Feather's stateful client interface is not supported on this device. For help or more information, please contact us at hello@feather.id."
     )
   }
-  this._api = new API(apiKey, config)
+  this._client = Feather(apiKey, config)
   this._database = new Database(
     (database) => {
       database

@@ -1,4 +1,4 @@
-import { FeatherError, ErrorType, ErrorCode } from '../errors'
+import { FeatherError, ErrorType, ErrorCode } from 'feather-client-js'
 
 export default function sendEmailVerificationLink(redirectUrl) {
   const that = this
@@ -34,7 +34,7 @@ export default function sendEmailVerificationLink(redirectUrl) {
         } else {
           return Promise.all([
             state,
-            that._api.credentials.create({
+            that._client.credentials.create({
               email: state.user.email,
               redirectUrl,
               scopes: 'verify_user_email',

@@ -1,4 +1,4 @@
-import { FeatherError, ErrorType, ErrorCode } from '../errors'
+import { FeatherError, ErrorType, ErrorCode } from 'feather-client-js'
 import { parseQueryParams } from './utils.js'
 
 export default function confirmUpdateEmailLink(url) {
@@ -24,7 +24,7 @@ export default function confirmUpdateEmailLink(url) {
         } else {
           return Promise.all([
             state,
-            that._api.credentials.update(state.credential.id, {
+            that._client.credentials.update(state.credential.id, {
               verificationCode: params.code
             })
           ])
@@ -40,7 +40,7 @@ export default function confirmUpdateEmailLink(url) {
         }
         Promise.all([
           state,
-          that._api.users.updateEmail(
+          that._client.users.updateEmail(
             state.session.userId,
             credential.token,
             state.session.token

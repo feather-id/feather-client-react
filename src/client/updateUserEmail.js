@@ -1,4 +1,4 @@
-import { FeatherError, ErrorType, ErrorCode } from '../errors'
+import { FeatherError, ErrorType, ErrorCode } from 'feather-client-js'
 
 export default function updateUserEmail(password, newEmail) {
   const that = this
@@ -22,7 +22,7 @@ export default function updateUserEmail(password, newEmail) {
         } else {
           return Promise.all([
             state,
-            that._api.credentials.create({
+            that._client.credentials.create({
               password,
               email: state.user.email,
               scopes: 'update_user_email'
@@ -41,7 +41,7 @@ export default function updateUserEmail(password, newEmail) {
         const credentialToken = credential.token
         return Promise.all([
           state,
-          that._api.users.updateEmail(state.user.id, {
+          that._client.users.updateEmail(state.user.id, {
             credentialToken,
             newEmail
           })

@@ -1,4 +1,4 @@
-import { FeatherError, ErrorType, ErrorCode } from '../errors'
+import { FeatherError, ErrorType, ErrorCode } from 'feather-client-js'
 
 export default function sendUpdateEmailLink(params) {
   const that = this
@@ -22,7 +22,7 @@ export default function sendUpdateEmailLink(params) {
         } else {
           return Promise.all([
             state,
-            that._api.credentials.create({
+            that._client.credentials.create({
               ...params,
               templateName: 'update_email',
               scopes: 'update_user_email'

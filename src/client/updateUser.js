@@ -1,4 +1,4 @@
-import { FeatherError, ErrorType, ErrorCode } from '../errors'
+import { FeatherError, ErrorType, ErrorCode } from 'feather-client-js'
 
 export default function updateUser(params) {
   const that = this
@@ -15,7 +15,7 @@ export default function updateUser(params) {
         } else {
           return Promise.all([
             state,
-            that._api.users.updateEmail(state.user.id, {
+            that._client.users.updateEmail(state.user.id, {
               metadata: params.metadata
             })
           ])
