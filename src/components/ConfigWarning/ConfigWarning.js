@@ -2,7 +2,7 @@ import React from 'react'
 import { css } from 'emotion'
 import { configWarningCSS } from '../styles.js'
 
-export default function AuthenticationForm_ComponentConfigWarning(props) {
+export default function ConfigWarning(props) {
   return (
     <div
       className={css`

@@ -5,7 +5,7 @@ import Spinner from '../Spinner'
 import { css } from 'emotion'
 import { isValidEmail } from '../../utils.js'
 
-export default function AuthenticationForm_SignIn(params) {
+export default function AuthenticationFormSignIn(params) {
   const [isBusy, setIsBusy] = useState()
   const [errorMessage, setErrorMessage] = useState()
   const emailInputRef = useRef()

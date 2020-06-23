@@ -6,13 +6,7 @@ import Spinner from '../Spinner'
 import { css } from 'emotion'
 import { isValidEmail } from '../../utils.js'
 
-const INITIAL_STATE = {
-  isBusy: false,
-  infoMessage: null,
-  errorMessage: null
-}
-
-export default function PasswordlessAuthenticationForm_SignIn(params) {
+export default function PasswordlessAuthenticationFormSignIn(params) {
   const [isBusy, setIsBusy] = useState()
   const [infoMessage, setInfoMessage] = useState()
   const [errorMessage, setErrorMessage] = useState()
@@ -26,6 +20,7 @@ export default function PasswordlessAuthenticationForm_SignIn(params) {
       )
       return
     }
+
     const email = params.input.email
     const redirectUrl = params.redirectUrl
     if (!isValidEmail(email)) {
@@ -45,7 +40,7 @@ export default function PasswordlessAuthenticationForm_SignIn(params) {
         .catch((error) => {
           setIsBusy(false)
           setInfoMessage(null)
-          setErrorMessage(errorMessage)
+          setErrorMessage(error.message)
         })
     }
   }

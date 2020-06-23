@@ -8,13 +8,6 @@ import { defaultConfig } from './defaultConfig.js'
 import { defaultStyles } from '../styles.js'
 import { mergeStyles } from '../utils.js'
 
-const INITIAL_STATE = {
-  emailInput: '',
-  passwordInput: '',
-  confirmPasswordInput: '',
-  formType: 'sign_in'
-}
-
 export default function PasswordAuthenticationForm(params) {
   const [emailInput, setEmailInput] = useState('')
   const [passwordInput, setPasswordInput] = useState('')
@@ -63,7 +56,7 @@ export default function PasswordAuthenticationForm(params) {
 
   // Merge in custom styling
   var styles = { ...defaultStyles }
-  if (!!params.styles) {
+  if (params.styles) {
     styles = mergeStyles(styles, params.styles)
   }
 
@@ -74,7 +67,7 @@ export default function PasswordAuthenticationForm(params) {
       `}
     >
       {showConfigWarning && <ConfigWarning warnings={configWarnings} />}
-      {currentForm == 'sign_in' && (
+      {currentForm === 'sign_in' && (
         <SignIn
           feather={params.feather}
           form={config.signIn}
@@ -89,7 +82,7 @@ export default function PasswordAuthenticationForm(params) {
           }}
         />
       )}
-      {currentForm == 'sign_up' && (
+      {currentForm === 'sign_up' && (
         <SignUp
           feather={params.feather}
           form={config.signUp}
@@ -104,7 +97,7 @@ export default function PasswordAuthenticationForm(params) {
           }}
         />
       )}
-      {currentForm == 'forgot_password' && (
+      {currentForm === 'forgot_password' && (
         <ForgotPassword
           feather={params.feather}
           form={config.forgotPassword}

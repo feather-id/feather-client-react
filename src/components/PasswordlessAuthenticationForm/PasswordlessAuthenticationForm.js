@@ -1,21 +1,17 @@
 import React, { useState } from 'react'
 import ConfigWarning from '../ConfigWarning'
-import PasswordlessAuthenticationForm_SignIn from './PasswordlessAuthenticationForm_SignIn.js'
+import SignIn from './PasswordlessAuthenticationForm_SignIn.js'
 import { css } from 'emotion'
 import { defaultConfig } from './defaultConfig.js'
 import { defaultStyles } from '../styles.js'
 import { mergeStyles } from '../utils.js'
-
-const INITIAL_STATE = {
-  emailInput: ''
-}
 
 export default function PasswordlessAuthenticationForm(params) {
   const [emailInput, setEmailInput] = useState()
 
   const onChangeInput = (event) => {
     event.preventDefault()
-    setEmailInput[event.target.value]
+    setEmailInput(event.target.value)
   }
 
   const getConfigWarnings = (config) => {
@@ -38,7 +34,7 @@ export default function PasswordlessAuthenticationForm(params) {
 
   // Merge in custom styling
   var styles = { ...defaultStyles }
-  if (!!params.styles) {
+  if (params.styles) {
     styles = mergeStyles(styles, params.styles)
   }
 
@@ -49,7 +45,7 @@ export default function PasswordlessAuthenticationForm(params) {
       `}
     >
       {showConfigWarning && <ConfigWarning warnings={configWarnings} />}
-      <PasswordlessAuthenticationForm_SignIn
+      <SignIn
         feather={params.feather}
         form={config.signIn}
         onChangeInput={onChangeInput}

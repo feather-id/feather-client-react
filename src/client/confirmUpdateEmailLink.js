@@ -31,17 +31,20 @@ export default function confirmUpdateEmailLink(url) {
         }
       })
       .then(([state, credential]) => {
-        if (credential.status != 'valid') {
+        if (credential.status !== 'valid') {
           throw new FeatherError({
             type: ErrorType.VALIDATION,
             code: ErrorCode.VERIFICATION_CODE_INVALID,
             message: 'The verification code is invalid.'
           })
         }
-        const credentialToken = credential.token
         Promise.all([
           state,
-          that._api.users.update(session.userId, session.token)
+          that._api.users.updateEmail(
+            state.session.userId,
+            credential.token,
+            state.session.token
+          )
         ])
       })
       .then(([state, user]) => {

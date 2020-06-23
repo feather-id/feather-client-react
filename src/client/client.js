@@ -46,7 +46,7 @@ export function Feather(apiKey, config = {}) {
         })
     },
     (error) => {
-      throw new Error('Failed to initialize Feather database.')
+      throw new Error('Failed to initialize Feather database: ' + error)
     }
   )
   this._onStateChangeObservers = []

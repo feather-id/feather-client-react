@@ -7,7 +7,7 @@ import { isValidEmail } from '../../utils.js'
 
 // TODO Custom checkboxes (e.g. for TOS/Privacy/etc.)
 
-export default function AuthenticationForm_SignUp(params) {
+export default function AuthenticationFormSignUp(params) {
   const [isBusy, setIsBusy] = useState()
   const [errorMessage, setErrorMessage] = useState()
   const emailInputRef = useRef()

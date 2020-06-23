@@ -31,7 +31,7 @@ export default function confirmEmailVerificationLink(url) {
         }
       })
       .then(([session, credential]) => {
-        if (credential.status != 'valid') {
+        if (credential.status !== 'valid') {
           throw new FeatherError({
             type: ErrorType.VALIDATION,
             code: ErrorCode.VERIFICATION_CODE_INVALID,

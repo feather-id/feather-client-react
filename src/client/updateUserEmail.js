@@ -31,7 +31,7 @@ export default function updateUserEmail(password, newEmail) {
         }
       })
       .then(([state, credential]) => {
-        if (credential.status != 'valid') {
+        if (credential.status !== 'valid') {
           throw new FeatherError({
             type: ErrorType.VALIDATION,
             code: ErrorCode.CREDENTIAL_INVALID,

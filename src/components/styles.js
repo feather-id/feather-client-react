@@ -32,7 +32,7 @@ export const defaultStyles = {
     padding: '0px'
   },
   inputField: {
-    '-webkit-appearance': 'none',
+    WebkitAppearance: 'none',
     fontSize: '1em',
     padding: '0px 16px',
     height: '48px',

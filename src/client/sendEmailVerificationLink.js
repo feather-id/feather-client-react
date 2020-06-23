@@ -36,7 +36,7 @@ export default function sendEmailVerificationLink(redirectUrl) {
             state,
             that._api.credentials.create({
               email: state.user.email,
-              redirectUrl: params.redirectUrl,
+              redirectUrl,
               scopes: 'verify_user_email',
               templateName: 'verify_email'
             })

@@ -6,7 +6,7 @@ export default function sendUpdateEmailLink(params) {
     that._database
       .fetchCurrentState()
       .then((state) => {
-        if (!!state.user) {
+        if (state.user) {
           throw new FeatherError({
             type: ErrorType.VALIDATION,
             code: ErrorCode.CURRENT_STATE_INCONSISTENT,

@@ -6,7 +6,7 @@ import Spinner from '../Spinner'
 import { css } from 'emotion'
 import { isValidEmail } from '../../utils.js'
 
-export default function AuthenticationForm_ForgotPassword(params) {
+export default function AuthenticationFormForgotPassword(params) {
   const [isBusy, setIsBusy] = useState(false)
   const [errorMessage, setErrorMessage] = useState(null)
   const [infoMessage, setInfoMessage] = useState(null)
@@ -15,10 +15,9 @@ export default function AuthenticationForm_ForgotPassword(params) {
   const onSubmit = (event) => {
     event.preventDefault()
     if (!params.feather) {
-      setState({
-        errorMessage:
-          "A Feather client was not provided. To learn more about using Feather's React components, please see our documentation at https://feather.id/docs."
-      })
+      setErrorMessage(
+        "A Feather client was not provided. To learn more about using Feather's React components, please see our documentation at https://feather.id/docs."
+      )
       return
     }
     const email = params.input.email

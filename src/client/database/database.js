@@ -8,7 +8,7 @@ export default function Database(onSuccess, onError) {
   }
 
   var that = this
-  var request = window.indexedDB.open(dbName, 1)
+  var request = window.indexedDB.open(dbName, version)
   request.onerror = function (event) {
     if (onError) {
       onError(event)
@@ -25,7 +25,7 @@ export default function Database(onSuccess, onError) {
   request.onupgradeneeded = function (event) {
     _db = request.result
     if (!_db.objectStoreNames.contains('state')) {
-      var objectStore = _db.createObjectStore('state', {
+      _db.createObjectStore('state', {
         keyPath: 'id'
       })
     }

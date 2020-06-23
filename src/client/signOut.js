@@ -6,7 +6,7 @@ export default function signOut(params) {
     that._database
       .fetchCurrentState()
       .then((state) => {
-        if (!!state.session) {
+        if (state.session) {
           throw new FeatherError({
             type: ErrorType.VALIDATION,
             code: ErrorCode.CURRENT_STATE_INCONSISTENT,

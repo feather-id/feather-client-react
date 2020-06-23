@@ -23,7 +23,7 @@ export default function Spinner(params) {
           height: 1rem;
           animation: ${spin} 0.6s linear infinite;
         `}
-      ></div>
+      />
     </div>
   )
 }
