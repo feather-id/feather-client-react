@@ -40,16 +40,10 @@ export function fetchCurrentState() {
 
       request.onerror = function (event) {
         reject(event)
-        db.close()
       }
 
       request.onsuccess = function (event) {
-        if (request.result) {
-          resolve(request.result)
-        } else {
-          resolve(null)
-        }
-        db.close()
+        resolve(request.result)
       }
     })
   })
