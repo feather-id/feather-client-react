@@ -6,9 +6,10 @@ import ConfigWarning from '../ConfigWarning'
 const validFactors = ['email_password', 'email_verification']
 
 export default function AuthenticationForm(params) {
+  const factors = params.factors ? params.factors : 'email_password'
   var warnings = []
-  if (!validFactors.includes(params.factors)) {
-    warnings.push(`The provided 'factors' parameter is invalid: '${params.factors}'.
+  if (!validFactors.includes(factors)) {
+    warnings.push(`The provided 'factors' parameter is invalid: '${factors}'.
 
     Please provide one of the following values:`)
     warnings = warnings.concat(validFactors.map((c) => ` - ${c}`))
@@ -16,7 +17,7 @@ export default function AuthenticationForm(params) {
   return (
     <div>
       {warnings.length > 0 && <ConfigWarning warnings={warnings} />}
-      {params.factors === 'email_password' && (
+      {factors === 'email_password' && (
         <EmailPasswordAuthenticationForm
           feather={params.feather}
           styles={params.styles}
@@ -24,7 +25,7 @@ export default function AuthenticationForm(params) {
           silenceWarnings={params.silenceWarnings}
         />
       )}
-      {params.factors === 'email_verification' && (
+      {factors === 'email_verification' && (
         <EmailVerificationAuthenticationForm
           feather={params.feather}
           styles={params.styles}
