@@ -1,4 +1,8 @@
-import { FeatherError, FeatherErrorType, FeatherErrorCode } from 'feather-client-js'
+import {
+  FeatherError,
+  FeatherErrorType,
+  FeatherErrorCode
+} from 'feather-client-js'
 import { fetchCurrentState, updateCurrentState } from './database'
 
 export default function sendEmailVerificationLink(redirectUrl) {
@@ -37,7 +41,6 @@ export default function sendEmailVerificationLink(redirectUrl) {
             that._client.credentials.create({
               email: state.user.email,
               redirectUrl,
-              scopes: 'verify_user_email',
               templateName: 'verify_email'
             })
           ])

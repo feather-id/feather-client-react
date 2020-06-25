@@ -1,3 +1,2 @@
-export { default as PasswordAuthenticationForm } from './PasswordAuthenticationForm'
-export { default as PasswordlessAuthenticationForm } from './PasswordlessAuthenticationForm'
+export { default as AuthenticationForm } from './AuthenticationForm'
 export { FeatherContext, withFeather } from './Context'

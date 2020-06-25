@@ -1,16 +1,15 @@
 import React, { useRef, useState } from 'react'
 import FormInput from '../FormInput'
 import ErrorMessage from '../ErrorMessage'
-import InfoMessage from '../InfoMessage'
 import Spinner from '../Spinner'
 import { css } from 'emotion'
 import { isValidEmail } from '../../utils.js'
 
-export default function PasswordlessAuthenticationFormSignIn(params) {
+export default function EmailPasswordAuthenticationFormSignIn(params) {
   const [isBusy, setIsBusy] = useState()
-  const [infoMessage, setInfoMessage] = useState()
   const [errorMessage, setErrorMessage] = useState()
   const emailInputRef = useRef()
+  const passwordInputRef = useRef()
 
   const onSubmit = (event) => {
     event.preventDefault()
@@ -20,24 +19,24 @@ export default function PasswordlessAuthenticationFormSignIn(params) {
       )
       return
     }
-
     const email = params.input.email
-    const redirectUrl = params.redirectUrl
+    const password = params.input.password
     if (!isValidEmail(email)) {
       setErrorMessage('Please enter a valid email address.')
       emailInputRef.current.focus()
+    } else if (password === '') {
+      setErrorMessage('Please enter a password.')
+      passwordInputRef.current.focus()
     } else {
       setIsBusy(true)
       params.feather
-        .sendSignInLink(email, redirectUrl)
+        .signIn(email, password)
         .then(() => {
           setIsBusy(false)
-          setInfoMessage('Please check your email for a link to sign in.')
           setErrorMessage(null)
         })
         .catch((error) => {
           setIsBusy(false)
-          setInfoMessage(null)
           setErrorMessage(error.message)
         })
     }
@@ -75,9 +74,24 @@ export default function PasswordlessAuthenticationFormSignIn(params) {
         styles={params.styles}
         disabled={isBusy}
       />
-      {infoMessage && (
-        <InfoMessage styles={params.styles} message={infoMessage} />
-      )}
+      <FormInput
+        inputRef={passwordInputRef}
+        type='password'
+        name='passwordInput'
+        title='Password'
+        placeholder={inputs.password.placeholder}
+        disabled={isBusy}
+        helpButton={
+          params.linkToForgotPassword && {
+            title: 'Forgot password?',
+            onClick: params.onClickFormTypeButton,
+            name: 'forgot_password'
+          }
+        }
+        value={params.input.password}
+        onChange={params.onChangeInput}
+        styles={params.styles}
+      />
       {errorMessage && (
         <ErrorMessage styles={params.styles} message={errorMessage} />
       )}
@@ -91,6 +105,19 @@ export default function PasswordlessAuthenticationFormSignIn(params) {
       >
         {isBusy ? <Spinner /> : 'Continue'}
       </button>
+      {params.linkToSignUp && (
+        <button
+          type='button'
+          name='sign_up'
+          onClick={params.onClickFormTypeButton}
+          disabled={isBusy}
+          className={css`
+            ${params.styles.secondaryCtaButton}
+          `}
+        >
+          Create an account
+        </button>
+      )}
     </div>
   )
 }

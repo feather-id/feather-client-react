@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
 import ConfigWarning from '../ConfigWarning'
-import SignIn from './PasswordlessAuthenticationForm_SignIn.js'
+import SignIn from './EmailVerificationAuthenticationForm_SignIn.js'
 import { css } from 'emotion'
 import { defaultConfig } from './defaultConfig.js'
 import { defaultStyles } from '../styles.js'
 import { mergeStyles } from '../utils.js'
 
-export default function PasswordlessAuthenticationForm(params) {
+export default function EmailVerificationAuthenticationForm(params) {
   const [emailInput, setEmailInput] = useState('')
 
   const onChangeInput = (event) => {

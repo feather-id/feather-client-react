@@ -1,4 +1,8 @@
-import { FeatherError, FeatherErrorType, FeatherErrorCode } from 'feather-client-js'
+import {
+  FeatherError,
+  FeatherErrorType,
+  FeatherErrorCode
+} from 'feather-client-js'
 import { fetchCurrentState, updateCurrentState } from './database'
 
 export default function updateUserPassword(currentPassword, newPassword) {
@@ -24,8 +28,7 @@ export default function updateUserPassword(currentPassword, newPassword) {
             state,
             that._client.credentials.create({
               password: currentPassword,
-              email: state.user.email,
-              scopes: 'update_user_password'
+              email: state.user.email
             })
           ])
         }

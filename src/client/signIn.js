@@ -1,4 +1,8 @@
-import { FeatherError, FeatherErrorType, FeatherErrorCode } from 'feather-client-js'
+import {
+  FeatherError,
+  FeatherErrorType,
+  FeatherErrorCode
+} from 'feather-client-js'
 import { fetchCurrentState, updateCurrentState } from './database'
 
 // TODO Update user with provided (optional) metadata after sign-in
@@ -19,8 +23,7 @@ export default function signIn(email, password) {
             state.session,
             that._client.credentials.create({
               email,
-              password,
-              scopes: 'upgrade_session'
+              password
             })
           ])
         }

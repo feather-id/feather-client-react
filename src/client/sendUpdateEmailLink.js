@@ -1,4 +1,8 @@
-import { FeatherError, FeatherErrorType, FeatherErrorCode } from 'feather-client-js'
+import {
+  FeatherError,
+  FeatherErrorType,
+  FeatherErrorCode
+} from 'feather-client-js'
 import { fetchCurrentState, updateCurrentState } from './database'
 
 export default function sendUpdateEmailLink(params) {
@@ -24,8 +28,7 @@ export default function sendUpdateEmailLink(params) {
             state,
             that._client.credentials.create({
               ...params,
-              templateName: 'update_email',
-              scopes: 'update_user_email'
+              templateName: 'update_email'
             })
           ])
         }

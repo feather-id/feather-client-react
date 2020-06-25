@@ -1,4 +1,8 @@
-import { FeatherError, FeatherErrorType, FeatherErrorCode } from 'feather-client-js'
+import {
+  FeatherError,
+  FeatherErrorType,
+  FeatherErrorCode
+} from 'feather-client-js'
 import { fetchCurrentState, updateCurrentState } from './database'
 
 export default function sendSignInLink(email, redirectUrl) {
@@ -18,8 +22,7 @@ export default function sendSignInLink(email, redirectUrl) {
             that._client.credentials.create({
               email,
               redirectUrl,
-              templateName: 'sign_in',
-              scopes: 'upgrade_session'
+              templateName: 'sign_in'
             })
           ])
         }

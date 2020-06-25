@@ -4,9 +4,4 @@ export {
   FeatherErrorType,
   FeatherErrorCode
 } from 'feather-client-js'
-export {
-  FeatherContext,
-  PasswordAuthenticationForm,
-  PasswordlessAuthenticationForm,
-  withFeather
-} from './components'
+export { FeatherContext, AuthenticationForm, withFeather } from './components'

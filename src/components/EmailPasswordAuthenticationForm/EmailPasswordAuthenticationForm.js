@@ -1,14 +1,14 @@
 import React, { useState } from 'react'
-import SignIn from './PasswordAuthenticationForm_SignIn.js'
-import SignUp from './PasswordAuthenticationForm_SignUp.js'
-import ForgotPassword from './PasswordAuthenticationForm_ForgotPassword.js'
+import SignIn from './EmailPasswordAuthenticationForm_SignIn.js'
+import SignUp from './EmailPasswordAuthenticationForm_SignUp.js'
+import ForgotPassword from './EmailPasswordAuthenticationForm_ForgotPassword.js'
 import ConfigWarning from '../ConfigWarning'
 import { css } from 'emotion'
 import { defaultConfig } from './defaultConfig.js'
 import { defaultStyles } from '../styles.js'
 import { mergeStyles } from '../utils.js'
 
-export default function PasswordAuthenticationForm(params) {
+export default function EmailPasswordAuthenticationForm(params) {
   const [emailInput, setEmailInput] = useState('')
   const [passwordInput, setPasswordInput] = useState('')
   const [confirmPasswordInput, setConfirmPasswordInput] = useState('')

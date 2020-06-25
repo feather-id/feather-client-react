@@ -6,10 +6,10 @@ import Spinner from '../Spinner'
 import { css } from 'emotion'
 import { isValidEmail } from '../../utils.js'
 
-export default function AuthenticationFormForgotPassword(params) {
-  const [isBusy, setIsBusy] = useState(false)
-  const [errorMessage, setErrorMessage] = useState(null)
-  const [infoMessage, setInfoMessage] = useState(null)
+export default function EmailVerificationAuthenticationFormSignIn(params) {
+  const [isBusy, setIsBusy] = useState()
+  const [infoMessage, setInfoMessage] = useState()
+  const [errorMessage, setErrorMessage] = useState()
   const emailInputRef = useRef()
 
   const onSubmit = (event) => {
@@ -20,28 +20,25 @@ export default function AuthenticationFormForgotPassword(params) {
       )
       return
     }
+
     const email = params.input.email
     const redirectUrl = params.redirectUrl
     if (!isValidEmail(email)) {
       setErrorMessage('Please enter a valid email address.')
       emailInputRef.current.focus()
-    } else if (!redirectUrl) {
-      setErrorMessage('A redirect URL has not been configured.')
     } else {
       setIsBusy(true)
       params.feather
-        .sendForgotPasswordLink(email, redirectUrl)
+        .sendSignInLink(email, redirectUrl)
         .then(() => {
           setIsBusy(false)
-          setInfoMessage(
-            'Please check your email for a link to reset your password.'
-          )
+          setInfoMessage('Please check your email for a link to sign in.')
           setErrorMessage(null)
         })
         .catch((error) => {
-          setIsBusy(true)
-          setErrorMessage(error.message)
+          setIsBusy(false)
           setInfoMessage(null)
+          setErrorMessage(error.message)
         })
     }
   }
@@ -71,44 +68,29 @@ export default function AuthenticationFormForgotPassword(params) {
         inputRef={emailInputRef}
         type='email'
         name='emailInput'
-        title={inputs.email.title ? inputs.email.title : 'Email'}
+        title='Email'
         placeholder={inputs.email.placeholder}
         value={params.input.email}
         onChange={params.onChangeInput}
         styles={params.styles}
         disabled={isBusy}
       />
-      {errorMessage && (
-        <ErrorMessage styles={params.styles} message={errorMessage} />
-      )}
       {infoMessage && (
         <InfoMessage styles={params.styles} message={infoMessage} />
       )}
-      {!infoMessage && (
-        <div>
-          <button
-            type='submit'
-            onClick={onSubmit}
-            disabled={isBusy}
-            className={css`
-              ${params.styles.primaryCtaButton}
-            `}
-          >
-            {isBusy ? <Spinner /> : 'Continue'}
-          </button>
-          <button
-            type='button'
-            name='sign_in'
-            onClick={params.onClickFormTypeButton}
-            disabled={isBusy}
-            className={css`
-              ${params.styles.secondaryCtaButton}
-            `}
-          >
-            Cancel
-          </button>
-        </div>
+      {errorMessage && (
+        <ErrorMessage styles={params.styles} message={errorMessage} />
       )}
+      <button
+        type='submit'
+        onClick={onSubmit}
+        disabled={isBusy}
+        className={css`
+          ${params.styles.primaryCtaButton}
+        `}
+      >
+        {isBusy ? <Spinner /> : 'Continue'}
+      </button>
     </div>
   )
 }

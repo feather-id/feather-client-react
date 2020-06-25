@@ -1,4 +1,8 @@
-import { FeatherError, FeatherErrorType, FeatherErrorCode } from 'feather-client-js'
+import {
+  FeatherError,
+  FeatherErrorType,
+  FeatherErrorCode
+} from 'feather-client-js'
 import { fetchCurrentState, updateCurrentState } from './database'
 
 export default function sendForgotPasswordLink(email, redirectUrl) {
@@ -18,8 +22,7 @@ export default function sendForgotPasswordLink(email, redirectUrl) {
             that._client.credentials.create({
               email,
               redirectUrl,
-              templateName: 'reset_password',
-              scopes: 'upgrade_session, update_user_password'
+              templateName: 'reset_password'
             })
           ])
         }

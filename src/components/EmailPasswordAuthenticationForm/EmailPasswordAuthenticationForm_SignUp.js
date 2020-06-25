@@ -5,11 +5,14 @@ import Spinner from '../Spinner'
 import { css } from 'emotion'
 import { isValidEmail } from '../../utils.js'
 
-export default function AuthenticationFormSignIn(params) {
+// TODO Custom checkboxes (e.g. for TOS/Privacy/etc.)
+
+export default function EmailPasswordAuthenticationFormSignUp(params) {
   const [isBusy, setIsBusy] = useState()
   const [errorMessage, setErrorMessage] = useState()
   const emailInputRef = useRef()
   const passwordInputRef = useRef()
+  const confirmPasswordInputRef = useRef()
 
   const onSubmit = (event) => {
     event.preventDefault()
@@ -21,24 +24,20 @@ export default function AuthenticationFormSignIn(params) {
     }
     const email = params.input.email
     const password = params.input.password
+    const confirmPassword = params.input.confirmPassword
     if (!isValidEmail(email)) {
       setErrorMessage('Please enter a valid email address.')
       emailInputRef.current.focus()
     } else if (password === '') {
       setErrorMessage('Please enter a password.')
       passwordInputRef.current.focus()
+    } else if (password !== confirmPassword) {
+      setErrorMessage('Your password and password confirmation do not match.')
+      confirmPasswordInputRef.current.focus()
     } else {
       setIsBusy(true)
-      params.feather
-        .signIn(email, password)
-        .then(() => {
-          setIsBusy(false)
-          setErrorMessage(null)
-        })
-        .catch((error) => {
-          setIsBusy(false)
-          setErrorMessage(error.message)
-        })
+
+      // TODO
     }
   }
 
@@ -67,12 +66,11 @@ export default function AuthenticationFormSignIn(params) {
         inputRef={emailInputRef}
         type='email'
         name='emailInput'
-        title='Email'
+        title={inputs.email.title ? inputs.email.title : 'Email'}
         placeholder={inputs.email.placeholder}
         value={params.input.email}
         onChange={params.onChangeInput}
         styles={params.styles}
-        disabled={isBusy}
       />
       <FormInput
         inputRef={passwordInputRef}
@@ -80,17 +78,22 @@ export default function AuthenticationFormSignIn(params) {
         name='passwordInput'
         title='Password'
         placeholder={inputs.password.placeholder}
-        disabled={isBusy}
-        helpButton={
-          params.linkToForgotPassword && {
-            title: 'Forgot password?',
-            onClick: params.onClickFormTypeButton,
-            name: 'forgot_password'
-          }
-        }
         value={params.input.password}
         onChange={params.onChangeInput}
         styles={params.styles}
+        disabled={isBusy}
+      />
+
+      <FormInput
+        inputRef={confirmPasswordInputRef}
+        type='password'
+        name='confirmPasswordInput'
+        title='Confirm password'
+        placeholder={inputs.confirmPassword.placeholder}
+        value={params.input.confirmPassword}
+        onChange={params.onChangeInput}
+        styles={params.styles}
+        disabled={isBusy}
       />
       {errorMessage && (
         <ErrorMessage styles={params.styles} message={errorMessage} />
@@ -105,17 +108,17 @@ export default function AuthenticationFormSignIn(params) {
       >
         {isBusy ? <Spinner /> : 'Continue'}
       </button>
-      {params.linkToSignUp && (
+      {params.linkToSignIn && (
         <button
           type='button'
-          name='sign_up'
-          onClick={params.onClickFormTypeButton}
+          name='sign_in'
           disabled={isBusy}
+          onClick={params.onClickFormTypeButton}
           className={css`
             ${params.styles.secondaryCtaButton}
           `}
         >
-          Create an account
+          Already have an account?
         </button>
       )}
     </div>
