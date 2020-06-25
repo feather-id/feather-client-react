@@ -36,8 +36,16 @@ export default function EmailPasswordAuthenticationFormSignUp(params) {
       confirmPasswordInputRef.current.focus()
     } else {
       setIsBusy(true)
-
-      // TODO
+      params.feather
+        .signIn(email, password)
+        .then(() => {
+          setIsBusy(false)
+          setErrorMessage(null)
+        })
+        .catch((error) => {
+          setIsBusy(false)
+          setErrorMessage(error.message)
+        })
     }
   }
 

@@ -5186,10 +5186,10 @@ fb-watchman@^2.0.0:
   dependencies:
     bser "2.1.1"
 
-feather-client-js@^0.0.9:
-  version "0.0.9"
-  resolved "https://registry.yarnpkg.com/feather-client-js/-/feather-client-js-0.0.9.tgz#f022d8c03cad9912f4f3270994c224a6b40c0a78"
-  integrity sha512-qOVkxYeRI5OI6IdDD6PQRrlQOoswSd3X0t6pNH2Hn3zywm882F/VGV1fWz+3bPNaiLpIx5NoIZBEYfHa5MqfEg==
+feather-client-js@^0.0.10:
+  version "0.0.10"
+  resolved "https://registry.yarnpkg.com/feather-client-js/-/feather-client-js-0.0.10.tgz#d65d3e92dd2478b3772a7624e09af77febda396c"
+  integrity sha512-wYVGws+8F3lR3NEd38IixbxVZ8JzLDK7MZT86OeUHX7NlWd0WfgK003sg3tB9nH/4itqbQtSICZSn9/beEtaHQ==
   dependencies:
     chai-as-promised "^7.1.1"
     jws "^4.0.0"
