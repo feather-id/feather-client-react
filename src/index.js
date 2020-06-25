@@ -1,4 +1,4 @@
-export { Client as Feather } from './client'
+export { Client as Feather } from 'feather-client-js'
 export {
   FeatherError,
   FeatherErrorType,
