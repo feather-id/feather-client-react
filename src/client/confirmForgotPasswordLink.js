@@ -1,4 +1,8 @@
-import { FeatherError, FeatherErrorType, FeatherErrorCode } from 'feather-client-js'
+import {
+  FeatherError,
+  FeatherErrorType,
+  FeatherErrorCode
+} from 'feather-client-js'
 import { fetchCurrentState, updateCurrentState } from './database'
 import { parseQueryParams } from './utils.js'
 
@@ -23,14 +27,14 @@ export default function confirmForgotPasswordLink(url, newPassword) {
           })
         } else {
           return Promise.all([
-            state.session,
+            state,
             that._client.credentials.update(state.credential.id, {
               verificationCode: params.code
             })
           ])
         }
       })
-      .then(([session, credential]) => {
+      .then(([state, credential]) => {
         if (credential.status !== 'valid') {
           throw new FeatherError({
             type: FeatherErrorType.VALIDATION,
@@ -39,30 +43,18 @@ export default function confirmForgotPasswordLink(url, newPassword) {
           })
         }
         const credentialToken = credential.token
-        if (session) {
-          return Promise.all([
-            credentialToken,
-            that._client.sessions.upgrade(session.id, { credentialToken })
-          ])
-        } else {
-          return Promise.all([
-            credentialToken,
-            that._client.sessions.create({ credentialToken })
-          ])
-        }
-      })
-      .then(([credentialToken, session]) =>
-        Promise.all([
+        return Promise.all([
           session,
           that._client.users.updatePassword(session.userId, {
             credentialToken,
             newPassword
           })
         ])
-      )
-      .then(([session, user]) =>
-        updateCurrentState({ credential: null, session, user })
-      )
+      })
+      .then(([state, user]) => {
+        state.user = user
+        return updateCurrentState(state)
+      })
       .then(() => {
         that._notifyStateObservers()
         resolve()
