@@ -29,7 +29,7 @@ export default function AuthenticationForm(params) {
         <EmailVerificationAuthenticationForm
           feather={params.feather}
           styles={params.styles}
-          redirectUrl={prams.redirectUrl}
+          redirectUrl={pramas.redirectUrl}
           silenceWarnings={params.silenceWarnings}
         />
       )}
