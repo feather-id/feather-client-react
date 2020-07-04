@@ -30,8 +30,14 @@ export default function EmailPasswordAuthenticationFormSignIn(params) {
     } else {
       setIsBusy(true)
       params.feather
-        .signIn(email, password)
-        .then(() => {
+        .newCurrentCredential({ email, password })
+        .then((credential) => {
+          if (credential.status !== 'valid') {
+            throw new Error('Incorrect email or password.')
+          }
+          return params.feather.newCurrentUser(credential.token)
+        })
+        .then((newUser) => {
           setIsBusy(false)
           setErrorMessage(null)
         })

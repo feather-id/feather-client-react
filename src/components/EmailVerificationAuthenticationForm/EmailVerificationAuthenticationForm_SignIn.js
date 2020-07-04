@@ -23,22 +23,26 @@ export default function EmailVerificationAuthenticationFormSignIn(params) {
 
     const email = params.input.email
     const redirectUrl = params.redirectUrl
+    const templateName = 'sign_in'
     if (!isValidEmail(email)) {
       setErrorMessage('Please enter a valid email address.')
       emailInputRef.current.focus()
     } else {
       setIsBusy(true)
       params.feather
-        .sendSignInLink(email, redirectUrl)
-        .then(() => {
+        .newCurrentCredential({ email, redirectUrl, templateName })
+        .then((credential) => {
+          if (credential.status !== 'requires_verification_code') {
+            throw new Error('Something went wrong.')
+          }
           setIsBusy(false)
           setInfoMessage('Please check your email for a link to sign in.')
           setErrorMessage(null)
         })
         .catch((error) => {
-          setIsBusy(false)
-          setInfoMessage(null)
+          setIsBusy(true)
           setErrorMessage(error.message)
+          setInfoMessage(null)
         })
     }
   }

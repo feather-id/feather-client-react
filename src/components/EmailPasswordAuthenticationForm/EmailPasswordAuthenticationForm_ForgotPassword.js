@@ -22,6 +22,7 @@ export default function EmailPasswordAuthenticationFormForgotPassword(params) {
     }
     const email = params.input.email
     const redirectUrl = params.redirectUrl
+    const templateName = 'reset_password'
     if (!isValidEmail(email)) {
       setErrorMessage('Please enter a valid email address.')
       emailInputRef.current.focus()
@@ -30,8 +31,11 @@ export default function EmailPasswordAuthenticationFormForgotPassword(params) {
     } else {
       setIsBusy(true)
       params.feather
-        .sendForgotPasswordLink(email, redirectUrl)
-        .then(() => {
+        .newCurrentCredential({ email, redirectUrl, templateName })
+        .then((credential) => {
+          if (credential.status !== 'requires_verification_code') {
+            throw new Error('Something went wrong.')
+          }
           setIsBusy(false)
           setInfoMessage(
             'Please check your email for a link to reset your password.'
