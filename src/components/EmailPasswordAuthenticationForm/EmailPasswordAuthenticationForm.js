@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import SignIn from './EmailPasswordAuthenticationForm_SignIn.js'
 import SignUp from './EmailPasswordAuthenticationForm_SignUp.js'
 import ForgotPassword from './EmailPasswordAuthenticationForm_ForgotPassword.js'
+import VerifyEmail from './EmailPasswordAuthenticationForm_VerifyEmail.js'
+import NewPassword from './EmailPasswordAuthenticationForm_NewPassword.js'
 import ConfigWarning from '../ConfigWarning'
 import { css } from 'emotion'
 import { defaultConfig } from './defaultConfig.js'
@@ -31,20 +33,10 @@ export default function EmailPasswordAuthenticationForm(params) {
     }
   }
 
-  const onClickFormTypeButton = (event) => {
-    event.preventDefault()
-    setCurrentForm(event.target.name)
-  }
-
   const getConfigWarnings = (config) => {
     var configWarnings = []
     if (!params.feather) {
       configWarnings.push("You did not configure a 'feather' client.")
-    }
-    if (!params.redirectUrl) {
-      configWarnings.push(
-        "You did not configure a 'redirectUrl' for the forgot-password form. This is the URL your users will be redirected to after clicking the link in a password reset email."
-      )
     }
     return configWarnings
   }
@@ -61,55 +53,76 @@ export default function EmailPasswordAuthenticationForm(params) {
   }
 
   return (
-    <form
+    <div
       className={css`
-        ${styles.container}
+        ${styles.wrapper}
       `}
     >
-      {showConfigWarning && <ConfigWarning warnings={configWarnings} />}
-      {currentForm === 'sign_in' && (
-        <SignIn
-          feather={params.feather}
-          form={config.signIn}
-          onChangeInput={onChangeInput}
-          onClickFormTypeButton={onClickFormTypeButton}
-          linkToSignUp={!!config.signUp}
-          linkToForgotPassword={!!config.forgotPassword}
-          styles={styles}
-          input={{
-            email: emailInput,
-            password: passwordInput
-          }}
-        />
-      )}
-      {currentForm === 'sign_up' && (
-        <SignUp
-          feather={params.feather}
-          form={config.signUp}
-          onChangeInput={onChangeInput}
-          onClickFormTypeButton={onClickFormTypeButton}
-          linkToSignIn={!!config.signIn}
-          styles={styles}
-          input={{
-            email: emailInput,
-            password: passwordInput,
-            confirmPassword: confirmPasswordInput
-          }}
-        />
-      )}
-      {currentForm === 'forgot_password' && (
-        <ForgotPassword
-          feather={params.feather}
-          form={config.forgotPassword}
-          onChangeInput={onChangeInput}
-          onClickFormTypeButton={onClickFormTypeButton}
-          redirectUrl={params.redirectUrl}
-          styles={styles}
-          input={{
-            email: emailInput
-          }}
-        />
-      )}
-    </form>
+      <form
+        className={css`
+          ${styles.container}
+        `}
+      >
+        {showConfigWarning && <ConfigWarning warnings={configWarnings} />}
+        {currentForm === 'sign_in' && (
+          <SignIn
+            feather={params.feather}
+            form={config.signIn}
+            onChangeInput={onChangeInput}
+            setCurrentForm={setCurrentForm}
+            linkToSignUp={!!config.signUp}
+            linkToForgotPassword={!!config.forgotPassword}
+            styles={styles}
+            input={{
+              email: emailInput,
+              password: passwordInput
+            }}
+          />
+        )}
+        {currentForm === 'sign_up' && (
+          <SignUp
+            feather={params.feather}
+            form={config.signUp}
+            onChangeInput={onChangeInput}
+            setCurrentForm={setCurrentForm}
+            linkToSignIn={!!config.signIn}
+            styles={styles}
+            input={{
+              email: emailInput,
+              password: passwordInput,
+              confirmPassword: confirmPasswordInput
+            }}
+          />
+        )}
+        {currentForm === 'forgot_password' && (
+          <ForgotPassword
+            feather={params.feather}
+            form={config.forgotPassword}
+            onChangeInput={onChangeInput}
+            setCurrentForm={setCurrentForm}
+            styles={styles}
+            input={{
+              email: emailInput
+            }}
+          />
+        )}
+        {currentForm === 'verify_email' && (
+          <VerifyEmail
+            feather={params.feather}
+            form={config.verifyEmail}
+            setCurrentForm={setCurrentForm}
+            styles={styles}
+          />
+        )}
+        {currentForm === 'new_password' && (
+          <NewPassword
+            feather={params.feather}
+            form={config.newPassword}
+            setCurrentForm={setCurrentForm}
+            styles={styles}
+          />
+        )}
+      </form>
+    </div>
   )
 }

@@ -21,7 +21,6 @@ export default function AuthenticationForm(params) {
         <EmailPasswordAuthenticationForm
           feather={params.feather}
           styles={params.styles}
-          redirectUrl={params.redirectUrl}
           silenceWarnings={params.silenceWarnings}
         />
       )}

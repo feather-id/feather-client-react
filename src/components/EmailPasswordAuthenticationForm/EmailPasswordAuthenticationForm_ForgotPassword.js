@@ -9,7 +9,7 @@ import { isValidEmail } from '../../utils.js'
 export default function EmailPasswordAuthenticationFormForgotPassword(params) {
   const [isBusy, setIsBusy] = useState(false)
   const [errorMessage, setErrorMessage] = useState(null)
-  const [infoMessage, setInfoMessage] = useState(null)
+  // const [infoMessage, setInfoMessage] = useState(null)
   const emailInputRef = useRef()
 
   const onSubmit = (event) => {
@@ -21,36 +21,34 @@ export default function EmailPasswordAuthenticationFormForgotPassword(params) {
       return
     }
     const email = params.input.email
-    const redirectUrl = params.redirectUrl
     const templateName = 'reset_password'
     if (!isValidEmail(email)) {
       setErrorMessage('Please enter a valid email address.')
       emailInputRef.current.focus()
-    } else if (!redirectUrl) {
-      setErrorMessage('A redirect URL has not been configured.')
     } else {
       setIsBusy(true)
       params.feather
-        .newCurrentCredential({ email, redirectUrl, templateName })
+        .newCurrentCredential({ email, templateName })
         .then((credential) => {
-          if (credential.status !== 'requires_verification_code') {
+          console.log(credential)
+          if (credential.status !== 'requires_verification') {
             throw new Error('Something went wrong.')
           }
           setIsBusy(false)
-          setInfoMessage(
-            'Please check your email for a link to reset your password.'
-          )
+          // setInfoMessage(
+          //   'Please check your email for a verification code to reset your password.'
+          // )
           setErrorMessage(null)
+          params.setCurrentForm('verify_email')
         })
         .catch((error) => {
           setIsBusy(true)
           setErrorMessage(error.message)
-          setInfoMessage(null)
+          // setInfoMessage(null)
         })
     }
   }
 
-  const inputs = params.form.inputs ? params.form.inputs : []
   return (
     <div>
       {params.form.title && (
@@ -75,8 +73,7 @@ export default function EmailPasswordAuthenticationFormForgotPassword(params) {
         inputRef={emailInputRef}
         type='email'
         name='emailInput'
-        title={inputs.email.title ? inputs.email.title : 'Email'}
-        placeholder={inputs.email.placeholder}
+        title='Email'
         value={params.input.email}
         onChange={params.onChangeInput}
         styles={params.styles}
@@ -85,34 +82,28 @@ export default function EmailPasswordAuthenticationFormForgotPassword(params) {
       {errorMessage && (
         <ErrorMessage styles={params.styles} message={errorMessage} />
       )}
-      {infoMessage && (
-        <InfoMessage styles={params.styles} message={infoMessage} />
-      )}
-      {!infoMessage && (
-        <div>
-          <button
-            type='submit'
-            onClick={onSubmit}
-            disabled={isBusy}
-            className={css`
-              ${params.styles.primaryCtaButton}
-            `}
-          >
-            {isBusy ? <Spinner /> : 'Continue'}
-          </button>
-          <button
-            type='button'
-            name='sign_in'
-            onClick={params.onClickFormTypeButton}
-            disabled={isBusy}
-            className={css`
-              ${params.styles.secondaryCtaButton}
-            `}
-          >
-            Cancel
-          </button>
-        </div>
-      )}
+      <div>
+        <button
+          type='submit'
+          onClick={onSubmit}
+          disabled={isBusy}
+          className={css`
+            ${params.styles.primaryCtaButton}
+          `}
+        >
+          {isBusy ? <Spinner /> : 'Continue'}
+        </button>
+        <button
+          type='button'
+          onClick={(e) => params.setCurrentForm('sign_in')}
+          disabled={isBusy}
+          className={css`
+            ${params.styles.secondaryCtaButton}
+          `}
+        >
+          Cancel
+        </button>
+      </div>
     </div>
   )
 }

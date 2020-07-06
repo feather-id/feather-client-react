@@ -39,22 +39,28 @@ export default function EmailVerificationAuthenticationForm(params) {
   }
 
   return (
-    <form
+    <div
       className={css`
-        ${styles.container}
+        ${styles.wrapper}
       `}
     >
-      {showConfigWarning && <ConfigWarning warnings={configWarnings} />}
-      <SignIn
-        feather={params.feather}
-        form={config.signIn}
-        onChangeInput={onChangeInput}
-        redirectUrl={params.redirectUrl}
-        styles={styles}
-        input={{
-          email: emailInput
-        }}
-      />
-    </form>
+      <form
+        className={css`
+          ${styles.container}
+        `}
+      >
+        {showConfigWarning && <ConfigWarning warnings={configWarnings} />}
+        <SignIn
+          feather={params.feather}
+          form={config.signIn}
+          onChangeInput={onChangeInput}
+          redirectUrl={params.redirectUrl}
+          styles={styles}
+          input={{
+            email: emailInput
+          }}
+        />
+      </form>
+    </div>
   )
 }

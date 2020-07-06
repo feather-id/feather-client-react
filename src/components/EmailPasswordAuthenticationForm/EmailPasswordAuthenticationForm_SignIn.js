@@ -48,7 +48,6 @@ export default function EmailPasswordAuthenticationFormSignIn(params) {
     }
   }
 
-  const inputs = params.form.inputs ? params.form.inputs : []
   return (
     <div>
       {params.form.title && (
@@ -74,7 +73,6 @@ export default function EmailPasswordAuthenticationFormSignIn(params) {
         type='email'
         name='emailInput'
         title='Email'
-        placeholder={inputs.email.placeholder}
         value={params.input.email}
         onChange={params.onChangeInput}
         styles={params.styles}
@@ -85,13 +83,11 @@ export default function EmailPasswordAuthenticationFormSignIn(params) {
         type='password'
         name='passwordInput'
         title='Password'
-        placeholder={inputs.password.placeholder}
         disabled={isBusy}
         helpButton={
           params.linkToForgotPassword && {
             title: 'Forgot password?',
-            onClick: params.onClickFormTypeButton,
-            name: 'forgot_password'
+            onClick: (e) => params.setCurrentForm('forgot_password')
           }
         }
         value={params.input.password}
@@ -114,8 +110,7 @@ export default function EmailPasswordAuthenticationFormSignIn(params) {
       {params.linkToSignUp && (
         <button
           type='button'
-          name='sign_up'
-          onClick={params.onClickFormTypeButton}
+          onClick={(e) => params.setCurrentForm('sign_up')}
           disabled={isBusy}
           className={css`
             ${params.styles.secondaryCtaButton}
