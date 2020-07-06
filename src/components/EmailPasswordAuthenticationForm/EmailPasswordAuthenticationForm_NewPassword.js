@@ -28,14 +28,15 @@ export default function EmailPasswordAuthenticationFormNewPassword(params) {
       params.feather
         .currentCredential()
         .then((credential) =>
-          Promise.all([
-            credential,
-            params.feather.newCurrentUser(credential.token)
-          ])
+          params.feather.passwords.create(password, credential.token)
         )
-        .then(([credential, user]) =>
-          user.updatePassword(password, credential.token)
+        .then(() =>
+          params.feather.newCurrentCredential({
+            email: params.input.email,
+            password
+          })
         )
+        .then((credential) => params.feather.newCurrentUser(credential.token))
         .catch((error) => {
           setIsBusy(false)
           setErrorMessage(error.message)

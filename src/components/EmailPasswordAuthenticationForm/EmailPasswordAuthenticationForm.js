@@ -120,6 +120,9 @@ export default function EmailPasswordAuthenticationForm(params) {
             form={config.newPassword}
             setCurrentForm={setCurrentForm}
             styles={styles}
+            input={{
+              email: emailInput
+            }}
           />
         )}
       </form>
