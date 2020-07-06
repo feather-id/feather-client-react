@@ -13,18 +13,19 @@ export const defaultStyles = {
   container: {
     display: 'flex',
     flexDirection: 'column',
-    flexGrow: '1'
+    flexGrow: '1',
+    padding: '32px 0px'
   },
   title: {
     fontSize: '30px',
     color: 'hsl(214, 12%, 12%)',
-    margin: '32px 4px',
+    margin: '0px 0px 32px 0px',
     textAlign: 'left'
   },
   subtitle: {
     fontSize: '18px',
     color: 'hsl(214, 24%, 32%)',
-    margin: '16px 4px 32px 4px',
+    margin: '16px 0px 32px 0px',
     textAlign: 'left',
     lineHeight: '1.6'
   },
@@ -52,7 +53,7 @@ export const defaultStyles = {
     fontWeight: '500',
     color: 'hsl(214, 24%, 32%)',
     textAlign: 'left',
-    margin: '4px auto 12px 4px'
+    margin: '4px 0px 12px 0px'
   },
   forgotPasswordButton: {
     fontSize: '16px',
@@ -61,7 +62,7 @@ export const defaultStyles = {
     border: 'none',
     color: 'hsl(230, 75%, 65%)',
     padding: '0px',
-    margin: '0px 4px 8px auto',
+    margin: '0px 0px 8px auto',
     ':hover:enabled': {
       cursor: 'pointer',
       color: 'hsl(230, 75%, 68%)'

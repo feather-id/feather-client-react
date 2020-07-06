@@ -8,6 +8,7 @@ import { isValidEmail } from '../../utils.js'
 
 export default function EmailVerificationAuthenticationFormSignIn(params) {
   const [isBusy, setIsBusy] = useState()
+  const [didSentLink, setDidSentLink] = useState(false)
   const [infoMessage, setInfoMessage] = useState()
   const [errorMessage, setErrorMessage] = useState()
   const emailInputRef = useRef()
@@ -32,10 +33,11 @@ export default function EmailVerificationAuthenticationFormSignIn(params) {
       params.feather
         .newCurrentCredential({ email, redirectUrl, templateName })
         .then((credential) => {
-          if (credential.status !== 'requires_verification_code') {
+          if (credential.status !== 'requires_verification') {
             throw new Error('Something went wrong.')
           }
           setIsBusy(false)
+          setDidSentLink(true)
           setInfoMessage('Please check your email for a link to sign in.')
           setErrorMessage(null)
         })
@@ -85,16 +87,18 @@ export default function EmailVerificationAuthenticationFormSignIn(params) {
       {errorMessage && (
         <ErrorMessage styles={params.styles} message={errorMessage} />
       )}
-      <button
-        type='submit'
-        onClick={onSubmit}
-        disabled={isBusy}
-        className={css`
-          ${params.styles.primaryCtaButton}
-        `}
-      >
-        {isBusy ? <Spinner /> : 'Continue'}
-      </button>
+      {!didSentLink && (
+        <button
+          type='submit'
+          onClick={onSubmit}
+          disabled={isBusy}
+          className={css`
+            ${params.styles.primaryCtaButton}
+          `}
+        >
+          {isBusy ? <Spinner /> : 'Continue'}
+        </button>
+      )}
     </div>
   )
 }

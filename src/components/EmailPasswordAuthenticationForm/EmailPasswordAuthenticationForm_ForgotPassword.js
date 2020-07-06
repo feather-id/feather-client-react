@@ -35,16 +35,12 @@ export default function EmailPasswordAuthenticationFormForgotPassword(params) {
             throw new Error('Something went wrong.')
           }
           setIsBusy(false)
-          // setInfoMessage(
-          //   'Please check your email for a verification code to reset your password.'
-          // )
           setErrorMessage(null)
           params.setCurrentForm('verify_email')
         })
         .catch((error) => {
-          setIsBusy(true)
+          setIsBusy(false)
           setErrorMessage(error.message)
-          // setInfoMessage(null)
         })
     }
   }
