@@ -9,7 +9,6 @@ import { isValidEmail } from '../../utils.js'
 export default function EmailPasswordAuthenticationFormForgotPassword(params) {
   const [isBusy, setIsBusy] = useState(false)
   const [errorMessage, setErrorMessage] = useState(null)
-  // const [infoMessage, setInfoMessage] = useState(null)
   const emailInputRef = useRef()
 
   const onSubmit = (event) => {
