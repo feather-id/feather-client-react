@@ -3294,13 +3294,6 @@ caseless@~0.12.0:
   resolved "https://registry.yarnpkg.com/caseless/-/caseless-0.12.0.tgz#1b681c21ff84033c826543090689420d187151dc"
   integrity sha1-G2gcIf+EAzyCZUMJBolCDRhxUdw=
 
-chai-as-promised@^7.1.1:
-  version "7.1.1"
-  resolved "https://registry.yarnpkg.com/chai-as-promised/-/chai-as-promised-7.1.1.tgz#08645d825deb8696ee61725dbf590c012eb00ca0"
-  integrity sha512-azL6xMoi+uxu6z4rhWQ1jbdUhOMhis2PvscD/xjLqNMkv3BPPp2JyyuTHOrf9BOosGpNQ11v6BKv/g57RXbiaA==
-  dependencies:
-    check-error "^1.0.2"
-
 chalk@2.4.2, chalk@^2.0.0, chalk@^2.0.1, chalk@^2.1.0, chalk@^2.4.1, chalk@^2.4.2:
   version "2.4.2"
   resolved "https://registry.yarnpkg.com/chalk/-/chalk-2.4.2.tgz#cd42541677a54333cf541a49108c1432b44c9424"
@@ -3341,11 +3334,6 @@ chardet@^0.7.0:
   version "0.7.0"
   resolved "https://registry.yarnpkg.com/chardet/-/chardet-0.7.0.tgz#90094849f0937f2eedc2425d0d28a9e5f0cbad9e"
   integrity sha512-mT8iDcrh03qDGRRmoA2hmBJnxpllMR+0/0qlzjqZES6NdiWDcZkCNAk4rPFZ9Q85r27unkiNNg8ZOiwZXBHwcA==
-
-check-error@^1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/check-error/-/check-error-1.0.2.tgz#574d312edd88bb5dd8912e9286dd6c0aed4aac82"
-  integrity sha1-V00xLt2Iu13YkS6Sht1sCu1KrII=
 
 chokidar@^2.1.8:
   version "2.1.8"
@@ -5186,12 +5174,11 @@ fb-watchman@^2.0.0:
   dependencies:
     bser "2.1.1"
 
-feather-client-js@^0.0.11:
-  version "0.0.11"
-  resolved "https://registry.yarnpkg.com/feather-client-js/-/feather-client-js-0.0.11.tgz#1fde5397ab38b82a3d920372c18ec8c03bff5b40"
-  integrity sha512-9ZN8qYJJFO1eWgQGiEJL34uHDstHSXX3mwOpSN7ZYJgUWVlQPWAiaQTDGg6gPejpXuFdt8FO5c+jDwzW2l+aHA==
+feather-client-js@^0.0.12:
+  version "0.0.12"
+  resolved "https://registry.yarnpkg.com/feather-client-js/-/feather-client-js-0.0.12.tgz#8bbb0283ca4e24e4286faa53e637b7d7f2527f08"
+  integrity sha512-cKY+pqCecGOZFXNERXDCnfOr3ecFvEchFn18jWyCuOxFRjYitb+R1TeJPPTkkZfk8kFioiZmO8tUd6d4zpro7A==
   dependencies:
-    chai-as-promised "^7.1.1"
     jws "^4.0.0"
     node-fetch "^2.6.0"
 
