@@ -1,6 +1,6 @@
 {
   "name": "feather-client-react",
-  "version": "0.0.16",
+  "version": "0.0.17",
   "description": "Feather ",
   "license": "MIT",
   "repository": {
@@ -57,7 +57,7 @@
     "@fortawesome/free-solid-svg-icons": "^5.13.1",
     "@fortawesome/react-fontawesome": "^0.1.11",
     "emotion": "^10.0.27",
-    "feather-client-js": "^0.0.13",
+    "feather-client-js": "^0.0.14",
     "jws": "^4.0.0",
     "querystring": "^0.2.0"
   },
