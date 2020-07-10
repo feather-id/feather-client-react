@@ -12,36 +12,25 @@ $ yarn add feather-client-react
 
 ## Usage
 
-Feather makes adding authentication to your app incredibly easy. Just import one of the pre-built authentication forms and drop it into your app!
+Feather makes it incredibly easy to add an authentication form to your React app. Just import the pre-built authentication form and drop it into your app!
 
 ```jsx
 import React, { Component } from 'react'
+import { Feather, AuthenticationForm } from 'feather-client-react'
 
-import { Feather, PasswordAuthenticationForm } from 'feather-client-react'
+const feather = Feather('YOUR_API_KEY')
+
+feather.onStateChange((user) => {
+  console.log(`The current user is ${JSON.stringify(user)}`)
+})
 
 function App() {
-  const feather = Feather('pk_test_tZxHb2NRqGLt2A9qqhbdA8u7XdINW17A')
-
-  feather.onStateChange((session, user) => {
-    // The app's authentication state has changed
-  })
-
   return (
     <div className='App'>
-      <h1>DEMO</h1>
-      <PasswordAuthenticationForm
-        feather={feather}
-        redirectUrl='https://yourapp.com/verify'
-      />
+      <AuthenticationForm feather={feather} />
     </div>
   )
 }
 
 export default App
 ```
-
-## More Information
-
-- [Feather Docs](https://feather.id/docs)
-- [API Reference](https://feather.id/docs/api)
-- [Error Handling](https://feather.id/docs/api#errors)
