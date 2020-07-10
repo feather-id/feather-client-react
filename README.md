@@ -34,3 +34,7 @@ function App() {
 
 export default App
 ```
+
+## More Information
+
+Have any questions? We're hanging out on [Discord](https://discord.gg/S55amqV)!
