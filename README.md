@@ -26,7 +26,7 @@ import {
 
 function App() {
   return (
-    <Feather apiKey='YOUR_API_KEY'>
+    <Feather apiKey='pk_live_...'>
       <Home />
     </Feather>
   )
