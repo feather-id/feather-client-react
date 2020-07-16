@@ -15,6 +15,7 @@ export default function EmailPasswordAuthenticationFormSignUp(params) {
   const confirmPasswordInputRef = useRef()
 
   const onSubmit = (event) => {
+    var isMounted = true
     event.preventDefault()
     if (!params.feather) {
       setErrorMessage(
@@ -39,20 +40,24 @@ export default function EmailPasswordAuthenticationFormSignUp(params) {
       params.feather
         .newCurrentCredential({ email, password })
         .then((credential) => {
-          if (credential.status !== 'valid') {
+          if (credential.status !== 'valid')
             throw new Error('Email address already registered.')
-          }
           return params.feather.newCurrentUser(credential.token)
         })
         .then((newUser) => {
-          setIsBusy(false)
-          setErrorMessage(null)
+          if (isMounted) {
+            setIsBusy(false)
+            setErrorMessage(null)
+          }
         })
         .catch((error) => {
-          setIsBusy(false)
-          setErrorMessage(error.message)
+          if (isMounted) {
+            setIsBusy(false)
+            setErrorMessage(error.message)
+          }
         })
     }
+    return () => (isMounted = false)
   }
 
   return (

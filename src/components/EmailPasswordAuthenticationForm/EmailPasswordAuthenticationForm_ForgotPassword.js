@@ -12,6 +12,7 @@ export default function EmailPasswordAuthenticationFormForgotPassword(params) {
   const emailInputRef = useRef()
 
   const onSubmit = (event) => {
+    var isMounted = true
     event.preventDefault()
     if (!params.feather) {
       setErrorMessage(
@@ -29,19 +30,22 @@ export default function EmailPasswordAuthenticationFormForgotPassword(params) {
       params.feather
         .newCurrentCredential({ email, templateName })
         .then((credential) => {
-          console.log(credential)
-          if (credential.status !== 'requires_verification') {
-            throw new Error('Something went wrong.')
+          if (isMounted) {
+            if (credential.status !== 'requires_verification')
+              throw new Error('Something went wrong.')
+            setIsBusy(false)
+            setErrorMessage(null)
+            params.setCurrentForm('verify_email')
           }
-          setIsBusy(false)
-          setErrorMessage(null)
-          params.setCurrentForm('verify_email')
         })
         .catch((error) => {
-          setIsBusy(false)
-          setErrorMessage(error.message)
+          if (isMounted) {
+            setIsBusy(false)
+            setErrorMessage(error.message)
+          }
         })
     }
+    return () => (isMounted = false)
   }
 
   return (

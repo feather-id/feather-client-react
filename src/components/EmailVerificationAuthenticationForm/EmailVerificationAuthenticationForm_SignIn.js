@@ -14,6 +14,7 @@ export default function EmailVerificationAuthenticationFormSignIn(params) {
   const emailInputRef = useRef()
 
   const onSubmit = (event) => {
+    var isMounted = true
     event.preventDefault()
     if (!params.feather) {
       setErrorMessage(
@@ -21,7 +22,6 @@ export default function EmailVerificationAuthenticationFormSignIn(params) {
       )
       return
     }
-
     const email = params.input.email
     const redirectUrl = params.redirectUrl
     const templateName = 'sign_in'
@@ -33,20 +33,24 @@ export default function EmailVerificationAuthenticationFormSignIn(params) {
       params.feather
         .newCurrentCredential({ email, redirectUrl, templateName })
         .then((credential) => {
-          if (credential.status !== 'requires_verification') {
-            throw new Error('Something went wrong.')
+          if (isMounted) {
+            if (credential.status !== 'requires_verification')
+              throw new Error('Something went wrong.')
+            setIsBusy(false)
+            setDidSentLink(true)
+            setInfoMessage('Please check your email for a link to sign in.')
+            setErrorMessage(null)
           }
-          setIsBusy(false)
-          setDidSentLink(true)
-          setInfoMessage('Please check your email for a link to sign in.')
-          setErrorMessage(null)
         })
         .catch((error) => {
-          setIsBusy(false)
-          setErrorMessage(error.message)
-          setInfoMessage(null)
+          if (isMounted) {
+            setIsBusy(false)
+            setErrorMessage(error.message)
+            setInfoMessage(null)
+          }
         })
     }
+    return () => (isMounted = true)
   }
 
   const inputs = params.form.inputs ? params.form.inputs : []
