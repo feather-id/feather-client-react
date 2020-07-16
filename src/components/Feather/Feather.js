@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Client } from 'feather-client-js'
+import { FeatherClient } from 'feather-client-js'
 import { FeatherProvider } from '../Context'
 
 class Feather extends React.Component {
@@ -10,7 +10,7 @@ class Feather extends React.Component {
 
   componentDidMount() {
     if (!this.state.feather) {
-      this.setState({ feather: Client(this.props.apiKey) })
+      this.setState({ feather: FeatherClient(this.props.apiKey) })
     }
   }
 
