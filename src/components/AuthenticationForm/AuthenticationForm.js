@@ -2,11 +2,12 @@ import React from 'react'
 import EmailPasswordAuthenticationForm from '../EmailPasswordAuthenticationForm'
 import EmailVerificationAuthenticationForm from '../EmailVerificationAuthenticationForm'
 import ConfigWarning from '../ConfigWarning'
+import { withFeather } from '../Context'
 
 const validFactors = ['email_password', 'email_verification']
 
-export default function AuthenticationForm(params) {
-  const factors = params.factors ? params.factors : 'email_password'
+function AuthenticationForm(props) {
+  const factors = props.factors ? props.factors : 'email_password'
   var warnings = []
   if (!validFactors.includes(factors)) {
     warnings.push(`The provided 'factors' parameter is invalid: '${factors}'.
@@ -19,19 +20,21 @@ export default function AuthenticationForm(params) {
       {warnings.length > 0 && <ConfigWarning warnings={warnings} />}
       {factors === 'email_password' && (
         <EmailPasswordAuthenticationForm
-          feather={params.feather}
-          styles={params.styles}
-          silenceWarnings={params.silenceWarnings}
+          feather={props.feather}
+          styles={props.styles}
+          silenceWarnings={props.silenceWarnings}
         />
       )}
       {factors === 'email_verification' && (
         <EmailVerificationAuthenticationForm
-          feather={params.feather}
-          styles={params.styles}
-          redirectUrl={params.redirectUrl}
-          silenceWarnings={params.silenceWarnings}
+          feather={props.feather}
+          styles={props.styles}
+          redirectUrl={props.redirectUrl}
+          silenceWarnings={props.silenceWarnings}
         />
       )}
     </div>
   )
 }
+
+export default withFeather(AuthenticationForm)
