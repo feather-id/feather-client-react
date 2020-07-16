@@ -17,22 +17,25 @@ $ yarn add feather-client-react
 ## Usage
 
 ```jsx
-import React, { Component } from 'react'
-import { Feather, AuthenticationForm } from 'feather-client-react'
-
-const feather = Feather('YOUR_API_KEY')
-
-feather.onStateChange((user) => {
-  console.log(`The current user is ${JSON.stringify(user)}`)
-})
+import React from 'react'
+import {
+  Feather,
+  AuthenticationForm,
+  withCurrentUser
+} from 'feather-client-react'
 
 function App() {
   return (
-    <div className='App'>
-      <AuthenticationForm feather={feather} />
-    </div>
+    <Feather apiKey='YOUR_API_KEY'>
+      <Home />
+    </Feather>
   )
 }
+
+const Home = withCurrentUser((props) => {
+  if (!props.currentUser) return <AuthenticationForm />
+  else return <p>Current user: {props.currentUser.email}</p>
+})
 
 export default App
 ```
