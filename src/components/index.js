@@ -1,2 +1,2 @@
 export { default as AuthenticationForm } from './AuthenticationForm'
-export { FeatherContext, withFeather } from './Context'
+export { FeatherProvider, withFeather, withCurrentUser } from './Context'
