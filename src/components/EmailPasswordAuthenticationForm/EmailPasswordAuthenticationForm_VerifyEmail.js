@@ -9,14 +9,11 @@ export default function EmailPasswordAuthenticationFormVerifyEmail(params) {
   const [errorMessage, setErrorMessage] = useState(null)
 
   const onSubmit = (verificationCode) => {
+    var isMounted = true
     if (!params.feather) {
       setErrorMessage(
         "A Feather client was not provided. To learn more about using Feather's React components, please see our documentation at https://feather.id/docs."
       )
-      return
-    }
-    if (verificationCode.length !== 6) {
-      // TODO
       return
     }
     setIsBusy(true)
@@ -24,19 +21,23 @@ export default function EmailPasswordAuthenticationFormVerifyEmail(params) {
       .currentCredential()
       .then((credential) => credential.update({ verificationCode }))
       .then((credential) => {
-        setIsBusy(false)
-        if (credential.status === 'valid') {
-          params.setCurrentForm('new_password')
-        } else {
-          setErrorMessage(
-            'Something went wrong. We were not able to verify ownership of your email address.'
-          )
+        if (isMounted) {
+          setIsBusy(false)
+          if (credential.status === 'valid')
+            params.setCurrentForm('new_password')
+          else
+            setErrorMessage(
+              'Something went wrong. We were not able to verify ownership of your email address.'
+            )
         }
       })
       .catch((error) => {
-        setIsBusy(false)
-        setErrorMessage(error.message)
+        if (isMounted) {
+          setIsBusy(false)
+          setErrorMessage(error.message)
+        }
       })
+    return () => (isMounted = false)
   }
 
   return (

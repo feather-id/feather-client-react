@@ -13,8 +13,8 @@ export default function EmailPasswordAuthenticationFormNewPassword(params) {
   const passwordRef = useRef()
 
   const onSubmit = (event) => {
+    var isMounted = true
     event.preventDefault()
-
     if (!params.feather) {
       setErrorMessage(
         "A Feather client was not provided. To learn more about using Feather's React components, please see our documentation at https://feather.id/docs."
@@ -38,10 +38,13 @@ export default function EmailPasswordAuthenticationFormNewPassword(params) {
         )
         .then((credential) => params.feather.newCurrentUser(credential.token))
         .catch((error) => {
-          setIsBusy(false)
-          setErrorMessage(error.message)
+          if (isMounted) {
+            setIsBusy(false)
+            setErrorMessage(error.message)
+          }
         })
     }
+    return () => (isMounted = false)
   }
 
   const onChange = (event) => {
