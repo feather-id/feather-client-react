@@ -10,7 +10,8 @@ class Feather extends React.Component {
 
   componentDidMount() {
     if (!this.state.feather) {
-      this.setState({ feather: FeatherClient(this.props.apiKey) })
+      const config = this.props.config ? this.props.config : {}
+      this.setState({ feather: FeatherClient(this.props.apiKey, config) })
     }
   }
 
