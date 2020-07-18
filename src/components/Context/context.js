@@ -44,18 +44,27 @@ export const useCurrentUser = () => {
         )
   })
 
+  console.log('A')
+
   useEffect(() => {
     var mounted = true
+    console.log('B')
     if (!feather) return (mounted = false)
+    console.log('C')
     const unsubscribe = feather.onStateChange((currentUser) => {
+      console.log('D')
       if (!mounted) return
+      console.log('E')
       if (JSON.stringify(currentUser) !== JSON.stringify(state.currentUser)) {
+        console.log('F')
         setState({ currentUser, loading: false, error: null })
       } else if (state.loading) {
+        console.log('F')
         setState({ ...state, loading: false })
       }
     })
     return () => {
+      console.log('G')
       mounted = false
       unsubscribe()
     }
