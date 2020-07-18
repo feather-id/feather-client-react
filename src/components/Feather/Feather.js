@@ -3,15 +3,32 @@ import { FeatherClient } from 'feather-client-js'
 import { FeatherProvider } from '../Context'
 
 class Feather extends React.Component {
+  initializeFeather(props) {}
+
   constructor(props) {
     super(props)
-    this.state = { feather: null }
+    if (props.client) {
+      this.state = { feather: props.client }
+    } else {
+      try {
+        const config = props.config ? props.config : {}
+        const feather = FeatherClient(props.apiKey, config)
+        this.state = { feather }
+      } catch (e) {
+        this.state = { feather: null }
+      }
+    }
   }
 
   componentDidMount() {
     if (!this.state.feather) {
-      const config = this.props.config ? this.props.config : {}
-      this.setState({ feather: FeatherClient(this.props.apiKey, config) })
+      try {
+        const config = this.props.config ? this.props.config : {}
+        const feather = FeatherClient(this.props.apiKey, config)
+        this.setState({ feather })
+      } catch (e) {
+        // Do nothing
+      }
     }
   }
 

@@ -2,11 +2,12 @@ import React from 'react'
 import EmailPasswordAuthenticationForm from '../EmailPasswordAuthenticationForm'
 import EmailVerificationAuthenticationForm from '../EmailVerificationAuthenticationForm'
 import ConfigWarning from '../ConfigWarning'
-import { withFeather } from '../Context'
+import { useFeather } from '../Context'
 
 const validFactors = ['email_password', 'email_verification']
 
 function AuthenticationForm(props) {
+  const feather = useFeather()
   const factors = props.factors ? props.factors : 'email_password'
   var warnings = []
   if (!validFactors.includes(factors)) {
@@ -20,14 +21,14 @@ function AuthenticationForm(props) {
       {warnings.length > 0 && <ConfigWarning warnings={warnings} />}
       {factors === 'email_password' && (
         <EmailPasswordAuthenticationForm
-          feather={props.feather}
+          feather={feather}
           styles={props.styles}
           silenceWarnings={props.silenceWarnings}
         />
       )}
       {factors === 'email_verification' && (
         <EmailVerificationAuthenticationForm
-          feather={props.feather}
+          feather={feather}
           styles={props.styles}
           redirectUrl={props.redirectUrl}
           silenceWarnings={props.silenceWarnings}
@@ -37,4 +38,4 @@ function AuthenticationForm(props) {
   )
 }
 
-export default withFeather(AuthenticationForm)
+export default AuthenticationForm

@@ -1,1 +1,1 @@
-export { FeatherProvider, withFeather, withCurrentUser } from './context'
+export { FeatherProvider, useFeather, useCurrentUser } from './context'

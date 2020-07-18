@@ -1,4 +1,4 @@
-export { Client as FeatherClient } from 'feather-client-js'
+export { FeatherClient } from 'feather-client-js'
 export {
   FeatherError,
   FeatherErrorType,
@@ -6,8 +6,7 @@ export {
 } from 'feather-client-js'
 export {
   Feather,
-  FeatherProvider,
   AuthenticationForm,
-  withCurrentUser,
-  withFeather
+  useFeather,
+  useCurrentUser
 } from './components'

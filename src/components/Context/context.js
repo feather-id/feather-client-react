@@ -1,57 +1,65 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 
-function useCurrentUser(feather) {
-  const [currentUser, setCurrentUser] = useState(null)
-  const [isLoading, setIsLoading] = useState(true)
+function _observeCurrentUser(feather) {
+  const [state, setState] = useState({
+    isLoading: true,
+    currentUser: null
+  })
   useEffect(() => {
     const unsubscribe = feather.onStateChange((u) => {
-      setIsLoading(false)
-      if (JSON.stringify(u) !== JSON.stringify(currentUser)) {
-        setCurrentUser(u)
-      }
+      if (JSON.stringify(u) !== JSON.stringify(state.currentUser))
+        setState({ isLoading: false, currentUser: u })
+      else if (state.isLoading) setState({ isLoading: false })
     })
     return () => unsubscribe()
-  })
-  return [isLoading, currentUser]
+  }, [])
+  return state
 }
 
 const FeatherContext = React.createContext(null)
 
 export function FeatherProvider(props) {
-  const [isLoading, currentUser] = props.feather
-    ? useCurrentUser(props.feather)
-    : [false, null]
   return (
-    <FeatherContext.Provider
-      value={{
-        feather: props.feather,
-        isLoadingCurrentUser: isLoading,
-        currentUser
-      }}
-    >
+    <FeatherContext.Provider value={{ feather: props.feather }}>
       {props.children}
     </FeatherContext.Provider>
   )
 }
 
-export const withFeather = (Component) => (props) => {
-  return (
-    <FeatherContext.Consumer>
-      {({ feather }) => <Component {...props} feather={feather} />}
-    </FeatherContext.Consumer>
-  )
+export const useFeather = () => {
+  const ctx = useContext(FeatherContext)
+  if (!ctx) return null
+  return ctx.feather
 }
 
-export const withCurrentUser = (Component) => (props) => {
-  return (
-    <FeatherContext.Consumer>
-      {({ isLoadingCurrentUser, currentUser }) => (
-        <Component
-          {...props}
-          currentUser={currentUser}
-          isLoadingCurrentUser={isLoadingCurrentUser}
-        />
-      )}
-    </FeatherContext.Consumer>
-  )
+export const useCurrentUser = () => {
+  const feather = useFeather()
+  const [state, setState] = useState({
+    currentUser: null,
+    loading: true,
+    error: feather
+      ? null
+      : new Error(
+          'No Feather client available. This hook can only be used in a child component wrapped by <Feather></Feather> tags. For more details, please see the Feather documentation at https://feather.id/docs'
+        )
+  })
+
+  useEffect(() => {
+    var mounted = true
+    if (!feather) return (mounted = false)
+    const unsubscribe = feather.onStateChange((currentUser) => {
+      if (!mounted) return
+      if (JSON.stringify(currentUser) !== JSON.stringify(state.currentUser)) {
+        setState({ currentUser, loading: false, error: null })
+      } else if (state.loading) {
+        setState({ ...state, loading: false })
+      }
+    })
+    return () => {
+      mounted = false
+      unsubscribe()
+    }
+  })
+
+  return state
 }
