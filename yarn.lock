@@ -5174,10 +5174,10 @@ fb-watchman@^2.0.0:
   dependencies:
     bser "2.1.1"
 
-feather-client-js@^0.0.20:
-  version "0.0.20"
-  resolved "https://registry.yarnpkg.com/feather-client-js/-/feather-client-js-0.0.20.tgz#f94af2374a38da6e0729cc02bccdef576a1ebdc2"
-  integrity sha512-hjJ01Nri4m1BMYAdxY8V1chN0FThmehYpl8hfd3C/1kTKaHXH6WaJuGJ95m90z7mF8XUfLryEI94AePaTIqz0w==
+feather-client-js@^0.0.21:
+  version "0.0.21"
+  resolved "https://registry.yarnpkg.com/feather-client-js/-/feather-client-js-0.0.21.tgz#52094aca77eb2391b668b77edcef167a27a18254"
+  integrity sha512-Z20Chcn4RiYtJOVDz3/7PcbBvPjtknUS5qdSacoo+ky0jhuzo1knSMSjMxnkWjQLWBqZPUsBQ9+2cIKFgnNSUQ==
   dependencies:
     jws "^4.0.0"
     node-fetch "^2.6.0"
