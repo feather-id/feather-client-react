@@ -20,7 +20,7 @@ const FeatherContext = React.createContext(null)
 
 export function FeatherProvider(props) {
   return (
-    <FeatherContext.Provider value={{ feather: props.feather }}>
+    <FeatherContext.Provider value={{ feather: props.client }}>
       {props.children}
     </FeatherContext.Provider>
   )

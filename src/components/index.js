@@ -1,3 +1,2 @@
 export { default as AuthenticationForm } from './AuthenticationForm'
-export { default as Feather } from './Feather'
-export { useFeather, useCurrentUser } from './Context'
+export { FeatherProvider, useFeather, useCurrentUser } from './Context'

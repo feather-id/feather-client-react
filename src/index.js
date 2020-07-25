@@ -5,7 +5,7 @@ export {
   FeatherErrorCode
 } from 'feather-client-js'
 export {
-  Feather,
+  FeatherProvider,
   AuthenticationForm,
   useFeather,
   useCurrentUser
