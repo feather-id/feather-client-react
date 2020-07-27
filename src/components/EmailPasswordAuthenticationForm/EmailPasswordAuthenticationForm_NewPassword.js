@@ -9,7 +9,7 @@ export default function EmailPasswordAuthenticationFormNewPassword(params) {
   const [inputType, setInputType] = useState('password')
   const [isBusy, setIsBusy] = useState(false)
   const [errorMessage, setErrorMessage] = useState(null)
-  const [password, setPassword] = useState('')
+  const [newPassword, setNewPassword] = useState('')
   const passwordRef = useRef()
 
   const onSubmit = (event) => {
@@ -20,7 +20,7 @@ export default function EmailPasswordAuthenticationFormNewPassword(params) {
         "A Feather client was not provided. To learn more about using Feather's React components, please see our documentation at https://feather.id/docs."
       )
       return
-    } else if (password === '') {
+    } else if (newPassword === '') {
       setErrorMessage('Please enter a new password.')
       passwordInputRef.current.focus()
     } else {
@@ -28,12 +28,12 @@ export default function EmailPasswordAuthenticationFormNewPassword(params) {
       params.feather
         .currentCredential()
         .then((credential) =>
-          params.feather.passwords.create(password, credential.token)
+          params.feather.passwords.update(newPassword, credential.token)
         )
         .then(() =>
           params.feather.newCurrentCredential({
             email: params.input.email,
-            password
+            password: newPassword
           })
         )
         .then((credential) => params.feather.newCurrentUser(credential.token))
@@ -49,7 +49,7 @@ export default function EmailPasswordAuthenticationFormNewPassword(params) {
 
   const onChange = (event) => {
     event.preventDefault()
-    setPassword(event.target.value)
+    setNewPassword(event.target.value)
   }
 
   return (
@@ -85,7 +85,7 @@ export default function EmailPasswordAuthenticationFormNewPassword(params) {
             setInputType(inputType === 'password' ? 'text' : 'password')
           }
         }}
-        value={password}
+        value={newPassword}
         onChange={onChange}
         styles={params.styles}
       />
